@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.yandex.mapkit.MapKitFactory;
 
 import ru.vvdev.yamap.view.ClusteredYamapView;
 
@@ -21,7 +22,10 @@ public class ClusteredYamapViewManager extends BaseYamapViewManager<ClusteredYam
 
     @Override
     protected ClusteredYamapView createViewInstanceInternal(@NonNull ThemedReactContext context) {
-        return new ClusteredYamapView(context);
+        var view = new ClusteredYamapView(context);
+        MapKitFactory.getInstance().onStart();
+        view.onStart();
+        return view;
     }
 
     @Override

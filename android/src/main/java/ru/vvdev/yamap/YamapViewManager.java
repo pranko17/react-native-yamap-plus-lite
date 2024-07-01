@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.yandex.mapkit.MapKitFactory;
 
 import ru.vvdev.yamap.view.YamapView;
 
@@ -19,7 +20,10 @@ public class YamapViewManager extends BaseYamapViewManager<YamapView> {
 
     @Override
     protected YamapView createViewInstanceInternal(@NonNull ThemedReactContext context) {
-        return new YamapView(context);
+        var view = new YamapView(context);
+        MapKitFactory.getInstance().onStart();
+        view.onStart();
+        return view;
     }
 
     @Override
