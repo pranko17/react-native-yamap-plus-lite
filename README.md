@@ -28,7 +28,7 @@ react-native link react-native-yamap-plus
 ```diff
 dependencies {
      ...
-+    implementation 'com.yandex.android:maps.mobile:4.6.1-full'
++    implementation 'com.yandex.android:maps.mobile:4.7.0-full'
      ...
 }
 ```
