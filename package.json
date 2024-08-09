@@ -31,9 +31,9 @@
   "devDependencies": {
     "@types/react": "*",
     "@types/react-native": "*",
-    "react-native-builder-bob": "0.23.2",
-    "release-it": "17.4.0",
-    "typescript": "5.5.2"
+    "react-native-builder-bob": "0.29.0",
+    "release-it": "17.6.0",
+    "typescript": "5.5.4"
   },
   "peerDependencies": {
     "react": "*",

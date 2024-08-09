@@ -69,5 +69,5 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
 
-    implementation "com.yandex.android:maps.mobile:4.6.1-full"
+    implementation "com.yandex.android:maps.mobile:4.7.0-full"
 }
