@@ -1,7 +1,7 @@
 
 ## React Native Yandex Maps (Яндекс Карты)
 
-#### MapKit SDK [4.7.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (25 апреля 2024)
+#### MapKit SDK [4.7.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (17 июля 2024)
 
 Библиотека для интеграции Yandex Maps (Яндекс Карт) в React Native.
 
