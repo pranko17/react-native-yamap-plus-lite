@@ -310,6 +310,7 @@ import { Marker } from 'react-native-yamap-plus';
 | anchor | {  x:  number,  y:  number  } | Якорь иконки маркера. Координаты принимают значения от 0 до 1 |
 | zIndex | number | Отображение элемента по оси Z |
 | visible | boolean | Отображение маркера на карте |
+| handled | boolean | Включение(**false**)/отключение(**true**) всплытия события нажатия для родителя `default:true` |
 
 #### Доступные методы для примитива **Marker**:
 
@@ -337,6 +338,7 @@ import { Circle } from 'react-native-yamap-plus';
 | strokeWidth | number | Толщина границы |
 | onPress | function | Действие при нажатии/клике |
 | zIndex | number | Отображение элемента по оси Z |
+| handled | boolean | Включение(**false**)/отключение(**true**) всплытия события нажатия для родителя `default:true` |
 
 ### Polyline
 
@@ -368,6 +370,7 @@ import { Polyline } from 'react-native-yamap-plus';
 | gapLength | number | Длина разрыва между штрихами |
 | onPress | function | Действие при нажатии/клике |
 | zIndex | number | Отображение элемента по оси Z |
+| handled | boolean | Включение(**false**)/отключение(**true**) всплытия события нажатия для родителя `default:true` |
 
 ### Polygon
 
@@ -396,6 +399,7 @@ import { Polygon } from 'react-native-yamap-plus';
 | innerRings | (Point[])[] | Массив полилиний, которые образуют отверстия в полигоне |
 | onPress | function | Действие при нажатии/клике |
 | zIndex | number | Отображение элемента по оси Z |
+| handled | boolean | Включение(**false**)/отключение(**true**) всплытия события нажатия для родителя `default:true` |
 
 ## Запрос маршрутов
 

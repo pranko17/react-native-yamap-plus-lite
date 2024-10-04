@@ -111,4 +111,9 @@ public class YamapPolygonManager extends ViewGroupManager<YamapPolygon> {
     public void setZIndex(View view, int zIndex) {
         castToPolygonView(view).setZIndex(zIndex);
     }
+
+    @ReactProp(name = "handled")
+    public void setHandled(View view, boolean handled) {
+        castToPolygonView(view).setHandled(handled);
+    }
 }

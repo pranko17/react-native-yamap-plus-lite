@@ -32,6 +32,7 @@ public class YamapPolyline extends ViewGroup implements MapObjectTapListener, Re
     private int gapLength = 0;
     private float dashOffset = 0;
     private int outlineWidth = 0;
+    private Boolean handled = true;
 
     public YamapPolyline(Context context) {
         super(context);
@@ -89,6 +90,11 @@ public class YamapPolyline extends ViewGroup implements MapObjectTapListener, Re
         updatePolyline();
     }
 
+    public void setHandled(Boolean _handled) {
+        handled = _handled;
+        updatePolyline();
+    }
+
     private void updatePolyline() {
         if (mapObject != null) {
             mapObject.setGeometry(polyline);
@@ -118,6 +124,6 @@ public class YamapPolyline extends ViewGroup implements MapObjectTapListener, Re
         WritableMap e = Arguments.createMap();
         ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPress", e);
 
-        return false;
+        return handled;
     }
 }

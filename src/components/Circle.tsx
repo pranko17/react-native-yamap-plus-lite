@@ -12,11 +12,14 @@ export interface CircleProps {
   center: Point;
   radius: number;
   children?: undefined;
+  handled?: boolean;
 }
 
 const NativeCircleComponent = requireNativeComponent<CircleProps>('YamapCircle');
 
-export class Circle extends React.Component<CircleProps> {
+interface State {}
+
+export class Circle extends React.Component<CircleProps, State> {
   static defaultProps = {
   };
 

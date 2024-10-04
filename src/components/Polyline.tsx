@@ -15,11 +15,14 @@ export interface PolylineProps {
   onPress?: () => void;
   points: Point[];
   children?: undefined;
+  handled?: boolean;
 }
 
 const NativePolylineComponent = requireNativeComponent<PolylineProps>('YamapPolyline');
 
-export class Polyline extends React.Component<PolylineProps> {
+interface State {}
+
+export class Polyline extends React.Component<PolylineProps, State> {
   render() {
     const props = { ...this.props };
 

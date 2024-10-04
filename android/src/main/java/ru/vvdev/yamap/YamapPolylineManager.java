@@ -107,4 +107,9 @@ public class YamapPolylineManager extends ViewGroupManager<YamapPolyline> {
     public void setOutlineColor(View view, int color) {
         castToPolylineView(view).setOutlineColor(color);
     }
+
+    @ReactProp(name = "handled")
+    public void setHandled(View view, boolean handled) {
+        castToPolylineView(view).setHandled(handled);
+    }
 }

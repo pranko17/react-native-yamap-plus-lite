@@ -22,6 +22,7 @@ public class YamapCircle extends ViewGroup implements MapObjectTapListener, Reac
     public Circle circle;
 
     private CircleMapObject mapObject;
+    private boolean handled = true;
     private int fillColor = Color.BLACK;
     private int strokeColor = Color.BLACK;
     private int zIndex = 1;
@@ -57,6 +58,11 @@ public class YamapCircle extends ViewGroup implements MapObjectTapListener, Reac
 
     public void setZIndex(int _zIndex) {
         zIndex = _zIndex;
+        updateCircle();
+    }
+
+    public void setHandled(boolean _handled) {
+        handled = _handled;
         updateCircle();
     }
 
@@ -100,6 +106,6 @@ public class YamapCircle extends ViewGroup implements MapObjectTapListener, Reac
         WritableMap e = Arguments.createMap();
         ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPress", e);
 
-        return false;
+        return handled;
     }
 }

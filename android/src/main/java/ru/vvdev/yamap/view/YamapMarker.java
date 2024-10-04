@@ -34,6 +34,7 @@ public class YamapMarker extends ReactViewGroup implements MapObjectTapListener,
     private int _zIndex = 1;
     private float _scale = 1;
     private Boolean _visible = true;
+    private Boolean _handled = true;
     private Boolean _rotated = false;
     private PointF _anchor;
     private String _iconSource;
@@ -67,6 +68,13 @@ public class YamapMarker extends ReactViewGroup implements MapObjectTapListener,
     public void setScale(float scale) {
         if (_scale == scale) return;
         _scale = scale;
+
+        updateMarker();
+    }
+
+    public void setHandled(Boolean handled) {
+        if (_handled == handled) return;
+        _handled = handled;
 
         updateMarker();
     }
@@ -238,7 +246,7 @@ public class YamapMarker extends ReactViewGroup implements MapObjectTapListener,
         var e = Arguments.createMap();
         ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPress", e);
 
-        return false;
+        return _handled;
     }
 
     @Override

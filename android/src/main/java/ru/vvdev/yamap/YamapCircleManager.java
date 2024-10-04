@@ -77,4 +77,9 @@ public class YamapCircleManager extends ViewGroupManager<YamapCircle> {
     public void setZIndex(YamapCircle view, int zIndex) {
         view.setZIndex(zIndex);
     }
+
+    @ReactProp(name = "handled")
+    public void setHandled(YamapCircle view, boolean handled) {
+        view.setHandled(handled);
+    }
 }

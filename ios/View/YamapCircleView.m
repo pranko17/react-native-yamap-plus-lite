@@ -23,6 +23,7 @@
     UIColor* strokeColor;
     NSNumber* strokeWidth;
     NSNumber* zIndex;
+    BOOL handled;
 }
 
 - (instancetype)init {
@@ -31,6 +32,7 @@
     strokeColor = UIColor.blackColor;
     zIndex = [[NSNumber alloc] initWithInt:1];
     strokeWidth = [[NSNumber alloc] initWithInt:1];
+    handled = YES;
     center = [YMKPoint pointWithLatitude:0 longitude:0];
     radius = 0.f;
     circle = [YMKCircle circleWithCenter:center radius:radius];
@@ -68,6 +70,10 @@
     [self updateCircle];
 }
 
+- (void)setHandled:(BOOL)_handled {
+    handled = _handled;
+}
+
 - (void)updateGeometry {
     if (center) {
         circle = [YMKCircle circleWithCenter:center radius:radius];
@@ -100,7 +106,7 @@
     if (self.onPress)
         self.onPress(@{});
 
-    return YES;
+    return handled;
 }
 
 - (YMKCircleMapObject*)getMapObject {

@@ -30,6 +30,7 @@ public class YamapPolygon extends ViewGroup implements MapObjectTapListener, Rea
     private int strokeColor = Color.BLACK;
     private int zIndex = 1;
     private float strokeWidth = 1.f;
+    private Boolean handled = true;
 
     public YamapPolygon(Context context) {
         super(context);
@@ -83,6 +84,11 @@ public class YamapPolygon extends ViewGroup implements MapObjectTapListener, Rea
         updatePolygon();
     }
 
+    public void setHandled(Boolean _handled) {
+        handled = _handled;
+        updatePolygon();
+    }
+
     private void updatePolygon() {
         if (mapObject != null) {
             mapObject.setGeometry(polygon);
@@ -108,6 +114,6 @@ public class YamapPolygon extends ViewGroup implements MapObjectTapListener, Rea
         WritableMap e = Arguments.createMap();
         ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPress", e);
 
-        return false;
+        return handled;
     }
 }

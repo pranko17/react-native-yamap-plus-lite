@@ -12,11 +12,14 @@ export interface PolygonProps {
   points: Point[];
   innerRings?: (Point[])[];
   children?: undefined;
+  handled?: boolean;
 }
 
 const NativePolygonComponent = requireNativeComponent<PolygonProps>('YamapPolygon');
 
-export class Polygon extends React.Component<PolygonProps> {
+interface State {}
+
+export class Polygon extends React.Component<PolygonProps, State> {
   static defaultProps = {
     innerRings: []
   };
