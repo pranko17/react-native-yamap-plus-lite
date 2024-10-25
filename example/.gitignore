@@ -1,4 +1,5 @@
 /src/config.ts
 /.yarn
+/android/app/.cxx/
 /ios/Pods
 /ios/.xcode.env.local
