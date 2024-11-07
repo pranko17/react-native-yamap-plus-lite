@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/react": "*",
     "@types/react-native": "*",
-    "react-native-builder-bob": "0.30.2",
+    "react-native-builder-bob": "0.30.3",
     "release-it": "17.10.0",
     "typescript": "5.6.3"
   },
