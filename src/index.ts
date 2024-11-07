@@ -8,5 +8,6 @@ export * from './geocoding';
 export * from './interfaces';
 export * from './Suggest';
 
+export { default as Search } from './Search';
 export { default as Suggest } from './Suggest';
 export { YaMap as default } from './components/Yamap';

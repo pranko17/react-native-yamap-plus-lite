@@ -1,36 +1,37 @@
 import React, {useEffect, useState} from 'react'
 import {StyleSheet, Text, TextInput, View} from 'react-native'
-import {Geocoder, Point} from '../../../'
+import {Address, Suggest, YamapSuggest} from '../../../'
 import {useDebounceFunc} from '../helper/debounce'
 
-export const AddressToGeoScreen = () => {
-  const [address, setAddress] = useState('Moscow')
-  const [geo, setGeo] = useState<Point|undefined>()
+export const SuggestScreen = () => {
+  const [text, setText] = useState('Moscow')
+  const [suggests, setSuggests] = useState<YamapSuggest[]>()
 
-  const addressToGeo = useDebounceFunc(async (text: string) => {
+  const search = useDebounceFunc(async (text: string) => {
     try {
       if (text.trim()) {
-        setGeo(await Geocoder.addressToGeo(text))
+        const suggests = await Suggest.suggest(text)
+        setSuggests(suggests)
       }
     } catch (e) {
-      console.error('addressToGeo', e)
+      console.error('suggest', e)
     }
   })
 
   useEffect( () => {
-    setGeo(undefined)
-    addressToGeo(address)
-  }, [address]);
+    setSuggests(undefined)
+    search(text)
+  }, [text]);
 
   return (
     <View style={styles.container}>
       <TextInput
-          value={address}
-          onChangeText={setAddress}
+          value={text}
+          onChangeText={setText}
           placeholder={'Address'}
           style={styles.textInput}
       />
-      <Text style={styles.geoText}>{JSON.stringify(geo)}</Text>
+      <Text style={styles.text}>{`Suggest.suggest: ${JSON.stringify(suggests)}`}</Text>
     </View>
   )
 }
@@ -48,8 +49,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 16,
   },
-  geoText: {
+  text: {
     color: '#000',
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
+    marginTop: 16,
   },
 })

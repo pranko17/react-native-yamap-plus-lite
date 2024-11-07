@@ -16,6 +16,7 @@ buildscript {
 }
 
 apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
 
 static def supportsNamespace() {
     def parsed = Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')

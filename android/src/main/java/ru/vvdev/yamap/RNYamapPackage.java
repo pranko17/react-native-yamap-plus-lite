@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ru.vvdev.yamap.suggest.RNYandexSuggestModule;
+import ru.vvdev.yamap.search.RNYandexSearchModule;
 
 public class RNYamapPackage implements ReactPackage {
     public RNYamapPackage() {
@@ -19,7 +20,11 @@ public class RNYamapPackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
-        return Arrays.asList(new RNYamapModule(reactContext), new RNYandexSuggestModule(reactContext));
+        return Arrays.asList(
+            new RNYamapModule(reactContext),
+            new RNYandexSuggestModule(reactContext),
+            new RNYandexSearchModule(reactContext)
+        );
     }
 
     @NonNull

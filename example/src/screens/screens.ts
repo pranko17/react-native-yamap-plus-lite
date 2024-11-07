@@ -1,11 +1,15 @@
 export enum Screen {
     Map = 'Map',
-    AddressToGeo = 'AddressToGeo',
     ClusteredMap = 'ClusteredMap',
+    Search = 'Search',
+    Suggest = 'Suggest',
+    Geocoder = 'Geocoder',
 }
 
 export const screens = [
     Screen.Map,
-    Screen.AddressToGeo,
     Screen.ClusteredMap,
+    Screen.Search,
+    Screen.Suggest,
+    Screen.Geocoder,
 ]
