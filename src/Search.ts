@@ -89,7 +89,7 @@ const searchText = (query: string, figure?: FigureParams, options?: SearchOption
   return YamapSearch.searchByAddress(query, figure, options);
 }
 
-const searchPoint = (point: Point, zoom?: number, options?: SearchOptions): Promise<Address[]> => {
+const searchPoint = (point: Point, zoom?: number, options?: SearchOptions): Promise<Address> => {
   return YamapSearch.searchByPoint(point, zoom, options);
 }
 
