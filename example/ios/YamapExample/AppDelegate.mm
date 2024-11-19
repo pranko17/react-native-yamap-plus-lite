@@ -14,6 +14,7 @@
 
   [YMKMapKit setLocale:@"ru_RU"];
   [YMKMapKit setApiKey:@"Insert your MapKit SDK API KEY"];
+  [YMKMapKit sharedInstance];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
