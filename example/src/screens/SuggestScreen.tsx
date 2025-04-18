@@ -1,26 +1,27 @@
-import React, {useEffect, useState} from 'react'
-import {StyleSheet, Text, TextInput, View} from 'react-native'
-import {Address, Suggest, YamapSuggest} from '../../../'
-import {useDebounceFunc} from '../helper/debounce'
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Suggest, YamapSuggest} from '../../../';
+import {useDebounceFunc} from '../helper/debounce';
 
 export const SuggestScreen = () => {
-  const [text, setText] = useState('Moscow')
-  const [suggests, setSuggests] = useState<YamapSuggest[]>()
+  const [text, setText] = useState('Moscow');
+  const [suggests, setSuggests] = useState<YamapSuggest[]>();
 
-  const search = useDebounceFunc(async (text: string) => {
+  const search = useDebounceFunc(async (searchText: string) => {
     try {
-      if (text.trim()) {
-        const suggests = await Suggest.suggest(text)
-        setSuggests(suggests)
+      if (searchText.trim()) {
+        const suggestsResponse = await Suggest.suggest(searchText);
+        setSuggests(suggestsResponse);
       }
     } catch (e) {
-      console.error('suggest', e)
+      console.error('suggest', e);
     }
-  })
+  });
 
   useEffect( () => {
-    setSuggests(undefined)
-    search(text)
+    setSuggests(undefined);
+    search(text);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [text]);
 
   return (
@@ -33,8 +34,8 @@ export const SuggestScreen = () => {
       />
       <Text style={styles.text}>{`Suggest.suggest: ${JSON.stringify(suggests)}`}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -54,4 +55,4 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 16,
   },
-})
+});

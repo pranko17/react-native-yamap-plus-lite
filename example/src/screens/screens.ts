@@ -3,7 +3,6 @@ export enum Screen {
     ClusteredMap = 'ClusteredMap',
     Search = 'Search',
     Suggest = 'Suggest',
-    Geocoder = 'Geocoder',
 }
 
 export const screens = [
@@ -11,5 +10,4 @@ export const screens = [
     Screen.ClusteredMap,
     Screen.Search,
     Screen.Suggest,
-    Screen.Geocoder,
-]
+];

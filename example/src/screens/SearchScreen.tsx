@@ -1,33 +1,34 @@
-import React, {useEffect, useState} from 'react'
-import {StyleSheet, Text, TextInput, View} from 'react-native'
-import {Address, Point} from '../../../'
-import {useDebounceFunc} from '../helper/debounce'
-import {Search} from "../../../";
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Address, Point} from '../../../';
+import {useDebounceFunc} from '../helper/debounce';
+import {Search} from '../../../';
 
 export const SearchScreen = () => {
-  const [text, setText] = useState('Moscow')
-  const [point, setPoint] = useState<Point | {}>({})
-  const [address, setAddress] = useState<Address>()
+  const [text, setText] = useState('Moscow');
+  const [point, setPoint] = useState<Point | {}>({});
+  const [address, setAddress] = useState<Address>();
 
-  const search = useDebounceFunc(async (text: string) => {
+  const search = useDebounceFunc(async (searchText: string) => {
     try {
-      if (text.trim()) {
-        const point1 = await Search.geocodeAddress(text)
-        setPoint(point1)
+      if (searchText.trim()) {
+        const point1 = await Search.geocodeAddress(searchText);
+        setPoint(point1);
 
         if (point1.lat) {
-          const address1 = await Search.geocodePoint(point1)
-          setAddress(address1)
+          const address1 = await Search.geocodePoint(point1);
+          setAddress(address1);
         }
       }
     } catch (e) {
-      console.error('search', e)
+      console.error('search', e);
     }
-  })
+  });
 
   useEffect( () => {
-    setPoint({})
-    search(text)
+    setPoint({});
+    search(text);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [text]);
 
   return (
@@ -41,8 +42,8 @@ export const SearchScreen = () => {
       <Text style={styles.text}>{`Search.geocodeAddress: ${JSON.stringify(point)}`}</Text>
       <Text style={styles.text}>{`Search.geocodePoint: ${JSON.stringify(address)}`}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -62,4 +63,4 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginTop: 16,
   },
-})
+});

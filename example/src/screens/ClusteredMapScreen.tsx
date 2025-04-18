@@ -1,16 +1,16 @@
-import React, {useState} from "react";
-import {Platform, StyleSheet} from "react-native";
-import {ClusteredYamap, Marker} from "../../../";
+import React, {useState} from 'react';
+import {Platform, StyleSheet} from 'react-native';
+import {ClusteredYamap, Marker} from '../../../';
 
 export const ClusteredMapScreen = () => {
-  const [mapLoaded, setMapLoaded] = useState(false)
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   return (
     <ClusteredYamap
       clusterColor="red"
       initialRegion={{lat: 56.754215, lon: 38.421242, zoom: 6}}
       onMapLoaded={() => {
-        setMapLoaded(true)
+        setMapLoaded(true);
       }}
       clusteredMarkers={[
         {
@@ -30,7 +30,7 @@ export const ClusteredMapScreen = () => {
       ]}
       renderMarker={(info) => (
         <Marker
-          key={`${info.point.lat}_${info.point.lon}`}
+          key={`${info.point.lat}_${info.point.lon}_${mapLoaded}`}
           point={info.point}
           scale={0.3}
           source={require('../assets/images/marker.png')}
@@ -39,10 +39,11 @@ export const ClusteredMapScreen = () => {
       )}
       style={styles.container}
     />
-)}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-})
+});

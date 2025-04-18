@@ -1,12 +1,12 @@
 {
   "name": "react-native-yamap-plus",
   "version": "4.7.1",
-  "description": "Yandex.MapKit and Yandex.Geocoder for react-native",
+  "description": "Yandex MapKit for React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "yarn workspace react-native-yamap-example",
     "prepare": "bob build",
     "release": "release-it"
   },
@@ -78,5 +78,8 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/"
+  ],
+  "workspaces": [
+    "example"
   ]
 }
