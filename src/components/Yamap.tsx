@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   requireNativeComponent,
@@ -7,7 +7,8 @@ import {
   findNodeHandle,
   ViewProps,
   ImageSourcePropType,
-  NativeSyntheticEvent
+  NativeSyntheticEvent,
+  NativeMethods,
 } from 'react-native';
 // @ts-ignore
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
@@ -22,11 +23,10 @@ import {
   CameraPosition,
   VisibleRegion,
   InitialRegion,
-  MapType,
   Animation,
   MapLoaded,
   YandexLogoPosition,
-  YandexLogoPadding
+  YandexLogoPadding,
 } from '../interfaces';
 import { processColorProps } from '../utils';
 
@@ -38,8 +38,8 @@ export interface YaMapProps extends ViewProps {
   showUserPosition?: boolean;
   nightMode?: boolean;
   mapStyle?: string;
-  mapType?: MapType;
-  onCameraPositionChanged?: (event: NativeSyntheticEvent<CameraPosition>) => void;
+  onCameraPositionChange?: (event: NativeSyntheticEvent<CameraPosition>) => void;
+  onCameraPositionChangeEnd?: (event: NativeSyntheticEvent<CameraPosition>) => void;
   onMapPress?: (event: NativeSyntheticEvent<Point>) => void;
   onMapLongPress?: (event: NativeSyntheticEvent<Point>) => void;
   onMapLoaded?: (event: NativeSyntheticEvent<MapLoaded>) => void;
@@ -59,14 +59,13 @@ export interface YaMapProps extends ViewProps {
 
 const YaMapNativeComponent = requireNativeComponent<YaMapProps>('YamapView');
 
-export class YaMap extends React.Component<YaMapProps> {
+export class YaMap extends React.Component<YaMapProps, {}> {
   static defaultProps = {
     showUserPosition: true,
     clusterColor: 'red',
   };
 
-  // @ts-ignore
-  map = React.createRef<YaMapNativeComponent>();
+  map = React.createRef<Component<YaMapProps, {}, any> & Readonly<NativeMethods>>();
 
   static ALL_MASSTRANSIT_VEHICLES: Vehicles[] = [
     'bus',
@@ -85,15 +84,21 @@ export class YaMap extends React.Component<YaMapProps> {
   }
 
   public static setLocale(locale: string): Promise<void> {
-    return NativeYamapModule.setLocale(locale);
+    return new Promise((resolve, reject) => {
+      NativeYamapModule.setLocale(locale, () => resolve(), (err: string) => reject(new Error(err)));
+    });
   }
 
   public static getLocale(): Promise<string> {
-    return NativeYamapModule.getLocale();
+    return new Promise((resolve, reject) => {
+      NativeYamapModule.getLocale((locale: string) => resolve(locale), (err: string) => reject(new Error(err)));
+    });
   }
 
   public static resetLocale(): Promise<void> {
-    return NativeYamapModule.resetLocale();
+    return new Promise((resolve, reject) => {
+      NativeYamapModule.resetLocale(() => resolve(), (err: string) => reject(new Error(err)));
+    });
   }
 
   public findRoutes(points: Point[], vehicles: Vehicles[], callback: (event: RoutesFoundEvent<DrivingInfo | MasstransitInfo>) => void) {
@@ -240,7 +245,7 @@ export class YaMap extends React.Component<YaMapProps> {
       onVisibleRegionReceived: this.processVisibleRegion,
       onWorldToScreenPointsReceived: this.processWorldToScreenPointsReceived,
       onScreenToWorldPointsReceived: this.processScreenToWorldPointsReceived,
-      userLocationIcon: this.props.userLocationIcon ? this.resolveImageUri(this.props.userLocationIcon) : undefined
+      userLocationIcon: this.props.userLocationIcon ? this.resolveImageUri(this.props.userLocationIcon) : undefined,
     };
 
     processColorProps(props, 'clusterColor' as keyof YaMapProps);

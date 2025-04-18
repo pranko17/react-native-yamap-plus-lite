@@ -56,16 +56,16 @@
           [iconStyle setAnchor:anchor];
         }
         [iconStyle setRotationType:rotated];
-		if ([_reactSubviews count] == 0) {
-			if (![source isEqual:@""]) {
-				if (![source isEqual:lastSource]) {
-					[mapObject setIconWithImage:[self resolveUIImage:source]];
-					lastSource = source;
-				}
-			}
-		}
+        if ([_reactSubviews count] == 0) {
+            if (![source isEqual:@""]) {
+                if (![source isEqual:lastSource]) {
+                    [mapObject setIconWithImage:[self resolveUIImage:source]];
+                    lastSource = source;
+                }
+            }
+        }
         [mapObject setIconStyleWithStyle:iconStyle];
-	}
+    }
 }
 
 

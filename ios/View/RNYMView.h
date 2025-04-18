@@ -31,6 +31,7 @@
 - (void)setTrafficVisible:(BOOL)traffic;
 - (void)emitWorldToScreenPoint:(NSArray<YMKPoint *> *_Nonnull)points withId:(NSString*_Nonnull)_id;
 - (void)emitScreenToWorldPoint:(NSArray<YMKScreenPoint *> *_Nonnull)points withId:(NSString*_Nonnull)_id;
+- (YMKBoundingBox *_Nonnull)calculateBoundingBox:(NSArray<YMKPoint *> *_Nonnull)points;
 
 // PROPS
 - (void)setNightMode:(BOOL)nightMode;

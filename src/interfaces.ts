@@ -106,7 +106,14 @@ export type YandexLogoPadding = {
   vertical?: number;
 }
 
-export type ClusterMarker<T = any> = {
-  point: Point;
-  data: T;
+export interface Address {
+  country_code: string;
+  formatted: string;
+  postal_code: string;
+  Components: {kind: string, name: string}[];
+}
+
+export interface Anchor {
+  x: number;
+  y: number;
 }

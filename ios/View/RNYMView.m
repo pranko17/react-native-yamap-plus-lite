@@ -47,6 +47,7 @@
     UIColor *userLocationAccuracyFillColor;
     UIColor *userLocationAccuracyStrokeColor;
     float userLocationAccuracyStrokeWidth;
+    Boolean initializedRegion;
 }
 
 - (instancetype)init {
@@ -63,7 +64,7 @@
     drivingRouter = [[YMKDirectionsFactory instance] createDrivingRouterWithType: YMKDrivingRouterTypeCombined];
     pedestrianRouter = [[YMKTransportFactory instance] createPedestrianRouter];
     transitOptions = [YMKTransitOptions transitOptionsWithAvoid:YMKFilterVehicleTypesNone timeOptions:[[YMKTimeOptions alloc] init]];    acceptVehicleTypes = [[NSMutableArray<NSString *> alloc] init];
-    routeOptions = [YMKRouteOptions routeOptionsWithFitnessOptions:[YMKFitnessOptions fitnessOptionsWithAvoidSteep:false]];
+    routeOptions = [YMKRouteOptions routeOptionsWithFitnessOptions:[YMKFitnessOptions fitnessOptionsWithAvoidSteep:false avoidStairs:false]];
     routes = [[NSMutableArray alloc] init];
     currentRouteInfo = [[NSMutableArray alloc] init];
     lastKnownRoutePoints = [[NSMutableArray alloc] init];
@@ -83,6 +84,7 @@
     [self.mapWindow.map addCameraListenerWithCameraListener:self];
     [self.mapWindow.map addInputListenerWithInputListener:(id<YMKMapInputListener>) self];
     [self.mapWindow.map setMapLoadedListenerWithMapLoadedListener:self];
+    initializedRegion = NO;
     return self;
 }
 
@@ -120,7 +122,8 @@
 
     [routeMetadata setObject:wTransports forKey:@"transports"];
     NSMutableArray* points = [[NSMutableArray alloc] init];
-    YMKPolyline *subpolyline = [YMKSubpolylineHelper subpolylineWithPolyline: route.geometry subpolyline:section.geometry];
+    YMKPolyline* subpolyline = [YMKSubpolylineHelper subpolylineWithPolyline:route.geometry subpolyline:section.geometry];
+
 
     for (int i = 0; i < [subpolyline.points count]; ++i) {
         YMKPoint* point = [subpolyline.points objectAtIndex:i];
@@ -205,7 +208,7 @@
 
     [routeMetadata setObject:wTransports forKey:@"transports"];
     NSMutableArray *points = [[NSMutableArray alloc] init];
-    YMKPolyline *subpolyline = [YMKSubpolylineHelper subpolylineWithPolyline: route.geometry subpolyline:section.geometry];
+    YMKPolyline* subpolyline = [YMKSubpolylineHelper subpolylineWithPolyline:route.geometry subpolyline:section.geometry];
 
     for (int i = 0; i < [subpolyline.points count]; ++i) {
         YMKPoint *point = [subpolyline.points objectAtIndex:i];
@@ -352,6 +355,7 @@
 }
 
 - (void)setInitialRegion:(NSDictionary *)initialParams {
+    if (initializedRegion) return;
     if ([initialParams valueForKey:@"lat"] == nil || [initialParams valueForKey:@"lon"] == nil) return;
 
     float initialZoom = 10.f;
@@ -365,8 +369,9 @@
     if ([initialParams valueForKey:@"tilt"] != nil) initialTilt = [initialParams[@"tilt"] floatValue];
 
     YMKPoint *initialRegionCenter = [RCTConvert YMKPoint:@{@"lat" : [initialParams valueForKey:@"lat"], @"lon" : [initialParams valueForKey:@"lon"]}];
-    YMKCameraPosition *initialRegionPosition = [YMKCameraPosition cameraPositionWithTarget:initialRegionCenter zoom:initialZoom azimuth:initialAzimuth tilt:initialTilt];
-    [self.mapWindow.map moveWithCameraPosition:initialRegionPosition];
+    YMKCameraPosition *initialRegioPosition = [YMKCameraPosition cameraPositionWithTarget:initialRegionCenter zoom:initialZoom azimuth:initialAzimuth tilt:initialTilt];
+    [self.mapWindow.map moveWithCameraPosition:initialRegioPosition];
+    initializedRegion = YES;
 }
 
 - (void)setTrafficVisible:(BOOL)traffic {
@@ -530,6 +535,7 @@
     }
 
     if (follow) {
+        CGFloat scale = UIScreen.mainScreen.scale;
         [userLayer setAnchorWithAnchorNormal:CGPointMake(0.5 * self.mapWindow.width, 0.5 * self.mapWindow.height) anchorCourse:CGPointMake(0.5 * self.mapWindow.width, 0.83 * self.mapWindow.height )];
         [userLayer setAutoZoomEnabled:YES];
     } else {
@@ -563,21 +569,37 @@
     return points;
 }
 
+- (YMKBoundingBox *)calculateBoundingBox:(NSArray<YMKPoint *> *) points {
+    double minLon = [points[0] longitude], maxLon = [points[0] longitude];
+    double minLat = [points[0] latitude], maxLat = [points[0] latitude];
+
+    for (int i = 0; i < [points count]; i++) {
+        if ([points[i] longitude] > maxLon) maxLon = [points[i] longitude];
+        if ([points[i] longitude] < minLon) minLon = [points[i] longitude];
+        if ([points[i] latitude] > maxLat) maxLat = [points[i] latitude];
+        if ([points[i] latitude] < minLat) minLat = [points[i] latitude];
+    }
+
+    YMKPoint *southWest = [YMKPoint pointWithLatitude:minLat longitude:minLon];
+    YMKPoint *northEast = [YMKPoint pointWithLatitude:maxLat longitude:maxLon];
+    YMKBoundingBox *boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:southWest northEast:northEast];
+    return boundingBox;
+}
+
 - (void)fitMarkers:(NSArray<YMKPoint *> *) points {
     if ([points count] == 1) {
         YMKPoint *center = [points objectAtIndex:0];
         [self.mapWindow.map moveWithCameraPosition:[YMKCameraPosition cameraPositionWithTarget:center zoom:15 azimuth:0 tilt:0]];
         return;
     }
-    YMKPolyline *polyline = [YMKPolyline polylineWithPoints: points];
-    YMKCameraPosition *cameraPosition = [self.mapWindow.map cameraPositionWithGeometry: [YMKGeometry geometryWithPolyline: polyline]];
+    YMKCameraPosition *cameraPosition = [self.mapWindow.map cameraPositionWithGeometry:[YMKGeometry geometryWithBoundingBox:[self calculateBoundingBox:points]]];
     cameraPosition = [YMKCameraPosition cameraPositionWithTarget:cameraPosition.target zoom:cameraPosition.zoom - 0.8f azimuth:cameraPosition.azimuth tilt:cameraPosition.tilt];
     [self.mapWindow.map moveWithCameraPosition:cameraPosition animation:[YMKAnimation animationWithType:YMKAnimationTypeSmooth duration:1.0] cameraCallback:^(BOOL completed){}];
 }
 
 - (void)setLogoPosition:(NSDictionary *)logoPosition {
-    NSUInteger horizontalAlignment = YMKLogoHorizontalAlignmentRight;
-    NSUInteger verticalAlignment = YMKLogoVerticalAlignmentBottom;
+    YMKLogoHorizontalAlignment *horizontalAlignment = YMKLogoHorizontalAlignmentRight;
+    YMKLogoVerticalAlignment *verticalAlignment = YMKLogoVerticalAlignmentBottom;
 
     if ([[logoPosition valueForKey:@"horizontal"] isEqual:@"left"]) {
         horizontalAlignment = YMKLogoHorizontalAlignmentLeft;
@@ -593,8 +615,8 @@
 }
 
 - (void)setLogoPadding:(NSDictionary *)logoPadding {
-    NSUInteger horizontalPadding = [logoPadding valueForKey:@"horizontal"] != nil ? [RCTConvert NSUInteger:logoPadding[@"horizontal"]] : 0;
-    NSUInteger verticalPadding = [logoPadding valueForKey:@"vertical"] != nil ? [RCTConvert NSUInteger:logoPadding[@"vertical"]] : 0;
+    NSUInteger *horizontalPadding = [logoPadding valueForKey:@"horizontal"] != nil ? [RCTConvert NSUInteger:logoPadding[@"horizontal"]] : 0;
+    NSUInteger *verticalPadding = [logoPadding valueForKey:@"vertical"] != nil ? [RCTConvert NSUInteger:logoPadding[@"vertical"]] : 0;
 
     YMKLogoPadding *padding = [YMKLogoPadding paddingWithHorizontalPadding:horizontalPadding verticalPadding:verticalPadding];
     [self.mapWindow.map.logo setPaddingWithPadding:padding];

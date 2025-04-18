@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC, useMemo } from 'react';
 import { requireNativeComponent } from 'react-native';
-import { processColorProps } from '../utils';
+import { getProcessedColors } from '../utils';
 import { Point } from '../interfaces';
 
 export interface PolylineProps {
@@ -14,22 +14,16 @@ export interface PolylineProps {
   zIndex?: number;
   onPress?: () => void;
   points: Point[];
-  children?: undefined;
   handled?: boolean;
 }
 
 const NativePolylineComponent = requireNativeComponent<PolylineProps>('YamapPolyline');
 
-interface State {}
+export const Polyline: FC<PolylineProps> = (props) => {
+  const processedProps = useMemo(() =>
+      getProcessedColors(props, ['fillColor', 'strokeColor', 'outlineColor']) as PolylineProps,
+    [props]
+  );
 
-export class Polyline extends React.Component<PolylineProps, State> {
-  render() {
-    const props = { ...this.props };
-
-    processColorProps(props, 'fillColor' as keyof PolylineProps);
-    processColorProps(props, 'strokeColor' as keyof PolylineProps);
-    processColorProps(props, 'outlineColor' as keyof PolylineProps);
-
-    return <NativePolylineComponent {...props} />;
-  }
-}
+  return <NativePolylineComponent {...processedProps} />;
+};

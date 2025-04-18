@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   Platform,
   requireNativeComponent,
@@ -8,13 +8,13 @@ import {
   ViewProps,
   ImageSourcePropType,
   NativeSyntheticEvent,
-  ListRenderItemInfo
+  ListRenderItemInfo,
+  NativeMethods,
 } from 'react-native';
 // @ts-ignore
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 import CallbacksManager from '../utils/CallbacksManager';
 import {
-  MapType,
   Animation,
   Point,
   DrivingInfo,
@@ -28,25 +28,23 @@ import {
   InitialRegion,
   YandexLogoPosition,
   YandexLogoPadding,
-  ClusterMarker
 } from '../interfaces';
 import { processColorProps } from '../utils';
 import { YaMap } from './Yamap';
-import { convertClusterMarkers } from '../utils/Convert';
 
 const { yamap: NativeYamapModule } = NativeModules;
 
 export interface ClusteredYaMapProps<T = any> extends ViewProps {
   userLocationIcon?: ImageSourcePropType;
   userLocationIconScale?: number;
-  clusteredMarkers: ReadonlyArray<ClusterMarker<T>>
+  clusteredMarkers: ReadonlyArray<{point: Point, data: T}>
   renderMarker: (info: {point: Point, data: ListRenderItemInfo<T>}, index: number) => React.ReactElement
   clusterColor?: string;
   showUserPosition?: boolean;
   nightMode?: boolean;
   mapStyle?: string;
-  mapType?: MapType;
-  onCameraPositionChanged?: (event: NativeSyntheticEvent<CameraPosition>) => void;
+  onCameraPositionChange?: (event: NativeSyntheticEvent<CameraPosition>) => void;
+  onCameraPositionChangeEnd?: (event: NativeSyntheticEvent<CameraPosition>) => void;
   onMapPress?: (event: NativeSyntheticEvent<Point>) => void;
   onMapLongPress?: (event: NativeSyntheticEvent<Point>) => void;
   onMapLoaded?: (event: NativeSyntheticEvent<MapLoaded>) => void;
@@ -64,20 +62,22 @@ export interface ClusteredYaMapProps<T = any> extends ViewProps {
   logoPadding?: YandexLogoPadding;
 }
 
-type YaMapNativeComponentProps<T = any> = Omit<ClusteredYaMapProps<T>, 'clusteredMarkers'> & {
-  clusteredMarkers: ReadonlyArray<number>;
-}
+const YaMapNativeComponent =
+  requireNativeComponent<
+    Omit<ClusteredYaMapProps, 'clusteredMarkers'>
+    & {clusteredMarkers: Point[]}
+  >('ClusteredYamapView');
 
-const YaMapNativeComponent = requireNativeComponent<YaMapNativeComponentProps>('ClusteredYamapView');
-
-export class ClusteredYamap extends React.Component<ClusteredYaMapProps> {
+export class ClusteredYamap extends React.Component<ClusteredYaMapProps, {}> {
   static defaultProps = {
     showUserPosition: true,
     clusterColor: 'red',
   };
 
-  // @ts-ignore
-  map = React.createRef<YaMapNativeComponent>();
+  map = React.createRef<
+    Component<Omit<ClusteredYaMapProps, 'clusteredMarkers'> & { clusteredMarkers: Point[] }, {}, any> &
+    Readonly<NativeMethods>
+  >();
 
   static ALL_MASSTRANSIT_VEHICLES: Vehicles[] = [
     'bus',
@@ -252,14 +252,14 @@ export class ClusteredYamap extends React.Component<ClusteredYaMapProps> {
   private getProps() {
     const props = {
       ...this.props,
-      clusteredMarkers: convertClusterMarkers(this.props.clusteredMarkers),
+      clusteredMarkers: this.props.clusteredMarkers.map(mark => mark.point),
       children: this.props.clusteredMarkers.map(this.props.renderMarker),
       onRouteFound: this.processRoute,
       onCameraPositionReceived: this.processCameraPosition,
       onVisibleRegionReceived: this.processVisibleRegion,
       onWorldToScreenPointsReceived: this.processWorldToScreenPointsReceived,
       onScreenToWorldPointsReceived: this.processScreenToWorldPointsReceived,
-      userLocationIcon: this.props.userLocationIcon ? this.resolveImageUri(this.props.userLocationIcon) : undefined
+      userLocationIcon: this.props.userLocationIcon ? this.resolveImageUri(this.props.userLocationIcon) : undefined,
     };
     processColorProps(props, 'clusterColor' as keyof ClusteredYaMapProps);
     processColorProps(props, 'userLocationAccuracyFillColor' as keyof ClusteredYaMapProps);

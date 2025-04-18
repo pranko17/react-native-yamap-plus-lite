@@ -1,6 +1,5 @@
-import { BoundingBox, Point } from './interfaces';
+import { Address, BoundingBox, Point } from './interfaces';
 import { NativeModules } from 'react-native';
-import { Address } from './geocoding';
 
 const { YamapSearch } = NativeModules;
 
@@ -24,6 +23,7 @@ export enum SearchTypes {
   /**
    * Companies.
    */
+  // eslint-disable-next-line no-bitwise
   YMKSearchTypeBiz = 0b01 << 1,
   /**
    * Mass transit routes.
@@ -39,9 +39,8 @@ export enum SearchTypesSnippets {
   /**
    * Companies.
    */
-
-  // @ts-ignore:next-line
-  YMKSearchTypeBiz = 0b01 << 32,
+  // eslint-disable-next-line no-bitwise
+  YMKSearchTypeBiz = 0b01 << 0,
   /**
    * Mass transit routes.
    */
@@ -55,10 +54,10 @@ export type SearchOptions = {
 };
 
 export enum GeoFigureType {
-  POINT="POINT",
-  BOUNDINGBOX="BOUNDINGBOX",
-  POLYLINE="POLYLINE",
-  POLYGON="POLYGON",
+  POINT='POINT',
+  BOUNDINGBOX='BOUNDINGBOX',
+  POLYLINE='POLYLINE',
+  POLYGON='POLYGON',
 }
 
 export interface PointParams {
@@ -87,27 +86,27 @@ type SearchFetcher = (query: string, options?: SearchOptions) => Promise<Array<Y
 type SearchPointFetcher = (point: Point, options?: SearchOptions) => Promise<Address>;
 const searchText = (query: string, figure?: FigureParams, options?: SearchOptions) => {
   return YamapSearch.searchByAddress(query, figure, options);
-}
+};
 
 const searchPoint = (point: Point, zoom?: number, options?: SearchOptions): Promise<Address> => {
   return YamapSearch.searchByPoint(point, zoom, options);
-}
+};
 
 const resolveURI: SearchFetcher = (uri: string, options) => {
   return YamapSearch.resolveURI(uri, options);
-}
+};
 
 const searchByURI: SearchFetcher = (uri: string, options) => {
   return YamapSearch.searchByURI(uri, options);
-}
+};
 
 const geocodePoint: SearchPointFetcher = (point: Point) => {
   return YamapSearch.geoToAddress(point);
-}
+};
 
 const geocodeAddress = (address: string): Promise<Point> => {
   return YamapSearch.addressToGeo(address);
-}
+};
 
 const Search = {
   searchText,
@@ -115,7 +114,7 @@ const Search = {
   geocodePoint,
   geocodeAddress,
   resolveURI,
-  searchByURI
+  searchByURI,
 };
 
 export default Search;

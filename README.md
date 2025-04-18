@@ -4,7 +4,9 @@
 #### MapKit SDK
 Android [4.7.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (17 июля 2024)
 
-iOS [4.8.1](https://yandex.ru/dev/mapkit/doc/ru/versions) (14 октября 2024)
+В 4.8.0 для Android подняли minsdk до 26!
+
+iOS [4.11.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (14 февраля 2025)
 
 Библиотека для интеграции Yandex Maps (Яндекс Карт) в React Native.
 
@@ -434,35 +436,6 @@ findDrivingRoutes(points: Point[], callback: (event: RoutesFoundEvent) => void):
 
 В зависимости от типа роутера информация о маршутах может незначительно отличаться.
 
-## Использование API геокодера
-
-### Инициализация
-
-```typescript
-import { Geocoder } from 'react-native-yamap-plus';
-
-Geocoder.init('GEOCODER_API_KEY');
-```
-
-`GEOCODER_API_KEY` для API геокодера и для карт **отличаются**. Инициализировать надо оба класса и каждый со своим ключем.
-
-### Прямое геокодирование
-
-```
-Geocoder.geocode(geocode: Point, kind?: ObjectKind, results?: number, skip?: number, lang?: Lang);
-```
-
-[Документация по запросу к геокодеру](https://yandex.ru/dev/maps/geocoder/doc/desc/concepts/input_params.html)
-[Документация по ответу геокодера]( https://yandex.ru/dev/maps/geocoder/doc/desc/reference/response_structure.html)
-
-#### Упрощенный вызов ####
-
-```
-Geocoder.geoToAddress(geo: Point);
-```
-
-Вернет `null` или объект адреса (строковое значение, почтовый индекс и массив компонентов адреса) первого из предложений геокодера.
-
 ```typescript
 interface Address {
   country_code: string;
@@ -474,24 +447,6 @@ interface Address {
   }[];
 }
 ```
-
-
-### Обратное геокодирование
-
-```
-Geocoder.reverseGeocode(geocode: string, kind?: ObjectKind, results?: number,  skip?: number, lang?: Lang, rspn?: 0 | 1, ll?: Point, spn?: [number, number],  bbox?: [Point, Point]);
-```
-
-[Документация по запросу к геокодеру](https://yandex.ru/dev/maps/geocoder/doc/desc/concepts/input_params.html)
-[Документация по ответу геокодера]( https://yandex.ru/dev/maps/geocoder/doc/desc/reference/response_structure.html)
-
-#### Упрощенный вызов ####
-
-```
-Geocoder.addressToGeo(address: string);
-```
-
-Вернет `null` или координаты `{ lat: number, lon: number }` первого объекта из предложений геокодера.
 
 ## Поиск по гео с подсказсками (GeoSuggestions)
 

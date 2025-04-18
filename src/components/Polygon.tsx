@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC, useMemo } from 'react';
 import { requireNativeComponent } from 'react-native';
-import { processColorProps } from '../utils';
+import { getProcessedColors } from '../utils';
 import { Point } from '../interfaces';
 
 export interface PolygonProps {
@@ -11,25 +11,16 @@ export interface PolygonProps {
   onPress?: () => void;
   points: Point[];
   innerRings?: (Point[])[];
-  children?: undefined;
   handled?: boolean;
 }
 
 const NativePolygonComponent = requireNativeComponent<PolygonProps>('YamapPolygon');
 
-interface State {}
+export const Polygon: FC<PolygonProps> = (props) => {
+  const processedProps = useMemo(() =>
+      getProcessedColors(props, ['fillColor', 'strokeColor']) as PolygonProps,
+    [props]
+  );
 
-export class Polygon extends React.Component<PolygonProps, State> {
-  static defaultProps = {
-    innerRings: []
-  };
-
-  render() {
-    const props = { ...this.props };
-
-    processColorProps(props, 'fillColor' as keyof PolygonProps);
-    processColorProps(props, 'strokeColor' as keyof PolygonProps);
-
-    return <NativePolygonComponent {...props} />;
-  }
-}
+  return <NativePolygonComponent {...processedProps} />;
+};
