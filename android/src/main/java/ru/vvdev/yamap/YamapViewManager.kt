@@ -10,6 +10,7 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
+import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
 
@@ -29,7 +30,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onRouteFound")
                     ),
-            "cameraPosition" to
+            GetCameraPositionEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onCameraPositionReceived")

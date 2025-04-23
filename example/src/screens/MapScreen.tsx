@@ -1,28 +1,44 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import YaMap, {Circle, Marker, MarkerRef, Polyline} from '../../../';
 import {Polygon} from '../../../src';
 
 export const MapScreen = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
+  const mapRef = useRef<YaMap>();
   const markerRef = useRef<MarkerRef | null>(null);
   const angleRef = useRef(0);
 
+    useEffect(() => {
+      if (mapLoaded) {
+          mapRef.current?.getCameraPosition(e => {
+            console.log('getCameraPosition', e);
+        });
+      }
+    }, [mapLoaded]);
+
   return (
     <YaMap
+      ref={mapRef}
       initialRegion={{lat: 55.751244, lon: 37.618423, zoom: 12}}
       style={styles.container}
       logoPosition={{horizontal: 'right', vertical: 'top'}}
-      onMapLoaded={() => {
-        console.log('onMapLoaded');
+      onMapLoaded={(e) => {
+        console.log('onMapLoaded', e.nativeEvent);
         setMapLoaded(true);
       }}
+      onCameraPositionChange={e => {
+          console.log('onCameraPositionChange', e.nativeEvent);
+      }}
+      onCameraPositionChangeEnd={e => {
+          console.log('onCameraPositionChangeEnd', e.nativeEvent);
+      }}
       onMapPress={e => {
-        console.log('map onPress');
+        console.log('map onPress', e.nativeEvent);
         markerRef.current?.animatedMoveTo(e.nativeEvent, 500);
       }}
-      onMapLongPress={() => {
-        console.log('map onLongPress');
+      onMapLongPress={(e) => {
+        console.log('map onLongPress', e.nativeEvent);
       }}
     >
       <Marker
@@ -77,7 +93,7 @@ export const MapScreen = () => {
         gapLength={5}
         dashLength={20}
         onPress={() => {
-            console.log('polyline press');
+          console.log('polyline press');
         }}
       />
     </YaMap>

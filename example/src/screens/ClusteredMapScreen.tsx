@@ -1,16 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {ClusteredYamap, Marker} from '../../../';
 
 export const ClusteredMapScreen = () => {
+  const clusteredMapRef = useRef<ClusteredYamap>();
   const [mapLoaded, setMapLoaded] = useState(false);
+
+    useEffect(() => {
+        if (mapLoaded) {
+            clusteredMapRef.current?.getCameraPosition(e => {
+                console.log('clustered getCameraPosition', e);
+            });
+        }
+    }, [mapLoaded]);
 
   return (
     <ClusteredYamap
+      ref={clusteredMapRef}
       clusterColor="red"
       initialRegion={{lat: 56.754215, lon: 38.421242, zoom: 6}}
-      onMapLoaded={() => {
+      onMapLoaded={(e) => {
+        console.log('clustered onMapLoaded', e.nativeEvent);
         setMapLoaded(true);
+      }}
+      onCameraPositionChange={e => {
+        console.log('clustered onCameraPositionChange', e.nativeEvent);
+      }}
+      onCameraPositionChangeEnd={e => {
+        console.log('clustered onCameraPositionChangeEnd', e.nativeEvent);
+      }}
+      onMapPress={e => {
+        console.log('clustered map onPress', e.nativeEvent);
       }}
       clusteredMarkers={[
         {

@@ -15,12 +15,13 @@ import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.runtime.image.ImageProvider
 import kotlin.math.abs
 import kotlin.math.sqrt
+import androidx.core.graphics.createBitmap
 
 class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListener,
     ClusterTapListener {
     private val clusterCollection = mapWindow.map.mapObjects.addClusterizedPlacemarkCollection(this)
     private var clusterColor = 0
-    private val placemarksMap: HashMap<String?, PlacemarkMapObject?> = HashMap<String?, PlacemarkMapObject?>()
+    private val placemarksMap = HashMap<String?, PlacemarkMapObject?>()
     private var pointsList = ArrayList<Point>()
 
     fun setClusteredMarkers(points: ArrayList<Any>) {
@@ -125,7 +126,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
 
             val width = (2 * externalRadius + 0.5).toInt()
 
-            val bitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888)
+            val bitmap = createBitmap(width, width)
             val canvas = Canvas(bitmap)
 
             val backgroundPaint = Paint()

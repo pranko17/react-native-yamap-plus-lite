@@ -14,6 +14,9 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeArray
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
@@ -65,6 +68,7 @@ import com.yandex.mapkit.user_location.UserLocationObjectListener
 import com.yandex.mapkit.user_location.UserLocationView
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
+import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
@@ -195,14 +199,18 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         return result
     }
 
-    fun emitCameraPositionToJS(id: String?) {
+    fun emitCameraPositionToJS(cameraPositionId: String?) {
         val position = mapWindow.map.cameraPosition
         val cameraPosition =
             positionToJSON(position, CameraUpdateReason.valueOf("APPLICATION"), true)
-        cameraPosition.putString("id", id)
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(getId(), "cameraPosition", cameraPosition)
+        cameraPosition.putString("id", cameraPositionId)
+
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(GetCameraPositionEvent(
+            getSurfaceId(context),
+            id,
+            cameraPosition
+        ))
     }
 
     fun emitVisibleRegionToJS(id: String?) {
