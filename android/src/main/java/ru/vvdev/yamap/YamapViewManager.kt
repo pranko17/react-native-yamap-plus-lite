@@ -269,27 +269,27 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
     @ReactProp(name = "scrollGesturesEnabled")
     fun setScrollGesturesEnabled(view: View, scrollGesturesEnabled: Boolean) {
-        castToYaMapView(view).setScrollGesturesEnabled(scrollGesturesEnabled == true)
+        castToYaMapView(view).setScrollGesturesEnabled(scrollGesturesEnabled)
     }
 
     @ReactProp(name = "rotateGesturesEnabled")
     fun setRotateGesturesEnabled(view: View, rotateGesturesEnabled: Boolean) {
-        castToYaMapView(view).setRotateGesturesEnabled(rotateGesturesEnabled == true)
+        castToYaMapView(view).setRotateGesturesEnabled(rotateGesturesEnabled)
     }
 
     @ReactProp(name = "zoomGesturesEnabled")
     fun setZoomGesturesEnabled(view: View, zoomGesturesEnabled: Boolean) {
-        castToYaMapView(view).setZoomGesturesEnabled(zoomGesturesEnabled == true)
+        castToYaMapView(view).setZoomGesturesEnabled(zoomGesturesEnabled)
     }
 
     @ReactProp(name = "tiltGesturesEnabled")
     fun setTiltGesturesEnabled(view: View, tiltGesturesEnabled: Boolean) {
-        castToYaMapView(view).setTiltGesturesEnabled(tiltGesturesEnabled == true)
+        castToYaMapView(view).setTiltGesturesEnabled(tiltGesturesEnabled)
     }
 
     @ReactProp(name = "fastTapEnabled")
     fun setFastTapEnabled(view: View, fastTapEnabled: Boolean) {
-        castToYaMapView(view).setFastTapEnabled(fastTapEnabled == true)
+        castToYaMapView(view).setFastTapEnabled(fastTapEnabled)
     }
 
     @ReactProp(name = "mapStyle")

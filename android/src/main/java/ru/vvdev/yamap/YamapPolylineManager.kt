@@ -6,6 +6,7 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.geometry.Point
+import ru.vvdev.yamap.events.YamapPolylinePressEvent
 import ru.vvdev.yamap.view.YamapPolyline
 import javax.annotation.Nonnull
 
@@ -16,7 +17,7 @@ class YamapPolylineManager internal constructor() : ViewGroupManager<YamapPolyli
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
         return mapOf(
-            "onPress" to
+            YamapPolylinePressEvent.EVENT_NAME to
                     mapOf("registrationName" to "onPress")
         )
     }

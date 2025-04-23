@@ -3,14 +3,15 @@ package ru.vvdev.yamap.view
 import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import com.yandex.mapkit.geometry.Circle
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CircleMapObject
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectTapListener
+import ru.vvdev.yamap.events.YamapCirclePressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
 class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
@@ -90,17 +91,9 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
         updateCircle()
     }
 
-//    fun setRnMapObject(obj: MapObject?) {
-//        rnMapObject = obj as CircleMapObject?
-//        rnMapObject!!.addTapListener(this)
-//        updateCircle()
-//    }
-
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
-        val e = Arguments.createMap()
-        (context as ReactContext).getJSModule(RCTEventEmitter::class.java).receiveEvent(
-            id, "onPress", e
-        )
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(YamapCirclePressEvent(getSurfaceId(context), id))
 
         return handled
     }

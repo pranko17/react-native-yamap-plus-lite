@@ -3,14 +3,15 @@ package ru.vvdev.yamap.view
 import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polyline
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.PolylineMapObject
+import ru.vvdev.yamap.events.YamapPolylinePressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
 class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
@@ -105,17 +106,10 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
     fun setHandled(_handled: Boolean) {
         handled = _handled
     }
-//    fun setRnMapObject(obj: MapObject?) {
-//        rnMapObject = obj as PolylineMapObject?
-//        rnMapObject!!.addTapListener(this)
-//        updatePolyline()
-//    }
 
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
-        val e = Arguments.createMap()
-        (context as ReactContext).getJSModule(RCTEventEmitter::class.java).receiveEvent(
-            id, "onPress", e
-        )
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(YamapPolylinePressEvent(getSurfaceId(context), id))
 
         return handled
     }

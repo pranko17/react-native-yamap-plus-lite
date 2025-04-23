@@ -8,9 +8,6 @@ import android.graphics.PointF
 import android.view.View
 import android.view.View.OnLayoutChangeListener
 import android.view.animation.LinearInterpolator
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.facebook.react.views.view.ReactViewGroup
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.IconStyle
@@ -22,6 +19,11 @@ import com.yandex.runtime.image.ImageProvider
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
+import androidx.core.graphics.createBitmap
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
+import ru.vvdev.yamap.events.YamapMarkerPressEvent
 
 class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapListener,
     ReactMapObject {
@@ -32,7 +34,6 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     private var visible = true
     private var handled = true
     private var rotated = false
-    private val YAMAP_FRAMES_PER_SECOND = 25
     private var markerAnchor: PointF? = null
     private var iconSource: String? = null
     private var _childView: View? = null
@@ -101,9 +102,7 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
 
             if (_childView != null) {
                 try {
-                    val b = Bitmap.createBitmap(
-                        _childView!!.width, _childView!!.height, Bitmap.Config.ARGB_8888
-                    )
+                    val b = createBitmap(_childView!!.width, _childView!!.height)
                     val c = Canvas(b)
                     _childView!!.draw(c)
                     (rnMapObject as PlacemarkMapObject).setIcon(ImageProvider.fromBitmap(b))
@@ -206,10 +205,8 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     }
 
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
-        val e = Arguments.createMap()
-        (context as ReactContext).getJSModule(RCTEventEmitter::class.java).receiveEvent(
-            id, "onPress", e
-        )
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(YamapMarkerPressEvent(getSurfaceId(context), id))
 
         return handled
     }

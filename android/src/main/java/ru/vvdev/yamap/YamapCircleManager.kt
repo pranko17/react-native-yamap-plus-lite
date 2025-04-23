@@ -5,6 +5,7 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.geometry.Point
+import ru.vvdev.yamap.events.YamapCirclePressEvent
 import ru.vvdev.yamap.view.YamapCircle
 import javax.annotation.Nonnull
 
@@ -15,7 +16,7 @@ class YamapCircleManager internal constructor() : ViewGroupManager<YamapCircle>(
 
     override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
         return mapOf(
-            "onPress" to
+            YamapCirclePressEvent.EVENT_NAME to
                     mapOf("registrationName" to "onPress")
         )
     }

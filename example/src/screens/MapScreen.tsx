@@ -14,10 +14,15 @@ export const MapScreen = () => {
       style={styles.container}
       logoPosition={{horizontal: 'right', vertical: 'top'}}
       onMapLoaded={() => {
+        console.log('onMapLoaded');
         setMapLoaded(true);
       }}
       onMapPress={e => {
+        console.log('map onPress');
         markerRef.current?.animatedMoveTo(e.nativeEvent, 500);
+      }}
+      onMapLongPress={() => {
+        console.log('map onLongPress');
       }}
     >
       <Marker
@@ -27,6 +32,9 @@ export const MapScreen = () => {
         scale={0.25}
         visible={Platform.OS === 'android' ? mapLoaded : true}
         rotated={true}
+        onPress={() => {
+           console.log('marker onPress');
+        }}
       />
       <Circle
         center={{lat: 55.74, lon: 37.65}}
@@ -35,6 +43,7 @@ export const MapScreen = () => {
         strokeColor={'red'}
         fillColor={'blue'}
         onPress={() => {
+          console.log('circle onPress');
           angleRef.current = angleRef.current + 180;
           markerRef.current?.animatedRotateTo(angleRef.current, 300);
         }}
@@ -49,6 +58,9 @@ export const MapScreen = () => {
         fillColor={'green'}
         strokeWidth={0}
         handled={false}
+        onPress={() => {
+          console.log('polygon press');
+        }}
       />
       <Polyline
         points={[
@@ -64,6 +76,9 @@ export const MapScreen = () => {
         handled={false}
         gapLength={5}
         dashLength={20}
+        onPress={() => {
+            console.log('polyline press');
+        }}
       />
     </YaMap>
   );

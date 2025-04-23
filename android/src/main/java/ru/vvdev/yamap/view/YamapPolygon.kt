@@ -3,15 +3,16 @@ package ru.vvdev.yamap.view
 import android.content.Context
 import android.graphics.Color
 import android.view.ViewGroup
-import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
-import com.facebook.react.uimanager.events.RCTEventEmitter
+import com.facebook.react.uimanager.ThemedReactContext
+import com.facebook.react.uimanager.UIManagerHelper
+import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
 import com.yandex.mapkit.map.MapObject
 import com.yandex.mapkit.map.MapObjectTapListener
 import com.yandex.mapkit.map.PolygonMapObject
+import ru.vvdev.yamap.events.YamapPolygonPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
 class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
@@ -45,12 +46,6 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
         updatePolygonGeometry()
         updatePolygon()
     }
-
-//    fun setInnerRings(_innerRings: ArrayList<ArrayList<Point>>?) {
-//        innerRings = _innerRings ?: ArrayList()
-//        updatePolygonGeometry()
-//        updatePolygon()
-//    }
 
     private fun updatePolygonGeometry() {
         val _rings = ArrayList<LinearRing>()
@@ -102,17 +97,9 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
         handled = _handled
     }
 
-//    fun setRnMapObject(obj: MapObject?) {
-//        rnMapObject = obj as PolygonMapObject?
-//        rnMapObject!!.addTapListener(this)
-//        updatePolygon()
-//    }
-
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
-        val e = Arguments.createMap()
-        (context as ReactContext).getJSModule(RCTEventEmitter::class.java).receiveEvent(
-            id, "onPress", e
-        )
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(YamapPolygonPressEvent(getSurfaceId(context), id))
 
         return handled
     }
