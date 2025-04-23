@@ -106,7 +106,7 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
     ) {
         when (commandType) {
             "animatedMoveTo" -> {
-                val markerPoint = args!!.getMap(0) as ReadableMap
+                val markerPoint = args!!.getMap(0)
                 val moveDuration = args.getInt(1)
                 val lon = markerPoint.getDouble("lon").toFloat()
                 val lat = markerPoint.getDouble("lat").toFloat()

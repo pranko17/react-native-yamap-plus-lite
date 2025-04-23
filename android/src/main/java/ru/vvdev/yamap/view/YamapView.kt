@@ -222,7 +222,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
         if (worldPoints !== null && worldPoints.size() > 0) {
             for (i in 0 until worldPoints.size()) {
-                val p = worldPoints.getMap(i) as ReadableMap
+                val p = worldPoints.getMap(i)
                 val worldPoint = Point(p.getDouble("lat"), p.getDouble("lon"))
                 val screenPoint = mapWindow.worldToScreen(worldPoint)
                 screenPoints.pushMap(screenPointToJSON(screenPoint))
@@ -243,7 +243,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
         if (screenPoints !== null && screenPoints.size() > 0) {
             for (i in 0 until screenPoints.size()) {
-                val p = screenPoints.getMap(i) as ReadableMap
+                val p = screenPoints.getMap(i)
                 val screenPoint =
                     ScreenPoint(p.getDouble("x").toFloat(), p.getDouble("y").toFloat())
                 val worldPoint = mapWindow.screenToWorld(screenPoint)

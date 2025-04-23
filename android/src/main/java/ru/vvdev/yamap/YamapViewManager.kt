@@ -225,7 +225,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
             if (jsVehicles != null) {
                 for (i in 0 until jsVehicles.size()) {
-                    vehicles.add(jsVehicles.getString(i) as String)
+                    vehicles.add(jsVehicles.getString(i))
                 }
             }
 
