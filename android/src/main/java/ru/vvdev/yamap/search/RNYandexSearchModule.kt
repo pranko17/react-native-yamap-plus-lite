@@ -1,6 +1,5 @@
 package ru.vvdev.yamap.search
 
-import android.content.Context
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -93,7 +92,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).searchAddress(searchQuery, getGeometry(figure), searchOptions,
+                getSearchClient().searchAddress(searchQuery, getGeometry(figure), searchOptions,
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
@@ -117,7 +116,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).resolveURI(searchQuery, searchOptions,
+                getSearchClient().resolveURI(searchQuery, searchOptions,
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
@@ -141,7 +140,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).searchByURI(searchQuery, searchOptions,
+                getSearchClient().searchByURI(searchQuery, searchOptions,
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
@@ -167,7 +166,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
             val lat = markerPoint.getDouble("lat")
             val point = Point(lat, lon)
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).searchPoint(point, (zoom?.toInt() ?: 10), getSearchOptions(options),
+                getSearchClient().searchPoint(point, (zoom?.toInt() ?: 10), getSearchOptions(options),
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
@@ -193,7 +192,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
             val lat = markerPoint.getDouble("lat")
             val point = Point(lat, lon)
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).searchPoint(point, 10, getSearchOptions(null),
+                getSearchClient().searchPoint(point, 10, getSearchOptions(null),
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
@@ -216,7 +215,7 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
     fun addressToGeo(text: String?, promise: Promise) {
         if (text != null) {
             UiThreadUtil.runOnUiThread {
-                getSearchClient(reactApplicationContext).searchAddress(text, Geometry.fromPoint(Point(0.0, 0.0)), SearchOptions(),
+                getSearchClient().searchAddress(text, Geometry.fromPoint(Point(0.0, 0.0)), SearchOptions(),
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
                             val resultPoint = Arguments.createMap()
@@ -238,9 +237,9 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    private fun getSearchClient(context: Context): MapSearchClient {
+    private fun getSearchClient(): MapSearchClient {
         if (searchClient == null) {
-            searchClient = YandexMapSearchClient(context)
+            searchClient = YandexMapSearchClient()
         }
 
         return searchClient as MapSearchClient

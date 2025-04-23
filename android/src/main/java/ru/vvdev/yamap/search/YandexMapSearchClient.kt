@@ -1,6 +1,5 @@
 package ru.vvdev.yamap.search
 
-import android.content.Context
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.search.BusinessObjectMetadata
@@ -15,7 +14,7 @@ import com.yandex.mapkit.uri.UriObjectMetadata
 import com.yandex.runtime.Error
 import ru.vvdev.yamap.utils.Callback
 
-class YandexMapSearchClient(context: Context) : MapSearchClient {
+class YandexMapSearchClient : MapSearchClient {
     private val searchManager: SearchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
 
     private fun transformResponse(searchResponse: Response, options: SearchOptions): MapSearchItem {

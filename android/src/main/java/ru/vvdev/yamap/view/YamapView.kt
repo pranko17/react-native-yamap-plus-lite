@@ -31,7 +31,6 @@ import com.yandex.mapkit.directions.driving.VehicleOptions
 import com.yandex.mapkit.geometry.BoundingBox
 import com.yandex.mapkit.geometry.Geometry
 import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.geometry.Polyline
 import com.yandex.mapkit.geometry.SubpolylineHelper
 import com.yandex.mapkit.layers.ObjectEvent
 import com.yandex.mapkit.logo.Alignment
@@ -45,7 +44,6 @@ import com.yandex.mapkit.map.IconStyle
 import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.MapLoadStatistics
 import com.yandex.mapkit.map.MapLoadedListener
-import com.yandex.mapkit.map.MapObjectCollection
 import com.yandex.mapkit.map.MapType
 import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.map.VisibleRegion
@@ -71,7 +69,6 @@ import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
 import ru.vvdev.yamap.utils.RouteManager
-import java.util.Objects
 import javax.annotation.Nonnull
 
 
@@ -325,10 +322,10 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
                     val sections = Arguments.createArray()
                     for (section in _route.sections) {
                         val jsonSection = convertRouteSection(
-                            _route, section, SubpolylineHelper.subpolyline(
-                                _route.geometry,
-                                section.geometry
-                            ), _route.metadata.weight, i
+                            _route,
+                            section,
+                            _route.metadata.weight,
+                            i
                         )
                         sections.pushMap(jsonSection)
                     }
@@ -614,7 +611,6 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     private fun convertRouteSection(
         route: Route,
         section: Section,
-        geometry: Polyline,
         routeWeight: Weight,
         routeIndex: Int
     ): WritableMap {

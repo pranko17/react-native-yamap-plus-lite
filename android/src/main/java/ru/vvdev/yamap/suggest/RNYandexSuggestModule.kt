@@ -1,6 +1,5 @@
 package ru.vvdev.yamap.suggest
 
-import android.content.Context
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -26,7 +25,7 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
         }
 
         UiThreadUtil.runOnUiThread {
-            getSuggestClient(reactApplicationContext).suggest(text,
+            getSuggestClient().suggest(text,
                 object : Callback<List<MapSuggestItem?>?> {
                     override fun invoke(arg: List<MapSuggestItem?>?) {
                         promise.resolve(argsHelper.createSuggestsMapFrom(arg))
@@ -49,7 +48,7 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
         }
 
         UiThreadUtil.runOnUiThread {
-            getSuggestClient(reactApplicationContext).suggest(text, options,
+            getSuggestClient().suggest(text, options,
                 object : Callback<List<MapSuggestItem?>?> {
                     override fun invoke(arg: List<MapSuggestItem?>?) {
                         promise.resolve(argsHelper.createSuggestsMapFrom(arg))
@@ -66,12 +65,12 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
 
     @ReactMethod
     fun reset() {
-        UiThreadUtil.runOnUiThread { getSuggestClient(reactApplicationContext).resetSuggest() }
+        UiThreadUtil.runOnUiThread { getSuggestClient().resetSuggest() }
     }
 
-    private fun getSuggestClient(context: Context): MapSuggestClient {
+    private fun getSuggestClient(): MapSuggestClient {
         if (suggestClient == null) {
-            suggestClient = YandexMapSuggestClient(context)
+            suggestClient = YandexMapSuggestClient()
         }
 
         return suggestClient as MapSuggestClient

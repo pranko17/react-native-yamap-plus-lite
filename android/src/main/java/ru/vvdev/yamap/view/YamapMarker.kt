@@ -39,8 +39,9 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     override var rnMapObject: MapObject? = null
     private val childs = ArrayList<View>()
 
+    // OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> updateMarker() }
     private val childLayoutListener =
-        OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> updateMarker() }
+        OnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> updateMarker() }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
     }

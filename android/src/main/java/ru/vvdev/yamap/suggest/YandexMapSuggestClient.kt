@@ -1,6 +1,5 @@
 package ru.vvdev.yamap.suggest
 
-import android.content.Context
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.ReadableType
 import com.yandex.mapkit.geometry.BoundingBox
@@ -17,7 +16,7 @@ import com.yandex.mapkit.search.SuggestType
 import com.yandex.runtime.Error
 import ru.vvdev.yamap.utils.Callback
 
-class YandexMapSuggestClient(context: Context?) : MapSuggestClient {
+class YandexMapSuggestClient : MapSuggestClient {
     private val searchManager: SearchManager
     private val suggestOptions = SuggestOptions()
     private var suggestSession: SuggestSession? = null

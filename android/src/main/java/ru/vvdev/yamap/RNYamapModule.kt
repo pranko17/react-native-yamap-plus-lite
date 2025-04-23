@@ -53,7 +53,7 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
     }
 
     @ReactMethod
-    fun setLocale(locale: String?, successCb: Callback, errorCb: Callback?) {
+    fun setLocale(locale: String?, successCb: Callback) {
         UiThreadUtil.runOnUiThread(Thread {
             MapKitFactory.setLocale(locale)
             successCb.invoke()
@@ -61,7 +61,7 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
     }
 
     @ReactMethod
-    fun getLocale(successCb: Callback, errorCb: Callback?) {
+    fun getLocale(successCb: Callback) {
         UiThreadUtil.runOnUiThread(Thread {
             val locale = I18nManagerFactory.getLocale()
             successCb.invoke(locale)
@@ -69,7 +69,7 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
     }
 
     @ReactMethod
-    fun resetLocale(successCb: Callback, errorCb: Callback?) {
+    fun resetLocale(successCb: Callback) {
         UiThreadUtil.runOnUiThread(Thread {
             I18nManagerFactory.setLocale(null)
             successCb.invoke()
