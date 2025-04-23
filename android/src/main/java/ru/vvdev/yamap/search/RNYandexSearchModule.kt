@@ -73,18 +73,16 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
     }
 
     private fun getSearchOptions(options: ReadableMap?): SearchOptions {
-        var searchOptions: SearchOptions? = null
-        if (options!=null) {
-            searchOptions = SearchOptions().apply {
+        return if (options!=null) {
+            SearchOptions().apply {
                 searchTypes = if (options.hasKey("searchTypes")) options.getInt("searchTypes") else SearchType.NONE.value
                 snippets = if (options.hasKey("snippets")) options.getInt("snippets") else Snippet.NONE.value
                 geometry = if (options.hasKey("geometry")) options.getBoolean("geometry") else false
                 disableSpellingCorrection = if (options.hasKey("disableSpellingCorrection")) options.getBoolean("disableSpellingCorrection") else false
             }
         } else {
-            searchOptions = SearchOptions();
+            SearchOptions();
         }
-        return searchOptions;
     }
 
     @ReactMethod
