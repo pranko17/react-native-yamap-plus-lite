@@ -273,8 +273,8 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
                     for (i in routes.indices) {
                         val _route = routes[i]
                         val jsonRoute = Arguments.createMap()
-                        val id = RouteManager.generateId()
-                        jsonRoute.putString("id", id)
+                        val _id = RouteManager.generateId()
+                        jsonRoute.putString("id", _id)
                         val sections = Arguments.createArray()
                         for (section in _route.sections) {
                             val jsonSection = convertDrivingRouteSection(_route, section, i)
@@ -316,9 +316,9 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
                 for (i in routes.indices) {
                     val _route = routes[i]
                     val jsonRoute = Arguments.createMap()
-                    val id = RouteManager.generateId()
-                    self.routeMng.saveRoute(_route, id)
-                    jsonRoute.putString("id", id)
+                    val _id = RouteManager.generateId()
+                    self.routeMng.saveRoute(_route, _id)
+                    jsonRoute.putString("id", _id)
                     val sections = Arguments.createArray()
                     for (section in _route.sections) {
                         val jsonSection = convertRouteSection(
