@@ -10,6 +10,8 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
+import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
+import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.view.ClusteredYamapView
 import javax.annotation.Nonnull
@@ -35,12 +37,12 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onCameraPositionReceived")
                     ),
-            "cameraPositionChange" to
+            CameraPositionChangeEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onCameraPositionChange")
                     ),
-            "cameraPositionChangeEnd" to
+            CameraPositionChangeEndEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onCameraPositionChangeEnd")

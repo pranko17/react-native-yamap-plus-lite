@@ -68,6 +68,8 @@ import com.yandex.mapkit.user_location.UserLocationObjectListener
 import com.yandex.mapkit.user_location.UserLocationView
 import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
+import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
+import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
@@ -845,14 +847,22 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         finished: Boolean
     ) {
         val positionStart = positionToJSON(cameraPosition, reason, finished)
-        val positionFinish = positionToJSON(cameraPosition, reason, finished)
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(id, "cameraPositionChange", positionStart)
+
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(CameraPositionChangeEvent(
+            getSurfaceId(context),
+            id,
+            positionStart
+        ))
 
         if (finished) {
-            reactContext.getJSModule(RCTEventEmitter::class.java)
-                .receiveEvent(id, "cameraPositionChangeEnd", positionFinish)
+            val positionFinish = positionToJSON(cameraPosition, reason, finished)
+
+            eventDispatcher?.dispatchEvent(CameraPositionChangeEndEvent(
+                getSurfaceId(context),
+                id,
+                positionFinish
+            ))
         }
     }
 
