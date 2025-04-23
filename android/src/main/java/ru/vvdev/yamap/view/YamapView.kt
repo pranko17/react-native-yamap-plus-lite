@@ -782,8 +782,8 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     open fun removeChild(index: Int) {
-        if (getChildAt(index) is ReactMapObject) {
-            val child = getChildAt(index) as ReactMapObject ?: return
+        val child = getChildAt(index)
+        if (child is ReactMapObject) {
             val mapObject = child.rnMapObject
             if (mapObject == null || !mapObject.isValid) return
 

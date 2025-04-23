@@ -28,6 +28,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
         placemarksMap.clear()
         val pt = ArrayList<Point>()
         for (i in points.indices) {
+            @Suppress("UNCHECKED_CAST")
             val point = points[i] as HashMap<String, Double>
             pt.add(Point(point["lat"]!!, point["lon"]!!))
         }
@@ -78,8 +79,8 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     }
 
     override fun removeChild(index: Int) {
-        if (getChildAt(index) is YamapMarker) {
-            val child = getChildAt(index) as YamapMarker ?: return
+        val child = getChildAt(index)
+        if (child is YamapMarker) {
             val mapObject = child.rnMapObject
             if (mapObject == null || !mapObject.isValid) return
             clusterCollection.remove(mapObject)
