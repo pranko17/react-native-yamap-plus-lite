@@ -206,9 +206,7 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
 
             for (i in 0 until jsPoints.size()) {
                 val point = jsPoints.getMap(i)
-                if (point != null) {
-                    points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
-                }
+                points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
             }
 
             castToYaMapView(view).fitMarkers(points)
@@ -225,9 +223,7 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
             val points = ArrayList<Point?>()
             for (i in 0 until jsPoints.size()) {
                 val point = jsPoints.getMap(i)
-                if (point != null) {
-                    points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
-                }
+                points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
             }
             val vehicles = ArrayList<String>()
             if (jsVehicles != null) {

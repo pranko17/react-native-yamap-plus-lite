@@ -196,9 +196,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
             for (i in 0 until jsPoints.size()) {
                 val point = jsPoints.getMap(i)
-                if (point != null) {
-                    points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
-                }
+                points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
             }
 
             castToYaMapView(view).fitMarkers(points)
@@ -216,9 +214,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
             for (i in 0 until jsPoints.size()) {
                 val point = jsPoints.getMap(i)
-                if (point != null) {
-                    points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
-                }
+                points.add(Point(point.getDouble("lat"), point.getDouble("lon")))
             }
 
             val vehicles = ArrayList<String>()

@@ -46,12 +46,10 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
                     val points = figure.getMap("value")!!.getArray("points");
                     for (i in 0 until points!!.size()) {
                         val markerMap = points.getMap(i)
-                        if (markerMap != null) {
-                            val lon = markerMap.getDouble("lon")
-                            val lat = markerMap.getDouble("lat")
-                            val point = Point(lat, lon)
-                            polylinePoints.add(point)
-                        }
+                        val lon = markerMap.getDouble("lon")
+                        val lat = markerMap.getDouble("lat")
+                        val point = Point(lat, lon)
+                        polylinePoints.add(point)
                     }
                     Geometry.fromPolyline(Polyline(polylinePoints))
                 }
@@ -61,12 +59,10 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
                     val points = figure.getMap("value")!!.getArray("points");
                     for (i in 0 until points!!.size()) {
                         val markerMap = points.getMap(i)
-                        if (markerMap != null) {
-                            val lon = markerMap.getDouble("lon")
-                            val lat = markerMap.getDouble("lat")
-                            val point = Point(lat, lon)
-                            polygonPoints.add(point)
-                        }
+                        val lon = markerMap.getDouble("lon")
+                        val lat = markerMap.getDouble("lat")
+                        val point = Point(lat, lon)
+                        polygonPoints.add(point)
                     }
                     Geometry.fromPolygon(Polygon(LinearRing(polygonPoints), ArrayList()));
                 }

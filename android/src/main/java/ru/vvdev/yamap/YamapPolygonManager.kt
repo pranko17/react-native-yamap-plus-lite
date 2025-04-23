@@ -41,12 +41,10 @@ class YamapPolygonManager internal constructor() : ViewGroupManager<YamapPolygon
             val parsed = ArrayList<Point>()
             for (i in 0 until points.size()) {
                 val markerMap = points.getMap(i)
-                if (markerMap != null) {
-                    val lon = markerMap.getDouble("lon")
-                    val lat = markerMap.getDouble("lat")
-                    val point = Point(lat, lon)
-                    parsed.add(point)
-                }
+                val lon = markerMap.getDouble("lon")
+                val lat = markerMap.getDouble("lat")
+                val point = Point(lat, lon)
+                parsed.add(point)
             }
             castToPolygonView(view).setPolygonPoints(parsed)
         }
@@ -58,19 +56,15 @@ class YamapPolygonManager internal constructor() : ViewGroupManager<YamapPolygon
         if (_rings != null) {
             for (j in 0 until _rings.size()) {
                 val points = _rings.getArray(j)
-                if (points != null) {
-                    val parsed = ArrayList<Point>()
-                    for (i in 0 until points.size()) {
-                        val markerMap = points.getMap(i)
-                        if (markerMap != null) {
-                            val lon = markerMap.getDouble("lon")
-                            val lat = markerMap.getDouble("lat")
-                            val point = Point(lat, lon)
-                            parsed.add(point)
-                        }
-                    }
-                    rings.add(parsed)
+                val parsed = ArrayList<Point>()
+                for (i in 0 until points.size()) {
+                    val markerMap = points.getMap(i)
+                    val lon = markerMap.getDouble("lon")
+                    val lat = markerMap.getDouble("lat")
+                    val point = Point(lat, lon)
+                    parsed.add(point)
                 }
+                rings.add(parsed)
             }
         }
         castToPolygonView(view).setPolygonInnerRings(rings)
