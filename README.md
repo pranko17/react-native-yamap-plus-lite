@@ -283,8 +283,8 @@ type YandexLogoPadding = {
 -  `findPedestrianRoutes(points: Point[], callback: (event: RoutesFoundEvent<MasstransitInfo>) => void): void` - запрос пешеходного маршрута;
 -  `findDrivingRoutes(points: Point[], callback: (event: RoutesFoundEvent<DrivingInfo>) => void): void` - запрос маршрута для автомобиля;
 -  `setTrafficVisible(isVisible: boolean): void` - включить/отключить отображение слоя с пробками на картах;
--  `getScreenPoints(point: Point[], callback: (screenPoints: ScreenPoint[]) => void)` - получить кооординаты на экране (x и y) по координатам маркеров;
--  `getWorldPoints(screenPoint: ScreenPoint[], callback: (worldPoints: Point[]) => void)` - получить координаты точек (lat и lon) по координатам на экране.
+-  `getScreenPoints(point: Point[], callback: (result: {screenPoints: ScreenPoint[]}) => void)` - получить кооординаты на экране (x и y) по координатам маркеров;
+-  `getWorldPoints(screenPoint: ScreenPoint[], callback: (result: {worldPoints: Point[]}) => void)` - получить координаты точек (lat и lon) по координатам на экране.
 
 **ВАЖНО**
 
