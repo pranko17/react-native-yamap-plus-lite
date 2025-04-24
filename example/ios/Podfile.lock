@@ -1558,11 +1558,11 @@ PODS:
     - React-logger
     - React-perflogger
     - React-utils (= 0.76.9)
-  - RNYamap (4.7.1):
+  - RNYamap (4.8.0):
     - React
-    - YandexMapsMobile (= 4.11.0-full)
+    - YandexMapsMobile (= 4.14.0-full)
   - SocketRocket (0.7.1)
-  - YandexMapsMobile (4.11.0-full)
+  - YandexMapsMobile (4.14.0-full)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1836,9 +1836,9 @@ SPEC CHECKSUMS:
   React-utils: ed818f19ab445000d6b5c4efa9d462449326cc9f
   ReactCodegen: f853a20cc9125c5521c8766b4b49375fec20648b
   ReactCommon: 300d8d9c5cb1a6cd79a67cf5d8f91e4d477195f9
-  RNYamap: 83b13be8ddeff2654758ee07194b59de90f5571c
+  RNYamap: 06ee80a0c5328e26bc9735193c52f7f7e1c2c1d5
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  YandexMapsMobile: 408a1e50eb8792e3aebfe11820de39b560024598
+  YandexMapsMobile: 9b39c156eeb4e7d02597c1e6bd1b23ee7f396e86
   Yoga: feb4910aba9742cfedc059e2b2902e22ffe9954a
 
 PODFILE CHECKSUM: bbba2b32bc98e76c40516e79b39daf2573fe0503
