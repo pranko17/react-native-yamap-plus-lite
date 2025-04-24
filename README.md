@@ -38,7 +38,35 @@ dependencies {
 
 #### iOS
 
-**Обязательно** инициализировать MapKit в функции `didFinishLaunchingWithOptions` в AppDelegate.m/AppDelegate.mm:
+
+
+**Обязательно** инициализировать MapKit
+- или в функции `application` в AppDelegate.swift:
+
+```diff
++ import YandexMapsMobile
+
+...
+
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+
+  ...
+
++    YMKMapKit.setLocale("ru_RU")
++    YMKMapKit.setApiKey("Insert your MapKit SDK API KEY")
++    YMKMapKit.sharedInstance()
+
+  ...
+
+    return true
+  }
+}
+```
+
+- или в функции `didFinishLaunchingWithOptions` в AppDelegate.m/AppDelegate.mm:
 
 ```diff
 + #import <YandexMapsMobile/YMKMapKitFactory.h>
@@ -50,7 +78,8 @@ dependencies {
   ...
 
 +  [YMKMapKit setLocale:@"ru_RU"];
-+  [YMKMapKit setApiKey:@"API_KEY"];
++  [YMKMapKit setApiKey:@"Insert your MapKit SDK API KEY"];
++  [YMKMapKit sharedInstance];
 
   return YES;
 }

@@ -4,3 +4,4 @@
 /ios/Pods
 /ios/.xcode.env.local
 /vendor
+.kotlin/
