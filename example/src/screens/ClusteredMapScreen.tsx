@@ -7,11 +7,14 @@ export const ClusteredMapScreen = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
 
     useEffect(() => {
-        if (mapLoaded) {
-            clusteredMapRef.current?.getCameraPosition(e => {
-                console.log('clustered getCameraPosition', e);
-            });
-        }
+      if (mapLoaded) {
+        clusteredMapRef.current?.getCameraPosition(e => {
+          console.log('clustered getCameraPosition', e);
+        });
+        clusteredMapRef.current?.getVisibleRegion(e => {
+          console.log('clustered getVisibleRegion', e);
+        });
+      }
     }, [mapLoaded]);
 
   return (

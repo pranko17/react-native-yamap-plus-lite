@@ -49,7 +49,6 @@ import com.yandex.mapkit.map.MapLoadStatistics
 import com.yandex.mapkit.map.MapLoadedListener
 import com.yandex.mapkit.map.MapType
 import com.yandex.mapkit.map.PlacemarkMapObject
-import com.yandex.mapkit.map.VisibleRegion
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.traffic.TrafficLayer
 import com.yandex.mapkit.traffic.TrafficLevel
@@ -71,6 +70,7 @@ import com.yandex.runtime.image.ImageProvider
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
+import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
@@ -175,32 +175,6 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         return result
     }
 
-    private fun visibleRegionToJSON(region: VisibleRegion): WritableMap {
-        val result = Arguments.createMap()
-
-        val bl = Arguments.createMap()
-        bl.putDouble("lat", region.bottomLeft.latitude)
-        bl.putDouble("lon", region.bottomLeft.longitude)
-        result.putMap("bottomLeft", bl)
-
-        val br = Arguments.createMap()
-        br.putDouble("lat", region.bottomRight.latitude)
-        br.putDouble("lon", region.bottomRight.longitude)
-        result.putMap("bottomRight", br)
-
-        val tl = Arguments.createMap()
-        tl.putDouble("lat", region.topLeft.latitude)
-        tl.putDouble("lon", region.topLeft.longitude)
-        result.putMap("topLeft", tl)
-
-        val tr = Arguments.createMap()
-        tr.putDouble("lat", region.topRight.latitude)
-        tr.putDouble("lon", region.topRight.longitude)
-        result.putMap("topRight", tr)
-
-        return result
-    }
-
     fun emitCameraPositionToJS(cameraPositionId: String?) {
         val position = mapWindow.map.cameraPosition
         val cameraPosition =
@@ -215,13 +189,14 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         ))
     }
 
-    fun emitVisibleRegionToJS(id: String?) {
-        val visibleRegion = mapWindow.map.visibleRegion
-        val result = visibleRegionToJSON(visibleRegion)
-        result.putString("id", id)
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(getId(), "visibleRegion", result)
+    fun emitVisibleRegionToJS(getVisibleRegionId: String?) {
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(GetVisibleRegionEvent(
+            getSurfaceId(context),
+            id,
+            mapWindow.map.visibleRegion,
+            getVisibleRegionId
+        ))
     }
 
     fun emitWorldToScreenPoints(worldPoints: ReadableArray?, id: String?) {

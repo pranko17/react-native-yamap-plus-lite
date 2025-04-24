@@ -178,7 +178,7 @@ export class ClusteredYamap extends React.Component<ClusteredYaMapProps, {}> {
     );
   }
 
-  public getVisibleRegion(callback: (VisibleRegion: VisibleRegion) => void) {
+  public getVisibleRegion(callback: (visibleRegion: VisibleRegion) => void) {
     const cbId = CallbacksManager.addCallback(callback);
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),

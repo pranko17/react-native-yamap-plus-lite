@@ -11,8 +11,11 @@ export const MapScreen = () => {
 
     useEffect(() => {
       if (mapLoaded) {
-          mapRef.current?.getCameraPosition(e => {
-            console.log('getCameraPosition', e);
+        mapRef.current?.getCameraPosition(e => {
+          console.log('getCameraPosition', e);
+        });
+        mapRef.current?.getVisibleRegion(e => {
+          console.log('getVisibleRegion', e);
         });
       }
     }, [mapLoaded]);
