@@ -20,6 +20,9 @@ export const MapScreen = () => {
         mapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
           console.log('getWorldPoints', e);
         });
+        mapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
+          console.warn('getScreenPoints', e);
+        });
       }
     }, [mapLoaded]);
 

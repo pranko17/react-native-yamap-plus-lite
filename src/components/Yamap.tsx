@@ -175,7 +175,7 @@ export class YaMap extends React.Component<YaMapProps, {}> {
     );
   }
 
-  public getScreenPoints(points: Point[], callback: (screenPoint: ScreenPoint) => void) {
+  public getScreenPoints(points: Point[], callback: (result: {screenPoints: ScreenPoint[]}) => void) {
     const cbId = CallbacksManager.addCallback(callback);
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),
@@ -184,7 +184,7 @@ export class YaMap extends React.Component<YaMapProps, {}> {
     );
   }
 
-  public getWorldPoints(points: ScreenPoint[], callback: ({worldPoints}: {worldPoints: Point[]}) => void) {
+  public getWorldPoints(points: ScreenPoint[], callback: (result: {worldPoints: Point[]}) => void) {
     const cbId = CallbacksManager.addCallback(callback);
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this),

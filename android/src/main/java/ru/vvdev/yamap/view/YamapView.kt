@@ -72,6 +72,7 @@ import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
+import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
@@ -200,7 +201,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         ))
     }
 
-    fun emitWorldToScreenPoints(worldPoints: ReadableArray?, id: String?) {
+    fun emitWorldToScreenPoints(worldPoints: ReadableArray?, getWorldToScreenPointsId: String?) {
         val screenPoints = Arguments.createArray()
 
         if (worldPoints !== null && worldPoints.size() > 0) {
@@ -212,13 +213,16 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
             }
         }
 
-        val result = Arguments.createMap()
-        result.putString("id", id)
-        result.putArray("screenPoints", screenPoints)
+        val eventData = Arguments.createMap()
+        eventData.putString("id", getWorldToScreenPointsId)
+        eventData.putArray("screenPoints", screenPoints)
 
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(getId(), "worldToScreenPoints", result)
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(GetWorldToScreenPointsEvent(
+            getSurfaceId(context),
+            id,
+            eventData
+        ))
     }
 
     fun emitScreenToWorldPoints(screenPoints: ReadableArray?, getScreenToWorldPointsId: String?) {
