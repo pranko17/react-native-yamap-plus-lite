@@ -654,3 +654,10 @@ const withYandexMaps: ConfigPlugin = (config) => {
 
 export default withYandexMaps(config);
 ```
+
+# Проблемы
+
+1. В никоторых случаях в симуляторе ios может крашиться приложение с ошибкой
+```failed assertion `The following Metal object is being destroyed while still required to be alive by the command buffer```
+
+Решение: In Xcode, in the "Product" Menu, go to "Scheme", then "Edit Scheme...". In the left panel select "Run (Debug)" and in Diagnostic tab uncheck "API Validation" under Metal settings.
