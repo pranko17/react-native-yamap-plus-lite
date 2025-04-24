@@ -74,6 +74,7 @@ import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
+import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
@@ -866,12 +867,12 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     override fun onMapLongTap(map: com.yandex.mapkit.map.Map, point: Point) {
-        val data = Arguments.createMap()
-        data.putDouble("lat", point.latitude)
-        data.putDouble("lon", point.longitude)
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java)
-            .receiveEvent(id, "onMapLongPress", data)
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(YamapLongPressEvent(
+            getSurfaceId(context),
+            id,
+            point
+        ))
     }
 
     override fun onMapLoaded(statistics: MapLoadStatistics) {

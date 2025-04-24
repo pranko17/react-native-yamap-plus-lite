@@ -44,6 +44,9 @@ export const ClusteredMapScreen = () => {
       onMapPress={e => {
         console.log('clustered map onPress', e.nativeEvent);
       }}
+      onMapLongPress={(e) => {
+        console.log('clustered map onLongPress', e.nativeEvent);
+      }}
       clusteredMarkers={[
         {
           point: {

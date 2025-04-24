@@ -17,6 +17,7 @@ import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
+import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
@@ -61,7 +62,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                     mapOf("phasedRegistrationNames" to
                             mapOf("bubbled" to "onMapPress")
                     ),
-            "onMapLongPress" to
+            YamapLongPressEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLongPress")
