@@ -17,6 +17,9 @@ export const MapScreen = () => {
         mapRef.current?.getVisibleRegion(e => {
           console.log('getVisibleRegion', e);
         });
+        mapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
+          console.log('getWorldPoints', e);
+        });
       }
     }, [mapLoaded]);
 

@@ -14,6 +14,9 @@ export const ClusteredMapScreen = () => {
         clusteredMapRef.current?.getVisibleRegion(e => {
           console.log('clustered getVisibleRegion', e);
         });
+        clusteredMapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
+          console.log('clustered getWorldPoints', e);
+        });
       }
     }, [mapLoaded]);
 

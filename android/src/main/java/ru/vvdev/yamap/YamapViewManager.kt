@@ -13,6 +13,7 @@ import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
+import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
@@ -67,7 +68,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLoaded")
                     ),
-            "screenToWorldPoints" to
+            GetScreenToWorldPointsEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onScreenToWorldPointsReceived")

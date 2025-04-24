@@ -3,8 +3,8 @@ package ru.vvdev.yamap.events.yamap
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.Event
 
-class GetCameraPositionEvent(surfaceId: Int, viewId: Int, private val eventData: WritableMap?)
-    : Event<GetCameraPositionEvent>(surfaceId, viewId) {
+class GetScreenToWorldPointsEvent(surfaceId: Int, viewId: Int, private val eventData: WritableMap?)
+    : Event<GetScreenToWorldPointsEvent>(surfaceId, viewId) {
 
     override fun getEventName(): String {
         return EVENT_NAME
@@ -17,6 +17,6 @@ class GetCameraPositionEvent(surfaceId: Int, viewId: Int, private val eventData:
     override fun getEventData(): WritableMap? = eventData
 
     companion object {
-        const val EVENT_NAME = "topGetCameraPosition"
+        const val EVENT_NAME = "topGetScreenToWorldPoints"
     }
 }
