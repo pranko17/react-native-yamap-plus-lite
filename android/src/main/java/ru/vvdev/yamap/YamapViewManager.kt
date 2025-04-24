@@ -12,6 +12,7 @@ import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
+import ru.vvdev.yamap.events.yamap.FindRoutesEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
@@ -30,7 +31,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
     override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
         return mutableMapOf(
-            "routes" to
+            FindRoutesEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onRouteFound")

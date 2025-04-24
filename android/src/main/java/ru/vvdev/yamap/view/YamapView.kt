@@ -69,6 +69,7 @@ import com.yandex.runtime.Error
 import com.yandex.runtime.image.ImageProvider
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
+import ru.vvdev.yamap.events.yamap.FindRoutesEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
@@ -736,13 +737,18 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         return routeMetadata
     }
 
-    fun onRoutesFound(id: String?, routes: WritableArray?, status: String?) {
-        val event = Arguments.createMap()
-        event.putArray("routes", routes)
-        event.putString("id", id)
-        event.putString("status", status)
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(getId(), "routes", event)
+    fun onRoutesFound(findRoutesId: String?, routes: WritableArray?, status: String?) {
+        val eventData = Arguments.createMap()
+        eventData.putArray("routes", routes)
+        eventData.putString("id", findRoutesId)
+        eventData.putString("status", status)
+
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(FindRoutesEvent(
+            getSurfaceId(context),
+            id,
+            eventData
+        ))
     }
 
     private fun transportHasStyle(transport: Transport): Boolean {

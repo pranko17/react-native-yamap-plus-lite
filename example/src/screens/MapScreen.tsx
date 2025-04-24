@@ -21,8 +21,11 @@ export const MapScreen = () => {
           console.log('getWorldPoints', e);
         });
         mapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
-          console.warn('getScreenPoints', e);
+          console.log('getScreenPoints', e);
         });
+        // mapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
+        //   console.log('findRoutes', e);
+        // });
       }
     }, [mapLoaded]);
 
