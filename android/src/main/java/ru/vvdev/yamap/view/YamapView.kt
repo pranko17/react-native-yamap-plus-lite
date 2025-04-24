@@ -8,7 +8,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewParent
 import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.ReactContext
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableArray
@@ -17,7 +16,6 @@ import com.facebook.react.bridge.WritableNativeArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
-import com.facebook.react.uimanager.events.RCTEventEmitter
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.RequestPoint
@@ -74,6 +72,7 @@ import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
+import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
@@ -117,10 +116,6 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         } else {
             mapWindow.map.move(position!!)
         }
-    }
-
-    fun setViewParent(viewParent: ViewParent?) { //any ViewGroup
-        mViewParent = viewParent
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
@@ -876,18 +871,12 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     override fun onMapLoaded(statistics: MapLoadStatistics) {
-        val data = Arguments.createMap()
-        data.putInt("renderObjectCount", statistics.renderObjectCount)
-        data.putDouble("curZoomModelsLoaded", statistics.curZoomModelsLoaded.toDouble())
-        data.putDouble("curZoomPlacemarksLoaded", statistics.curZoomPlacemarksLoaded.toDouble())
-        data.putDouble("curZoomLabelsLoaded", statistics.curZoomLabelsLoaded.toDouble())
-        data.putDouble("curZoomGeometryLoaded", statistics.curZoomGeometryLoaded.toDouble())
-        data.putDouble("tileMemoryUsage", statistics.tileMemoryUsage.toDouble())
-        data.putDouble("delayedGeometryLoaded", statistics.delayedGeometryLoaded.toDouble())
-        data.putDouble("fullyAppeared", statistics.fullyAppeared.toDouble())
-        data.putDouble("fullyLoaded", statistics.fullyLoaded.toDouble())
-        val reactContext = context as ReactContext
-        reactContext.getJSModule(RCTEventEmitter::class.java).receiveEvent(id, "onMapLoaded", data)
+        val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
+        eventDispatcher?.dispatchEvent(MapLoadedEvent(
+            getSurfaceId(context),
+            id,
+            statistics
+        ))
     }
 
     //trafficListener implementation

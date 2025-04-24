@@ -17,6 +17,7 @@ import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
 import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
+import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.view.YamapView
@@ -67,7 +68,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLongPress")
                     ),
-            "onMapLoaded" to
+            MapLoadedEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLoaded")

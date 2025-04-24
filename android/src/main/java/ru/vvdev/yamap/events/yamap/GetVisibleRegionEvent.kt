@@ -17,31 +17,31 @@ class GetVisibleRegionEvent(surfaceId: Int, viewId: Int, private val region: Vis
     }
 
     override fun getEventData(): WritableMap? {
-        val result = Arguments.createMap()
+        val data = Arguments.createMap()
 
         val bl = Arguments.createMap()
         bl.putDouble("lat", region.bottomLeft.latitude)
         bl.putDouble("lon", region.bottomLeft.longitude)
-        result.putMap("bottomLeft", bl)
+        data.putMap("bottomLeft", bl)
 
         val br = Arguments.createMap()
         br.putDouble("lat", region.bottomRight.latitude)
         br.putDouble("lon", region.bottomRight.longitude)
-        result.putMap("bottomRight", br)
+        data.putMap("bottomRight", br)
 
         val tl = Arguments.createMap()
         tl.putDouble("lat", region.topLeft.latitude)
         tl.putDouble("lon", region.topLeft.longitude)
-        result.putMap("topLeft", tl)
+        data.putMap("topLeft", tl)
 
         val tr = Arguments.createMap()
         tr.putDouble("lat", region.topRight.latitude)
         tr.putDouble("lon", region.topRight.longitude)
-        result.putMap("topRight", tr)
+        data.putMap("topRight", tr)
 
-        result.putString("id", id)
+        data.putString("id", id)
 
-        return result
+        return data
     }
 
     companion object {
