@@ -42,8 +42,8 @@ class YamapPolylineManager internal constructor() : ViewGroupManager<YamapPolyli
             val parsed = ArrayList<Point>()
             for (i in 0 until points.size()) {
                 val markerMap = points.getMap(i)
-                val lon = markerMap.getDouble("lon")
-                val lat = markerMap.getDouble("lat")
+                val lon = markerMap!!.getDouble("lon")
+                val lat = markerMap!!.getDouble("lat")
                 val point = Point(lat, lon)
                 parsed.add(point)
             }

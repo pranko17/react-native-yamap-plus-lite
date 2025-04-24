@@ -42,8 +42,8 @@ class YamapPolygonManager internal constructor() : ViewGroupManager<YamapPolygon
             val parsed = ArrayList<Point>()
             for (i in 0 until points.size()) {
                 val markerMap = points.getMap(i)
-                val lon = markerMap.getDouble("lon")
-                val lat = markerMap.getDouble("lat")
+                val lon = markerMap!!.getDouble("lon")
+                val lat = markerMap!!.getDouble("lat")
                 val point = Point(lat, lon)
                 parsed.add(point)
             }
@@ -58,10 +58,10 @@ class YamapPolygonManager internal constructor() : ViewGroupManager<YamapPolygon
             for (j in 0 until _rings.size()) {
                 val points = _rings.getArray(j)
                 val parsed = ArrayList<Point>()
-                for (i in 0 until points.size()) {
+                for (i in 0 until points!!.size()) {
                     val markerMap = points.getMap(i)
-                    val lon = markerMap.getDouble("lon")
-                    val lat = markerMap.getDouble("lat")
+                    val lon = markerMap!!.getDouble("lon")
+                    val lat = markerMap!!.getDouble("lat")
                     val point = Point(lat, lon)
                     parsed.add(point)
                 }
