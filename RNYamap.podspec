@@ -8,10 +8,12 @@ Pod::Spec.new do |s|
     s.homepage     = "vvdev.ru"
     s.license      = "MIT"
     s.author       = { package["author"]["name"] => package["author"]["email"] }
-    s.platform     = :ios, "12.0"
+    s.platform     = :ios, "13.0"
     s.source       = { :git => "https://github.com/author/RNYamap.git", :tag => "master" }
     s.source_files = "ios/**/*.{h,m,swift}"
     # s.requires_arc = true
+
+    s.static_framework = true
 
     s.dependency "React"
     s.dependency "YandexMapsMobile", "4.14.0-full"
