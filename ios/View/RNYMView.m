@@ -587,6 +587,9 @@
 }
 
 - (void)fitMarkers:(NSArray<YMKPoint *> *) points {
+    if ([points count] == 0) {
+        return;
+    }
     if ([points count] == 1) {
         YMKPoint *center = [points objectAtIndex:0];
         [self.mapWindow.map moveWithCameraPosition:[YMKCameraPosition cameraPositionWithTarget:center zoom:15 azimuth:0 tilt:0]];
