@@ -23,7 +23,9 @@ RCT_EXPORT_MODULE()
         @"onMapPress",
         @"onMapLongPress",
         @"onCameraPositionChangeEnd",
-        @"onMapLoaded"
+        @"onMapLoaded",
+        @"onWorldToScreenPointsReceived",
+        @"onScreenToWorldPointsReceived"
     ];
 }
 
@@ -55,6 +57,8 @@ RCT_EXPORT_VIEW_PROPERTY(onMapPress, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMapLongPress, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onCameraPositionChangeEnd, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMapLoaded, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onWorldToScreenPointsReceived, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onScreenToWorldPointsReceived, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY(initialRegion, NSDictionary, RNYMView) {
     if (json && view) {
@@ -249,6 +253,34 @@ RCT_EXPORT_METHOD(getVisibleRegion:(nonnull NSNumber*) reactTag _id:(NSString*_N
             return;
         }
         [view emitVisibleRegionToJS:_id];
+    }];
+}
+
+RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag json:(id)json _id:(NSString *_Nonnull)_id) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+
+        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+            RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
+            return;
+        }
+
+        NSArray<YMKPoint *> *mapPoints = [RCTConvert Points:json];
+        [view emitWorldToScreenPoint:mapPoints withId:_id];
+    }];
+}
+
+RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag json:(id)json _id:(NSString *_Nonnull)_id) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+
+        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+            RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
+            return;
+        }
+
+        NSArray<YMKScreenPoint *> *screenPoints = [RCTConvert ScreenPoints:json];
+        [view emitScreenToWorldPoint:screenPoints withId:_id];
     }];
 }
 

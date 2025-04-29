@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {ClusteredYamap, Marker} from '../../../';
 
 export const ClusteredMapScreen = () => {
@@ -14,12 +14,12 @@ export const ClusteredMapScreen = () => {
         clusteredMapRef.current?.getVisibleRegion(e => {
           console.log('clustered getVisibleRegion', e);
         });
-        // clusteredMapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
-        //   console.log('clustered getWorldPoints', e);
-        // });
-        // clusteredMapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
-        //   console.log('clustered getScreenPoints', e);
-        // });
+        clusteredMapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
+          console.log('clustered getWorldPoints', e);
+        });
+        clusteredMapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
+          console.log('clustered getScreenPoints', e);
+        });
         // clusteredMapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
         //   console.log('clustered findRoutes', e);
         // });
@@ -69,7 +69,7 @@ export const ClusteredMapScreen = () => {
           point={info.point}
           scale={0.3}
           source={require('../assets/images/marker.png')}
-          visible={Platform.OS === 'android' ? mapLoaded : true}
+          visible={mapLoaded}
         />
       )}
       style={styles.container}
