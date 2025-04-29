@@ -369,8 +369,8 @@
     if ([initialParams valueForKey:@"tilt"] != nil) initialTilt = [initialParams[@"tilt"] floatValue];
 
     YMKPoint *initialRegionCenter = [RCTConvert YMKPoint:@{@"lat" : [initialParams valueForKey:@"lat"], @"lon" : [initialParams valueForKey:@"lon"]}];
-    YMKCameraPosition *initialRegioPosition = [YMKCameraPosition cameraPositionWithTarget:initialRegionCenter zoom:initialZoom azimuth:initialAzimuth tilt:initialTilt];
-    [self.mapWindow.map moveWithCameraPosition:initialRegioPosition];
+    YMKCameraPosition *initialRegionPosition = [YMKCameraPosition cameraPositionWithTarget:initialRegionCenter zoom:initialZoom azimuth:initialAzimuth tilt:initialTilt];
+    [self.mapWindow.map moveWithCameraPosition:initialRegionPosition];
     initializedRegion = YES;
 }
 
