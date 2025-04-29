@@ -747,7 +747,9 @@
     } else if ([subview isKindOfClass:[YamapMarkerView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
         YamapMarkerView *marker = (YamapMarkerView *) subview;
-        YMKPlacemarkMapObject *obj = [objects addPlacemarkWithPoint:[marker getPoint]];
+        YMKPlacemarkMapObject *obj = [objects addPlacemark];
+        [obj setIconWithImage:[[UIImage alloc] init]];
+        [obj setGeometry:[marker getPoint]];
         [marker setMapObject:obj];
     } else if ([subview isKindOfClass:[YamapCircleView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;

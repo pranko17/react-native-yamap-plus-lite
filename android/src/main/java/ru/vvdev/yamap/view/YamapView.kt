@@ -7,6 +7,7 @@ import android.graphics.PointF
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewParent
+import androidx.core.graphics.createBitmap
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
@@ -759,21 +760,19 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     // CHILDREN
     open fun addFeature(child: View?, index: Int) {
         if (child is YamapPolygon) {
-            val _child = child
-            val obj = mapWindow.map.mapObjects.addPolygon(_child.polygon)
-            _child.setPolygonMapObject(obj)
+            val obj = mapWindow.map.mapObjects.addPolygon(child.polygon)
+            child.setPolygonMapObject(obj)
         } else if (child is YamapPolyline) {
-            val _child = child
-            val obj = mapWindow.map.mapObjects.addPolyline(_child.polyline)
-            _child.setPolylineMapObject(obj)
+            val obj = mapWindow.map.mapObjects.addPolyline(child.polyline)
+            child.setPolylineMapObject(obj)
         } else if (child is YamapMarker) {
-            val _child = child
-            val obj = mapWindow.map.mapObjects.addPlacemark(_child.point!!)
-            _child.setMarkerMapObject(obj)
+            val obj = mapWindow.map.mapObjects.addPlacemark()
+            obj.setIcon(ImageProvider.fromBitmap(createBitmap(1, 1)))
+            obj.geometry = child.point!!
+            child.setMarkerMapObject(obj)
         } else if (child is YamapCircle) {
-            val _child = child
-            val obj = mapWindow.map.mapObjects.addCircle(_child.circle)
-            _child.setCircleMapObject(obj)
+            val obj = mapWindow.map.mapObjects.addCircle(child.circle)
+            child.setCircleMapObject(obj)
         }
     }
 
