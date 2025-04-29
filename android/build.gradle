@@ -36,7 +36,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     if (supportsNamespace()) {
-        namespace "ru.vvdev.yamap"
+        namespace = "ru.vvdev.yamap"
 
         sourceSets {
             main {
@@ -51,7 +51,7 @@ android {
         targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
     }
     lintOptions {
-        abortOnError false
+        abortOnError = false
     }
     kotlinOptions {
         jvmTarget = '17'
