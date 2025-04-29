@@ -52,7 +52,7 @@
 
 - (instancetype)init {
 #if TARGET_OS_SIMULATOR
-    NXArchInfo *archInfo = NXGetLocalArchInfo();
+    const NXArchInfo *archInfo = NXGetLocalArchInfo();
     NSString *cpuArch = [NSString stringWithUTF8String:archInfo->description];
     self = [super initWithFrame:CGRectZero vulkanPreferred:[cpuArch hasPrefix:@"ARM64"]];
 #else
@@ -535,7 +535,6 @@
     }
 
     if (follow) {
-        CGFloat scale = UIScreen.mainScreen.scale;
         [userLayer setAnchorWithAnchorNormal:CGPointMake(0.5 * self.mapWindow.width, 0.5 * self.mapWindow.height) anchorCourse:CGPointMake(0.5 * self.mapWindow.width, 0.83 * self.mapWindow.height )];
         [userLayer setAutoZoomEnabled:YES];
     } else {
@@ -601,8 +600,8 @@
 }
 
 - (void)setLogoPosition:(NSDictionary *)logoPosition {
-    YMKLogoHorizontalAlignment *horizontalAlignment = YMKLogoHorizontalAlignmentRight;
-    YMKLogoVerticalAlignment *verticalAlignment = YMKLogoVerticalAlignmentBottom;
+    NSUInteger horizontalAlignment = YMKLogoHorizontalAlignmentRight;
+    NSUInteger verticalAlignment = YMKLogoVerticalAlignmentBottom;
 
     if ([[logoPosition valueForKey:@"horizontal"] isEqual:@"left"]) {
         horizontalAlignment = YMKLogoHorizontalAlignmentLeft;
@@ -618,8 +617,8 @@
 }
 
 - (void)setLogoPadding:(NSDictionary *)logoPadding {
-    NSUInteger *horizontalPadding = [logoPadding valueForKey:@"horizontal"] != nil ? [RCTConvert NSUInteger:logoPadding[@"horizontal"]] : 0;
-    NSUInteger *verticalPadding = [logoPadding valueForKey:@"vertical"] != nil ? [RCTConvert NSUInteger:logoPadding[@"vertical"]] : 0;
+    NSUInteger horizontalPadding = [logoPadding valueForKey:@"horizontal"] != nil ? [RCTConvert NSUInteger:logoPadding[@"horizontal"]] : 0;
+    NSUInteger verticalPadding = [logoPadding valueForKey:@"vertical"] != nil ? [RCTConvert NSUInteger:logoPadding[@"vertical"]] : 0;
 
     YMKLogoPadding *padding = [YMKLogoPadding paddingWithHorizontalPadding:horizontalPadding verticalPadding:verticalPadding];
     [self.mapWindow.map.logo setPaddingWithPadding:padding];
@@ -836,5 +835,7 @@
 
 
 @synthesize reactTag;
+
+@synthesize rootTag;
 
 @end

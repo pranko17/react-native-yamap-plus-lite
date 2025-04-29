@@ -150,6 +150,18 @@ RCT_CUSTOM_VIEW_PROPERTY(mapType, NSString, RNCYMView) {
     }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(logoPosition, BOOL, RNYMView) {
+    if (json && view) {
+        [view setLogoPosition:json];
+    }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
+    if (json && view) {
+        [view setLogoPadding:json];
+    }
+}
+
 // ref
 RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {

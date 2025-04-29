@@ -158,11 +158,10 @@
     float STROKE_SIZE = 9;
     NSString *text = [clusterSize stringValue];
     UIFont *font = [UIFont systemFontOfSize:FONT_SIZE];
-    CGSize size = [text sizeWithFont:font];
+    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:font}];
     float textRadius = sqrt(size.height * size.height + size.width * size.width) / 2;
     float internalRadius = textRadius + MARGIN_SIZE;
     float externalRadius = internalRadius + STROKE_SIZE;
-    UIImage *someImageView = [UIImage alloc];
     // This function returns a newImage, based on image, that has been:
     // - scaled to fit in (CGRect) rect
     // - and cropped within a circle of radius: rectWidth/2
