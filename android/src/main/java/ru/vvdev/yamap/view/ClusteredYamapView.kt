@@ -24,13 +24,12 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     private val placemarksMap = HashMap<String?, PlacemarkMapObject?>()
     private var pointsList = ArrayList<Point>()
 
-    fun setClusteredMarkers(points: ArrayList<Any>) {
+    fun setClusteredMarkers(points: ArrayList<HashMap<String, Double>>) {
         clusterCollection.clear()
         placemarksMap.clear()
         val pt = ArrayList<Point>()
         for (i in points.indices) {
-            @Suppress("UNCHECKED_CAST")
-            val point = points[i] as HashMap<String, Double>
+            val point = points[i]
             pt.add(Point(point["lat"]!!, point["lon"]!!))
         }
         val placemarks = clusterCollection.addPlacemarks(pt, TextImageProvider(""), IconStyle())
