@@ -13,27 +13,11 @@ iOS [4.14.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (09 апреля 2025
 ```
 yarn add react-native-yamap-plus
 ```
-или
-```
-npm i react-native-yamap-plus --save
-```
 
 #### Линковка в React Native <0.60
 
 ```
 react-native link react-native-yamap-plus
-```
-
-#### Android
-
-В файле /android/app/build.gradle добавить
-
-```diff
-dependencies {
-     ...
-+    implementation 'com.yandex.android:maps.mobile:4.7.0-full'
-     ...
-}
 ```
 
 #### iOS
