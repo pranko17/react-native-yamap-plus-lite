@@ -156,6 +156,12 @@ RCT_CUSTOM_VIEW_PROPERTY(mapType, NSString, RNCYMView) {
     }
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(interactive, BOOL, RNYMView) {
+    if (json && view) {
+        [view setInteractive:[json boolValue]];
+    }
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(logoPosition, BOOL, RNYMView) {
     if (json && view) {
         [view setLogoPosition:json];
