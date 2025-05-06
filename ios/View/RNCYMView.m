@@ -73,7 +73,11 @@
             }
         }
     }
+}
+
+- (RCTBubblingEventBlock)onMapLoaded {
     [clusterCollection clusterPlacemarksWithClusterRadius:50 minZoom:12];
+    return [super onMapLoaded];
 }
 
 - (void)setClusterColor: (UIColor*) color {
