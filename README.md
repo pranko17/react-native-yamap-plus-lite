@@ -4,7 +4,7 @@
 #### Библиотека для интеграции MapKit SDK в React Native
 Android [4.7.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (17 июля 2024) (В Yandex MapKit SDK 4.8.0 для Android подняли minsdk до 26, все версии RN поддерживают 24!)
 
-iOS [4.14.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (09 апреля 2025)
+iOS [4.15.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (24 апреля 2025)
 
 ## Установка
 
