@@ -41,6 +41,7 @@
     UIColor* clusterColor;
     NSMutableArray<YMKPlacemarkMapObject *>* placemarks;
     BOOL userClusters;
+    BOOL mapLoaded;
     Boolean initializedRegion;
 }
 
@@ -52,6 +53,7 @@
     userClusters=NO;
     clusterCollection = [self.mapWindow.map.mapObjects addClusterizedPlacemarkCollectionWithClusterListener:self];
     initializedRegion = NO;
+    mapLoaded = NO;
     return self;
 }
 
@@ -73,10 +75,18 @@
             }
         }
     }
+    if (mapLoaded) {
+        [self clusterPlacemarks];
+    }
+}
+
+- (void) clusterPlacemarks {
+    [clusterCollection clusterPlacemarksWithClusterRadius:50 minZoom:12];
 }
 
 - (RCTBubblingEventBlock)onMapLoaded {
-    [clusterCollection clusterPlacemarksWithClusterRadius:50 minZoom:12];
+    mapLoaded = YES;
+    [self clusterPlacemarks];
     return [super onMapLoaded];
 }
 
