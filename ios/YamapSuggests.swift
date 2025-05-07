@@ -58,31 +58,27 @@ class YamapSuggests: NSObject {
     }
 
     @objc func suggestHandler(_ searchQuery: String, options: YMKSuggestOptions, boundingBox: YMKBoundingBox, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
-        do {
-            let session = getSuggestClient()
+        let session = getSuggestClient()
 
-            runAsyncOnMainQueueWithoutDeadlocking {
-                session.suggest(withText: searchQuery, window: boundingBox, suggestOptions: options) { suggest, error in
-                    if let error = error {
-                        rejecter(self.ERR_SUGGEST_FAILED, "search request: \(searchQuery)", error)
-                        return
-                    }
-
-                    var suggestsToPass = [[String: Any]]()
-
-                    suggest?.items.forEach { suggestItem in
-                        var suggestToPass = [String: Any]()
-                        suggestToPass["title"] = suggestItem.title.text
-                        suggestToPass["subtitle"] = suggestItem.subtitle?.text
-                        suggestToPass["uri"] = suggestItem.uri
-                        suggestsToPass.append(suggestToPass)
-                    }
-
-                    resolver(suggestsToPass)
+        runAsyncOnMainQueueWithoutDeadlocking {
+            session.suggest(withText: searchQuery, window: boundingBox, suggestOptions: options) { suggest, error in
+                if let error = error {
+                    rejecter(self.ERR_SUGGEST_FAILED, "search request: \(searchQuery)", error)
+                    return
                 }
+
+                var suggestsToPass = [[String: Any]]()
+
+                suggest?.items.forEach { suggestItem in
+                    var suggestToPass = [String: Any]()
+                    suggestToPass["title"] = suggestItem.title.text
+                    suggestToPass["subtitle"] = suggestItem.subtitle?.text
+                    suggestToPass["uri"] = suggestItem.uri
+                    suggestsToPass.append(suggestToPass)
+                }
+
+                resolver(suggestsToPass)
             }
-        } catch {
-            rejecter(ERR_NO_REQUEST_ARG, "search request: \(searchQuery)", nil)
         }
     }
 
@@ -159,16 +155,12 @@ class YamapSuggests: NSObject {
     }
 
     @objc func reset(_ resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
-        do {
-            if let client = suggestClient {
-                DispatchQueue.main.async {
-                    client.reset()
-                }
+        if let client = suggestClient {
+            DispatchQueue.main.async {
+                client.reset()
             }
-            resolve([])
-        } catch {
-            reject("ERROR", "Error during reset suggestions", nil)
         }
+        resolve([])
     }
 
     @objc static func moduleName() -> String {

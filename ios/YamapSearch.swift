@@ -139,29 +139,24 @@ class YamapSearch: NSObject {
 
     @objc func addressToGeo(_ searchQuery: String, resolver: @escaping RCTPromiseResolveBlock, rejecter: @escaping RCTPromiseRejectBlock) {
         self.initSearchManager()
-        do {
-            self.setSearchOptions(options: nil)
-            runOnMainQueueWithoutDeadlocking {
-                self.searchSession = self.searchManager?.submit(withText: searchQuery, geometry: YMKGeometry(boundingBox: self.defaultBoundingBox), searchOptions: self.searchOptions, responseHandler: { search, error in
-                    if let error = error {
-                        rejecter(self.ERR_SEARCH_FAILED, "search request: \(searchQuery)", error)
-                        return
-                    }
+        self.setSearchOptions(options: nil)
+        runOnMainQueueWithoutDeadlocking {
+            self.searchSession = self.searchManager?.submit(withText: searchQuery, geometry: YMKGeometry(boundingBox: self.defaultBoundingBox), searchOptions: self.searchOptions, responseHandler: { search, error in
+                if let error = error {
+                    rejecter(self.ERR_SEARCH_FAILED, "search request: \(searchQuery)", error)
+                    return
+                }
 
-                    let geoObjects = search?.collection.children.compactMap { $0.obj }
+                let geoObjects = search?.collection.children.compactMap { $0.obj }
 
-                    let point = (
-                        geoObjects?.first?.metadataContainer
-                            .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata
-                    )?.balloonPoint
-                    let searchPoint = ["lat": point?.latitude, "lon": point?.longitude];
+                let point = (
+                    geoObjects?.first?.metadataContainer
+                        .getItemOf(YMKSearchToponymObjectMetadata.self) as? YMKSearchToponymObjectMetadata
+                )?.balloonPoint
+                let searchPoint = ["lat": point?.latitude, "lon": point?.longitude];
 
-                    resolver(searchPoint)
-
-                })
-            }
-        } catch {
-            rejecter(ERR_NO_REQUEST_ARG, "search request: \(searchQuery)", nil)
+                resolver(searchPoint)
+            })
         }
     }
 
