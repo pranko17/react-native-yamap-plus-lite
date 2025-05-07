@@ -46,12 +46,15 @@
         [mapObject setGeometry:polyline];
         [mapObject setZIndex:[zIndex floatValue]];
         [mapObject setStrokeColorWithColor:strokeColor];
-        [mapObject setStrokeWidth:[strokeWidth floatValue]];
-        [mapObject setDashLength:[dashLength floatValue]];
-        [mapObject setGapLength:[gapLength floatValue]];
-        [mapObject setDashOffset:[dashOffset floatValue]];
-        [mapObject setOutlineWidth:[outlineWidth floatValue]];
-        [mapObject setOutlineColor:outlineColor];
+
+        YMKLineStyle * style = [YMKLineStyle new];
+        [style setStrokeWidth:[strokeWidth floatValue]];
+        [style setDashLength:[dashLength floatValue]];
+        [style setGapLength:[gapLength floatValue]];
+        [style setDashOffset:[dashOffset floatValue]];
+        [style setOutlineWidth:[outlineWidth floatValue]];
+        [style setOutlineColor:outlineColor];
+        [mapObject setStyle:style];
     }
 }
 
