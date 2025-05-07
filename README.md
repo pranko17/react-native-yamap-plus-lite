@@ -23,7 +23,7 @@ react-native link react-native-yamap-plus
 
 
 **Обязательно** инициализировать MapKit
-- или в функции `application` в AppDelegate.swift:
+- Swift: в файле AppDelegate.swift:
 
 ```diff
 + import YandexMapsMobile
@@ -48,7 +48,7 @@ react-native link react-native-yamap-plus
 }
 ```
 
-- или в функции `didFinishLaunchingWithOptions` в AppDelegate.m/AppDelegate.mm:
+- Objective-C: в файле AppDelegate.m/AppDelegate.mm:
 
 ```diff
 + #import <YandexMapsMobile/YMKMapKitFactory.h>
