@@ -57,11 +57,14 @@
         }
         [iconStyle setRotationType:rotated];
         if ([_reactSubviews count] == 0) {
-            if (![source isEqual:@""]) {
-                if (![source isEqual:lastSource]) {
-                    [mapObject setIconWithImage:[self resolveUIImage:source]];
-                    lastSource = source;
-                }
+            if (source != nil && ![source isEqualToString:@""] && ![source isEqual:lastSource]) {
+                [self fetchImage:[NSURL URLWithString:source] completion:^(UIImage *image) {
+                    if ([self->mapObject isValid]) {
+                        [self->mapObject setIconWithImage:image];
+                        self->lastSource = self->source;
+                        [self updateMarker];
+                    }
+                }];
             }
         }
         [mapObject setIconStyleWithStyle:iconStyle];
@@ -81,12 +84,14 @@
         }
         [iconStyle setRotationType:rotated];
         if ([_reactSubviews count] == 0) {
-            if (![source isEqualToString:@""] && source != nil) {
-                UIImage *image = [self resolveUIImage:source];
-                if (image) {
-                    [mapObject setIconWithImage:image];
-                    lastSource = source;
-                }
+            if (source != nil && ![source isEqualToString:@""] && ![source isEqual:lastSource]) {
+                [self fetchImage:[NSURL URLWithString:source] completion:^(UIImage *image) {
+                    if ([self->mapObject isValid]) {
+                        [self->mapObject setIconWithImage:image];
+                        self->lastSource = self->source;
+                        [self updateClusterMarker];
+                    }
+                }];
             }
         }
         [mapObject setIconStyleWithStyle:iconStyle];
@@ -121,31 +126,28 @@
     [self updateMarker];
 }
 
-- (UIImage*)resolveUIImage:(NSString*)uri {
-    if (!uri || [uri isEqualToString:@""]) {
-        NSLog(@"URI is nil or empty");
-        return nil;
-    }
+- (void)fetchImage:(NSURL *)url completion: (void (^)(UIImage *image)) completion {
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable taskData, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Failed fetch data with error: %@", error);
+        }
 
-    NSURL *url = [NSURL URLWithString:uri];
-    if (!url) {
-        NSLog(@"Failed to create URL from URI: %@", uri);
-        return nil;
-    }
+        if (!taskData) {
+            NSLog(@"Failed to load image data from URL: %@", url);
+            return;
+        }
 
-    NSData *imageData = [NSData dataWithContentsOfURL:url];
-    if (!imageData) {
-        NSLog(@"Failed to load image data from URL: %@", uri);
-        return nil;
-    }
-
-    UIImage *icon = [UIImage imageWithData:imageData];
-    if (!icon) {
-        NSLog(@"Failed to create image from loaded data: %@", uri);
-        return nil;
-    }
-
-    return icon;
+        UIImage *image = [UIImage imageWithData:taskData];
+        if (!image) {
+            NSLog(@"Failed to create image from loaded data: %@", url);
+            return;
+        }
+  
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(image);
+        });
+    }];
+    [task resume];
 }
 
 - (void)setSource:(NSString*)_source {
@@ -274,5 +276,7 @@
 }
 
 @synthesize reactTag;
+
+@synthesize rootTag;
 
 @end
