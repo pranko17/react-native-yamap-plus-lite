@@ -26,6 +26,7 @@ export const MapScreen = () => {
         // mapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
         //   console.log('findRoutes', e);
         // });
+        // mapRef.current?.setTrafficVisible(true);
       }
     }, [mapLoaded]);
 

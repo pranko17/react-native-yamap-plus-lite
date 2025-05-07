@@ -124,7 +124,6 @@
     NSMutableArray* points = [[NSMutableArray alloc] init];
     YMKPolyline* subpolyline = [YMKSubpolylineHelper subpolylineWithPolyline:route.geometry subpolyline:section.geometry];
 
-
     for (int i = 0; i < [subpolyline.points count]; ++i) {
         YMKPoint* point = [subpolyline.points objectAtIndex:i];
         NSMutableDictionary* jsonPoint = [[NSMutableDictionary alloc] init];
@@ -830,5 +829,14 @@
 @synthesize reactTag;
 
 @synthesize rootTag;
+
+- (void)onTrafficLoading {
+}
+
+- (void)onTrafficChangedWithTrafficLevel:(nullable YMKTrafficLevel *)trafficLevel {
+}
+
+- (void)onTrafficExpired {
+}
 
 @end
