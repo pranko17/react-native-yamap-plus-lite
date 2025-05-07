@@ -57,8 +57,8 @@ class YamapSearch: NSObject {
             return YMKGeometry.init(point: YMKPoint(latitude: (figure!["value"] as! [String: Any])["lat"] as! Double, longitude: (figure!["value"] as! [String: Any])["lon"] as! Double))
         }
         if (figure!["type"] as! String=="BOUNDINGBOX") {
-            var southWest = YMKPoint(latitude: ((figure!["value"] as! [String: Any])["southWest"] as! [String: Any])["lat"] as! Double, longitude: ((figure!["value"] as! [String: Any])["southWest"] as! [String: Any])["lon"] as! Double)
-            var northEast = YMKPoint(latitude: ((figure!["value"] as! [String: Any])["northEast"] as! [String: Any])["lat"] as! Double, longitude: ((figure!["value"] as! [String: Any])["northEast"] as! [String: Any])["lon"] as! Double)
+            let southWest = YMKPoint(latitude: ((figure!["value"] as! [String: Any])["southWest"] as! [String: Any])["lat"] as! Double, longitude: ((figure!["value"] as! [String: Any])["southWest"] as! [String: Any])["lon"] as! Double)
+            let northEast = YMKPoint(latitude: ((figure!["value"] as! [String: Any])["northEast"] as! [String: Any])["lat"] as! Double, longitude: ((figure!["value"] as! [String: Any])["northEast"] as! [String: Any])["lon"] as! Double)
             return YMKGeometry.init(boundingBox: YMKBoundingBox(southWest: southWest, northEast: northEast))
         }
         if (figure!["type"] as! String=="POLYLINE") {
