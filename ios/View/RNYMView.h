@@ -34,7 +34,6 @@
 
 // PROPS
 - (void)setNightMode:(BOOL)nightMode;
-- (void)setClusters:(BOOL)userClusters;
 - (void)setListenUserLocation:(BOOL)listen;
 - (void)setUserLocationIcon:(NSString *_Nullable)iconSource;
 - (void)setUserLocationIconScale:(NSNumber *_Nullable)iconScale;
