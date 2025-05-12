@@ -9,6 +9,7 @@
 #endif
 
 #import "YamapMarkerView.h"
+#import "ImageCacheManager.h"
 
 #define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
 
@@ -58,7 +59,7 @@
         [iconStyle setRotationType:rotated];
         if ([_reactSubviews count] == 0) {
             if (source != nil && ![source isEqualToString:@""] && ![source isEqual:lastSource]) {
-                [self fetchImage:[NSURL URLWithString:source] completion:^(UIImage *image) {
+                [[ImageCacheManager instance] getWithSource:source completion:^(UIImage *image) {
                     if ([self->mapObject isValid]) {
                         [self->mapObject setIconWithImage:image];
                         self->lastSource = self->source;
@@ -85,7 +86,7 @@
         [iconStyle setRotationType:rotated];
         if ([_reactSubviews count] == 0) {
             if (source != nil && ![source isEqualToString:@""] && ![source isEqual:lastSource]) {
-                [self fetchImage:[NSURL URLWithString:source] completion:^(UIImage *image) {
+                [[ImageCacheManager instance] getWithSource:source completion:^(UIImage *image) {
                     if ([self->mapObject isValid]) {
                         [self->mapObject setIconWithImage:image];
                         self->lastSource = self->source;
@@ -124,30 +125,6 @@
 - (void)setPoint:(YMKPoint*)point {
     _point = point;
     [self updateMarker];
-}
-
-- (void)fetchImage:(NSURL *)url completion: (void (^)(UIImage *image)) completion {
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable taskData, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"Failed fetch data with error: %@", error);
-        }
-
-        if (!taskData) {
-            NSLog(@"Failed to load image data from URL: %@", url);
-            return;
-        }
-
-        UIImage *image = [UIImage imageWithData:taskData];
-        if (!image) {
-            NSLog(@"Failed to create image from loaded data: %@", url);
-            return;
-        }
-  
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(image);
-        });
-    }];
-    [task resume];
 }
 
 - (void)setSource:(NSString*)_source {
