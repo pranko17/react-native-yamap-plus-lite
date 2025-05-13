@@ -65,7 +65,7 @@ export const ClusteredMapScreen = () => {
       ]}
       renderMarker={(info) => (
         <Marker
-          key={`${info.point.lat}_${info.point.lon}_${mapLoaded}`}
+          key={`${info.point.lat}_${info.point.lon}`}
           point={info.point}
           scale={0.3}
           source={require('../assets/images/marker.png')}
