@@ -2,7 +2,6 @@ package ru.vvdev.yamap.view
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.PointF
 import android.view.View
@@ -17,13 +16,12 @@ import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.map.RotationType
 import com.yandex.runtime.image.ImageProvider
 import ru.vvdev.yamap.models.ReactMapObject
-import ru.vvdev.yamap.utils.Callback
-import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
 import androidx.core.graphics.createBitmap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import ru.vvdev.yamap.events.YamapMarkerPressEvent
+import ru.vvdev.yamap.utils.ImageCacheManager
 
 class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapListener,
     ReactMapObject {
@@ -114,16 +112,9 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
             if (childs.size == 0) {
                 if (iconSource != "") {
                     iconSource?.let {
-                        DownloadImageBitmap(context, it, object : Callback<Bitmap?> {
-                            override fun invoke(arg: Bitmap?) {
-                                try {
-                                    val icon = ImageProvider.fromBitmap(arg)
-                                    (rnMapObject as PlacemarkMapObject).setIcon(icon)
-                                    (rnMapObject as PlacemarkMapObject).setIconStyle(iconStyle)
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                            }
+                        ImageCacheManager.getImage(context, it, fun (imageProvider: ImageProvider) {
+                            (rnMapObject as PlacemarkMapObject).setIcon(imageProvider)
+                            (rnMapObject as PlacemarkMapObject).setIconStyle(iconStyle)
                         })
                     }
                 }
