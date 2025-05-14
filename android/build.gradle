@@ -4,12 +4,10 @@ buildscript {
   }
 
   repositories {
-    google()
     mavenCentral()
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:8.7.3"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault("kotlinVersion")}"
   }
 }
@@ -38,7 +36,6 @@ android {
 
 repositories {
   mavenCentral()
-  google()
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -50,7 +47,8 @@ println "play_services_location_version=" + play_services_location_version
 println "maps_mobile_version=" + maps_mobile_version
 
 dependencies {
-  implementation "com.facebook.react:react-android"
+  //noinspection GradleDynamicVersion
+  implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   implementation "com.google.android.gms:play-services-location:$play_services_location_version"
