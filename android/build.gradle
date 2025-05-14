@@ -1,79 +1,58 @@
-import com.android.Version
-
-def DEFAULT_COMPILE_SDK_VERSION          = 33
-def DEFAULT_TARGET_SDK_VERSION           = 33
-def DEFAULT_MIN_SDK_VERSION              = 23
-def DEFAULT_GOOGLE_PLAY_SERVICES_VERSION = "21.0.1"
-
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.2.2"
-    }
+  ext.getExtOrDefault = {name ->
+    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['YamapPlus_' + name]
+  }
+
+  repositories {
+    google()
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "com.android.tools.build:gradle:8.7.3"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getExtOrDefault("kotlinVersion")}"
+  }
 }
 
 apply plugin: "com.android.library"
-apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "kotlin-android"
 
-static def supportsNamespace() {
-    def parsed = Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')
-    def major = parsed[0].toInteger()
-    def minor = parsed[1].toInteger()
-
-    // Namespace support was added in 7.3.0
-    return (major == 7 && minor >= 3) || major >= 8
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["YamapPlus_" + name]).toInteger()
 }
-
-def safeExtGet(prop, fallback) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    if (supportsNamespace()) {
-        namespace = "ru.vvdev.yamap"
+  namespace = "ru.vvdev.yamap"
 
-        sourceSets {
-            main {
-                manifest.srcFile "src/main/AndroidManifestNew.xml"
-            }
-        }
-    }
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
-    defaultConfig {
-        compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
-        minSdkVersion safeExtGet('minSdkVersion', DEFAULT_MIN_SDK_VERSION)
-        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
-    }
-    lintOptions {
-        abortOnError = false
-    }
-    kotlinOptions {
-        jvmTarget = '17'
-    }
+  defaultConfig {
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+  }
+
+  kotlinOptions {
+    jvmTarget = "17"
+  }
 }
 
 repositories {
-    mavenCentral()
-    google()
+  mavenCentral()
+  google()
 }
 
+def kotlin_version = getExtOrDefault("kotlinVersion")
+def play_services_location_version = getExtOrDefault("playServicesLocationVersion")
+def maps_mobile_version = getExtOrDefault("mapsMobileVersion")
+
+println "kotlin_version=" + kotlin_version
+println "play_services_location_version=" + play_services_location_version
+println "maps_mobile_version=" + maps_mobile_version
+
 dependencies {
-    //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"
+  implementation "com.facebook.react:react-android"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    def googlePlayServicesVersion = safeExtGet('googlePlayServicesVersion', DEFAULT_GOOGLE_PLAY_SERVICES_VERSION)
-    googlePlayServicesVersion = safeExtGet('playServicesVersion', googlePlayServicesVersion)
-    googlePlayServicesVersion = safeExtGet('playServicesLocationVersion', googlePlayServicesVersion)
-
-    implementation "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
-
-    implementation "com.yandex.android:maps.mobile:4.7.0-full"
-
-    implementation 'androidx.core:core-ktx:1.16.0'
+  implementation "com.google.android.gms:play-services-location:$play_services_location_version"
+  implementation "com.yandex.android:maps.mobile:$maps_mobile_version"
 }
