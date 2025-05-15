@@ -20,6 +20,7 @@ import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
 import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
+import ru.vvdev.yamap.utils.Points
 import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
 
@@ -202,13 +203,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
     private fun fitMarkers(view: View, jsPoints: ReadableArray?) {
         if (jsPoints != null) {
-            val points = ArrayList<Point?>()
-
-            for (i in 0 until jsPoints.size()) {
-                val point = jsPoints.getMap(i)
-                points.add(Point(point!!.getDouble("lat"), point!!.getDouble("lon")))
-            }
-
+            val points = Points.jsPointsToPoints(jsPoints)
             castToYaMapView(view).fitMarkers(points)
         }
     }
@@ -220,18 +215,13 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         id: String?
     ) {
         if (jsPoints != null) {
-            val points = ArrayList<Point?>()
-
-            for (i in 0 until jsPoints.size()) {
-                val point = jsPoints.getMap(i)
-                points.add(Point(point!!.getDouble("lat"), point!!.getDouble("lon")))
-            }
+            val points = Points.jsPointsToPoints(jsPoints)
 
             val vehicles = ArrayList<String>()
 
             if (jsVehicles != null) {
                 for (i in 0 until jsVehicles.size()) {
-                    vehicles.add(jsVehicles.getString(i) as String)
+                    jsVehicles.getString(i)?.let { vehicles.add(it) }
                 }
             }
 

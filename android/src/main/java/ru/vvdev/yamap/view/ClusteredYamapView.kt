@@ -94,7 +94,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     }
 
     override fun onClusterTap(cluster: Cluster): Boolean {
-        val points = ArrayList<Point?>()
+        val points = ArrayList<Point>()
         for (placemark in cluster.placemarks) {
             points.add(placemark.geometry)
         }

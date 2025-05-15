@@ -13,6 +13,7 @@ import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
+import ru.vvdev.yamap.utils.Points
 import ru.vvdev.yamap.view.ClusteredYamapView
 import javax.annotation.Nonnull
 
@@ -206,13 +207,7 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
 
     private fun fitMarkers(view: View, jsPoints: ReadableArray?) {
         if (jsPoints != null) {
-            val points = ArrayList<Point?>()
-
-            for (i in 0 until jsPoints.size()) {
-                val point = jsPoints.getMap(i)
-                points.add(Point(point!!.getDouble("lat"), point!!.getDouble("lon")))
-            }
-
+            val points = Points.jsPointsToPoints(jsPoints)
             castToYaMapView(view).fitMarkers(points)
         }
     }
@@ -224,11 +219,7 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
         id: String?
     ) {
         if (jsPoints != null) {
-            val points = ArrayList<Point?>()
-            for (i in 0 until jsPoints.size()) {
-                val point = jsPoints.getMap(i)
-                points.add(Point(point!!.getDouble("lat"), point!!.getDouble("lon")))
-            }
+            val points = Points.jsPointsToPoints(jsPoints)
             val vehicles = ArrayList<String>()
             if (jsVehicles != null) {
                 for (i in 0 until jsVehicles.size()) {

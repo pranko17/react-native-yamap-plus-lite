@@ -47,7 +47,6 @@ import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.MapLoadStatistics
 import com.yandex.mapkit.map.MapLoadedListener
 import com.yandex.mapkit.map.MapType
-import com.yandex.mapkit.map.PlacemarkMapObject
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.traffic.TrafficLayer
 import com.yandex.mapkit.traffic.TrafficLevel
@@ -205,10 +204,11 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
         if (worldPoints !== null && worldPoints.size() > 0) {
             for (i in 0 until worldPoints.size()) {
-                val p = worldPoints.getMap(i)
-                val worldPoint = Point(p!!.getDouble("lat"), p!!.getDouble("lon"))
-                val screenPoint = mapWindow.worldToScreen(worldPoint)
-                screenPoints.pushMap(screenPointToJSON(screenPoint))
+                worldPoints.getMap(i)?.let {
+                    val worldPoint = Point(it.getDouble("lat"), it.getDouble("lon"))
+                    val screenPoint = mapWindow.worldToScreen(worldPoint)
+                    screenPoints.pushMap(screenPointToJSON(screenPoint))
+                }
             }
         }
 
@@ -229,11 +229,12 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
         if (screenPoints !== null && screenPoints.size() > 0) {
             for (i in 0 until screenPoints.size()) {
-                val p = screenPoints.getMap(i)
-                val screenPoint =
-                    ScreenPoint(p!!.getDouble("x").toFloat(), p!!.getDouble("y").toFloat())
-                val worldPoint = mapWindow.screenToWorld(screenPoint)
-                worldPoints.pushMap(worldPointToJSON(worldPoint))
+                screenPoints.getMap(i)?.let {
+                    val screenPoint =
+                        ScreenPoint(it.getDouble("x").toFloat(), it.getDouble("y").toFloat())
+                    val worldPoint = mapWindow.screenToWorld(screenPoint)
+                    worldPoints.pushMap(worldPointToJSON(worldPoint))
+                }
             }
         }
 
@@ -256,7 +257,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         setCenter(position, duration, animation)
     }
 
-    fun findRoutes(points: ArrayList<Point?>, vehicles: ArrayList<String>, id: String?) {
+    fun findRoutes(points: ArrayList<Point>, vehicles: ArrayList<String>, id: String?) {
         val self = this
         if (vehicles.size == 1 && vehicles[0] == "car") {
             val listener: DrivingRouteListener = object : DrivingRouteListener {
@@ -285,7 +286,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
             val _points = ArrayList<RequestPoint>()
             for (i in points.indices) {
                 val point = points[i]
-                val _p = RequestPoint(point!!, RequestPointType.WAYPOINT, null, null)
+                val _p = RequestPoint(point, RequestPointType.WAYPOINT, null, null)
                 _points.add(_p)
             }
 
@@ -300,7 +301,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val _points = ArrayList<RequestPoint>()
         for (i in points.indices) {
             val point = points[i]
-            _points.add(RequestPoint(point!!, RequestPointType.WAYPOINT, null, null))
+            _points.add(RequestPoint(point, RequestPointType.WAYPOINT, null, null))
         }
         val listener: Session.RouteListener = object : Session.RouteListener {
             override fun onMasstransitRoutes(routes: List<Route>) {
@@ -340,47 +341,37 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     fun fitAllMarkers() {
-        val points = ArrayList<Point?>()
+        val points = ArrayList<Point>()
         for (i in 0 until childCount) {
             val obj: Any = getChildAt(i)
             if (obj is YamapMarker) {
-                points.add(obj.point)
+                obj.point?.let { points.add(it) }
             }
         }
         fitMarkers(points)
     }
 
-    private fun mapPlacemarksToPoints(placemarks: List<PlacemarkMapObject>): ArrayList<Point> {
-        val points = ArrayList<Point>()
-
-        for (i in placemarks.indices) {
-            points.add(placemarks[i].geometry)
-        }
-
-        return points
-    }
-
-    fun calculateBoundingBox(points: ArrayList<Point?>): BoundingBox {
-        var minLon = points[0]!!.longitude
-        var maxLon = points[0]!!.longitude
-        var minLat = points[0]!!.latitude
-        var maxLat = points[0]!!.latitude
+    private fun calculateBoundingBox(points: ArrayList<Point>): BoundingBox {
+        var minLon = points[0].longitude
+        var maxLon = points[0].longitude
+        var minLat = points[0].latitude
+        var maxLat = points[0].latitude
 
         for (i in points.indices) {
-            if (points[i]!!.longitude > maxLon) {
-                maxLon = points[i]!!.longitude
+            if (points[i].longitude > maxLon) {
+                maxLon = points[i].longitude
             }
 
-            if (points[i]!!.longitude < minLon) {
-                minLon = points[i]!!.longitude
+            if (points[i].longitude < minLon) {
+                minLon = points[i].longitude
             }
 
-            if (points[i]!!.latitude > maxLat) {
-                maxLat = points[i]!!.latitude
+            if (points[i].latitude > maxLat) {
+                maxLat = points[i].latitude
             }
 
-            if (points[i]!!.latitude < minLat) {
-                minLat = points[i]!!.latitude
+            if (points[i].latitude < minLat) {
+                minLat = points[i].latitude
             }
         }
 
@@ -391,13 +382,13 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         return boundingBox
     }
 
-    fun fitMarkers(points: ArrayList<Point?>) {
+    fun fitMarkers(points: ArrayList<Point>) {
         if (points.size == 0) {
             return
         }
         if (points.size == 1) {
             val center = Point(
-                points[0]!!.latitude, points[0]!!.longitude
+                points[0].latitude, points[0].longitude
             )
             mapWindow.map.move(CameraPosition(center, 15f, 0f, 0f))
             return
