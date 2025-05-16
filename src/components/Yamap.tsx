@@ -28,7 +28,7 @@ import {
   YandexLogoPosition,
   YandexLogoPadding,
 } from '../interfaces';
-import { processColorProps } from '../utils';
+import {getProcessedColors} from '../utils';
 
 const { yamap: NativeYamapModule } = NativeModules;
 
@@ -248,11 +248,7 @@ export class YaMap extends React.Component<YaMapProps, {}> {
       userLocationIcon: this.props.userLocationIcon ? this.resolveImageUri(this.props.userLocationIcon) : undefined,
     };
 
-    processColorProps(props, 'clusterColor' as keyof YaMapProps);
-    processColorProps(props, 'userLocationAccuracyFillColor' as keyof YaMapProps);
-    processColorProps(props, 'userLocationAccuracyStrokeColor' as keyof YaMapProps);
-
-    return props;
+    return getProcessedColors(props, ['userLocationAccuracyFillColor', 'userLocationAccuracyStrokeColor']);
   }
 
   render() {

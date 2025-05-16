@@ -1,13 +1,4 @@
-import { processColor } from 'react-native';
-
-export function processColorProps<T>(props: T, name: keyof T) {
-  if (props[name]) {
-
-    // @ts-ignore
-    props[name] = processColor(props[name]);
-
-  }
-}
+import {processColor} from 'react-native';
 
 export const getProcessedColors = <T extends { [key: string]: any }>(props: T, colorProps: Array<keyof T>): T => {
   const _props = {...props};
