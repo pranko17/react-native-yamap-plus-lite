@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/react": "*",
     "@types/react-native": "*",
-    "react-native-builder-bob": "0.40.9",
+    "react-native-builder-bob": "0.40.11",
     "release-it": "19.0.2",
     "typescript": "5.8.3"
   },
@@ -81,6 +81,5 @@
   ],
   "workspaces": [
     "example"
-  ],
-  "packageManager": "yarn@4.9.1"
+  ]
 }
