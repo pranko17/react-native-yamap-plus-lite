@@ -12,12 +12,6 @@ iOS [4.15.0](https://yandex.ru/dev/mapkit/doc/ru/versions) (24 апреля 2025
 yarn add react-native-yamap-plus
 ```
 
-#### Линковка в React Native <0.60
-
-```
-react-native link react-native-yamap-plus
-```
-
 #### iOS
 
 
