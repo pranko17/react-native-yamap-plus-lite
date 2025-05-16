@@ -21,7 +21,7 @@ const NativePolylineComponent = requireNativeComponent<PolylineProps>('YamapPoly
 
 export const Polyline: FC<PolylineProps> = (props) => {
   const processedProps = useMemo(() =>
-      getProcessedColors(props, ['fillColor', 'strokeColor', 'outlineColor']) as PolylineProps,
+      getProcessedColors(props, ['strokeColor', 'outlineColor']),
     [props]
   );
 

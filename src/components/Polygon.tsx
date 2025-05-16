@@ -18,7 +18,7 @@ const NativePolygonComponent = requireNativeComponent<PolygonProps>('YamapPolygo
 
 export const Polygon: FC<PolygonProps> = (props) => {
   const processedProps = useMemo(() =>
-      getProcessedColors(props, ['fillColor', 'strokeColor']) as PolygonProps,
+      getProcessedColors(props, ['fillColor', 'strokeColor']),
     [props]
   );
 
