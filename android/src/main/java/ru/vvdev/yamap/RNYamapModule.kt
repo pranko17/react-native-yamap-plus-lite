@@ -1,6 +1,5 @@
 package ru.vvdev.yamap
 
-import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -53,26 +52,38 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
     }
 
     @ReactMethod
-    fun setLocale(locale: String?, successCb: Callback) {
+    fun setLocale(locale: String?, promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
-            MapKitFactory.setLocale(locale)
-            successCb.invoke()
+            try {
+                MapKitFactory.setLocale(locale)
+                promise.resolve(null)
+            } catch (e: Throwable) {
+                promise.reject("101", e.message)
+            }
         })
     }
 
     @ReactMethod
-    fun getLocale(successCb: Callback) {
+    fun getLocale(promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
-            val locale = I18nManagerFactory.getLocale()
-            successCb.invoke(locale)
+            try {
+                val locale = I18nManagerFactory.getLocale()
+                promise.resolve(locale)
+            } catch (e: Throwable) {
+                promise.reject("102", e.message)
+            }
         })
     }
 
     @ReactMethod
-    fun resetLocale(successCb: Callback) {
+    fun resetLocale(promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
-            I18nManagerFactory.setLocale(null)
-            successCb.invoke()
+            try {
+                I18nManagerFactory.setLocale(null)
+                promise.resolve(null)
+            } catch (e: Throwable) {
+                promise.reject("103", e.message)
+            }
         })
     }
 

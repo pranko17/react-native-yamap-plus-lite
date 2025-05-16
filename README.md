@@ -74,19 +74,19 @@ react-native link react-native-yamap-plus
 Для этого лучше всего зайти в корневой файл приложения, например `App.js`, и добавить инициализацию:
 
 ```js
-import YaMap from 'react-native-yamap-plus';
+import {YamapInstance} from 'react-native-yamap-plus';
 
-YaMap.init('API_KEY');
+YamapInstance.init(API_KEY);
 ```
 
 ### Изменение языка карт
 
 ```js
-import YaMap from 'react-native-yamap-plus';
+import {YamapInstance} from 'react-native-yamap-plus';
 
-const currentLocale = await YaMap.getLocale();
-YaMap.setLocale('en_US');  // 'ru_RU' или другие
-YaMap.resetLocale();
+const currentLocale = await YamapInstance.getLocale();
+YamapInstance.setLocale('en_US');  // 'ru_RU' или другие
+YamapInstance.resetLocale();
 ```
 
 -  **getLocale(): Promise\<string\>** - возвращает используемый язык карт;
@@ -94,8 +94,6 @@ YaMap.resetLocale();
 -  **setLocale(locale: string): Promise\<void\>** - установить язык карт;
 
 -  **resetLocale(): Promise\<void\>** - использовать для карт язык системы.
-
-Каждый метод возвращает Promise, который выполняется при ответе нативного SDK. Promise может отклониться, если SDK вернет ошибку.
 
 **ВАЖНО!**
 

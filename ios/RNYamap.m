@@ -48,19 +48,21 @@ RCT_EXPORT_METHOD(init: (NSString *) apiKey
     }
 }
 
-RCT_EXPORT_METHOD(setLocale: (NSString *) locale successCallback:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
+RCT_EXPORT_METHOD(setLocale: (NSString *) locale
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
     [YRTI18nManagerFactory setLocaleWithLocale:locale];
-    successCb(@[]);
+    resolve(nil);
 }
 
-RCT_EXPORT_METHOD(resetLocale:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
+RCT_EXPORT_METHOD(resetLocale:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     [YRTI18nManagerFactory setLocaleWithLocale:nil];
-    successCb(@[]);
+    resolve(nil);
 }
 
-RCT_EXPORT_METHOD(getLocale:(RCTResponseSenderBlock)successCb errorCallback:(RCTResponseSenderBlock) errorCb) {
+RCT_EXPORT_METHOD(getLocale:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
     NSString * locale = [YRTI18nManagerFactory getLocale];
-    successCb(@[locale]);
+    resolve(locale);
 }
 
 RCT_EXPORT_MODULE()

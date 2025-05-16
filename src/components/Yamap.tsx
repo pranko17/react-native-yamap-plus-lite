@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Platform,
   requireNativeComponent,
-  NativeModules,
   UIManager,
   findNodeHandle,
   ViewProps,
@@ -29,8 +28,6 @@ import {
   YandexLogoPadding,
 } from '../interfaces';
 import {getProcessedColors} from '../utils';
-
-const { yamap: NativeYamapModule } = NativeModules;
 
 export interface YaMapProps extends ViewProps {
   userLocationIcon?: ImageSourcePropType;
@@ -78,28 +75,6 @@ export class YaMap extends React.Component<YaMapProps, {}> {
     'cable',
     'funicular',
   ];
-
-  public static init(apiKey: string): Promise<void> {
-    return NativeYamapModule.init(apiKey);
-  }
-
-  public static setLocale(locale: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      NativeYamapModule.setLocale(locale, () => resolve(), (err: string) => reject(new Error(err)));
-    });
-  }
-
-  public static getLocale(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      NativeYamapModule.getLocale((locale: string) => resolve(locale), (err: string) => reject(new Error(err)));
-    });
-  }
-
-  public static resetLocale(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      NativeYamapModule.resetLocale(() => resolve(), (err: string) => reject(new Error(err)));
-    });
-  }
 
   public findRoutes(points: Point[], vehicles: Vehicles[], callback: (event: RoutesFoundEvent<DrivingInfo | MasstransitInfo>) => void) {
     this._findRoutes(points, vehicles, callback);

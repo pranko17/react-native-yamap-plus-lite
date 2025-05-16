@@ -5,6 +5,7 @@ export * from './components/Polyline';
 export * from './components/Circle';
 export * from './components/ClusteredYamap';
 export * from './interfaces';
+export * from './modules';
 export * from './Suggest';
 
 export { default as Search } from './Search';

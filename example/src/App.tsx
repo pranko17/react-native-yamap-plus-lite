@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import YaMap from './../../';
+import {YamapInstance} from './../../';
 import {SelectOption} from './components/SelectOption';
 
 import {API_KEY} from './config';
@@ -9,7 +9,8 @@ import {ClusteredMapScreen} from './screens/ClusteredMapScreen';
 import {SearchScreen} from './screens/SearchScreen';
 import {SuggestScreen} from './screens/SuggestScreen';
 
-YaMap.init(API_KEY);
+YamapInstance.setLocale('ru_RU').then(() => {console.log('setLocale');}).catch(console.warn);
+YamapInstance.init(API_KEY).then(() => {console.log('init');}).catch(console.warn);
 
 export default function App() {
   const [selectedScreen, setSelectedScreen] = useState(Screen.Map);
