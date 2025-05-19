@@ -5,7 +5,6 @@ import com.facebook.react.bridge.ReadableType
 import com.yandex.mapkit.geometry.BoundingBox
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.search.SearchFactory
-import com.yandex.mapkit.search.SearchManager
 import com.yandex.mapkit.search.SearchManagerType
 import com.yandex.mapkit.search.SearchType
 import com.yandex.mapkit.search.SuggestOptions
@@ -18,9 +17,9 @@ import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.PointUtil
 
 class YandexMapSuggestClient : MapSuggestClient {
-    private val searchManager: SearchManager
-    private val suggestOptions = SuggestOptions()
-    private var suggestSession: SuggestSession? = null
+    private val _searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
+    private val _suggestOptions = SuggestOptions()
+    private var _suggestSession: SuggestSession? = null
 
     /**
      * Для Яндекса нужно указать географическую область поиска. В дефолтном варианте мы не знаем какие
@@ -29,11 +28,10 @@ class YandexMapSuggestClient : MapSuggestClient {
      * в градусах. Получается, что координаты самой юго-западной точки, это
      * ширина = -90, долгота = -180, а самой северо-восточной - ширина = 90, долгота = 180
      */
-    private val defaultGeometry = BoundingBox(Point(-90.0, -180.0), Point(90.0, 180.0))
+    private val _defaultGeometry = BoundingBox(Point(-90.0, -180.0), Point(90.0, 180.0))
 
     init {
-        searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED)
-        suggestOptions.setSuggestTypes(SearchType.GEO.value)
+        _suggestOptions.setSuggestTypes(SearchType.GEO.value)
     }
 
     private fun suggestHandler(
@@ -43,11 +41,11 @@ class YandexMapSuggestClient : MapSuggestClient {
         onSuccess: Callback<List<MapSuggestItem?>?>?,
         onError: Callback<Throwable?>?
     ) {
-        if (suggestSession == null) {
-            suggestSession = searchManager.createSuggestSession()
+        if (_suggestSession == null) {
+            _suggestSession = _searchManager.createSuggestSession()
         }
 
-        suggestSession!!.suggest(
+        _suggestSession!!.suggest(
             text!!,
             boundingBox,
             options,
@@ -94,7 +92,7 @@ class YandexMapSuggestClient : MapSuggestClient {
         onSuccess: Callback<List<MapSuggestItem?>?>?,
         onError: Callback<Throwable?>?
     ) {
-        this.suggestHandler(text, this.suggestOptions, this.defaultGeometry, onSuccess, onError)
+        suggestHandler(text, _suggestOptions, _defaultGeometry, onSuccess, onError)
     }
 
     override fun suggest(
@@ -110,10 +108,10 @@ class YandexMapSuggestClient : MapSuggestClient {
         val southWestKey = "southWest"
         val northEastKey = "northEast"
 
-        val options_ = SuggestOptions()
+        val suggestOptions = SuggestOptions()
 
         var suggestType = SuggestType.GEO.value
-        var boundingBox = this.defaultGeometry
+        var boundingBox = _defaultGeometry
 
         if (options!!.hasKey(suggestWordsKey) && !options.isNull(suggestWordsKey)) {
             if (options.getType(suggestWordsKey) != ReadableType.Boolean) {
@@ -122,7 +120,7 @@ class YandexMapSuggestClient : MapSuggestClient {
             }
             val suggestWords = options.getBoolean(suggestWordsKey)
 
-            options_.setSuggestWords(suggestWords)
+            suggestOptions.setSuggestWords(suggestWords)
         }
 
         if (options.hasKey(boundingBoxKey) && !options.isNull(boundingBoxKey)) {
@@ -150,7 +148,7 @@ class YandexMapSuggestClient : MapSuggestClient {
         if (options.hasKey(userPositionKey) && !options.isNull(userPositionKey)) {
             try {
                 val userPosition = mapPoint(options, userPositionKey)
-                options_.setUserPosition(userPosition)
+                suggestOptions.setUserPosition(userPosition)
             } catch (upex: Exception) {
                 onError!!.invoke(upex)
                 return
@@ -174,14 +172,14 @@ class YandexMapSuggestClient : MapSuggestClient {
             }
         }
 
-        options_.setSuggestTypes(suggestType)
-        this.suggestHandler(text, options_, boundingBox, onSuccess, onError)
+        suggestOptions.setSuggestTypes(suggestType)
+        suggestHandler(text, suggestOptions, boundingBox, onSuccess, onError)
     }
 
     override fun resetSuggest() {
-        if (suggestSession != null) {
-            suggestSession!!.reset()
-            suggestSession = null
+        if (_suggestSession != null) {
+            _suggestSession!!.reset()
+            _suggestSession = null
         }
     }
 }

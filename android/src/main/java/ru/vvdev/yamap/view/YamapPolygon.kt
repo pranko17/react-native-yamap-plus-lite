@@ -18,14 +18,14 @@ import ru.vvdev.yamap.models.ReactMapObject
 class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
     @JvmField
     var polygon: Polygon
-    var _points: ArrayList<Point> = ArrayList()
-    var innerRings: ArrayList<ArrayList<Point>>? = ArrayList()
+    private var _points: ArrayList<Point> = ArrayList()
+    private var _innerRings: ArrayList<ArrayList<Point>>? = ArrayList()
     override var rnMapObject: MapObject? = null
-    private var fillColor = Color.BLACK
-    private var strokeColor = Color.BLACK
-    private var zIndex = 1
-    private var strokeWidth = 1f
-    private var handled = true
+    private var _fillColor = Color.BLACK
+    private var _strokeColor = Color.BLACK
+    private var _zIndex = 1
+    private var _strokeWidth = 1f
+    private var _handled = true
 
     init {
         polygon = Polygon(LinearRing(ArrayList()), ArrayList())
@@ -41,49 +41,49 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
         updatePolygon()
     }
 
-    fun setPolygonInnerRings(_innerRings: ArrayList<ArrayList<Point>>?) {
-        innerRings = _innerRings ?: ArrayList()
+    fun setPolygonInnerRings(innerRings: ArrayList<ArrayList<Point>>?) {
+        _innerRings = innerRings ?: ArrayList()
         updatePolygonGeometry()
         updatePolygon()
     }
 
     private fun updatePolygonGeometry() {
-        val _rings = ArrayList<LinearRing>()
-        if (innerRings != null) {
-            for (i in innerRings!!.indices) {
-                _rings.add(LinearRing(innerRings!![i]))
+        val rings = ArrayList<LinearRing>()
+        if (_innerRings != null) {
+            for (i in _innerRings!!.indices) {
+                rings.add(LinearRing(_innerRings!![i]))
             }
         }
-        polygon = Polygon(LinearRing(_points), _rings)
+        polygon = Polygon(LinearRing(_points), rings)
     }
 
-    fun setZIndex(_zIndex: Int) {
-        zIndex = _zIndex
+    fun setZIndex(zIndex: Int) {
+        _zIndex = zIndex
         updatePolygon()
     }
 
-    fun setStrokeColor(_color: Int) {
-        strokeColor = _color
+    fun setStrokeColor(color: Int) {
+        _strokeColor = color
         updatePolygon()
     }
 
-    fun setFillColor(_color: Int) {
-        fillColor = _color
+    fun setFillColor(color: Int) {
+        _fillColor = color
         updatePolygon()
     }
 
     fun setStrokeWidth(width: Float) {
-        strokeWidth = width
+        _strokeWidth = width
         updatePolygon()
     }
 
     private fun updatePolygon() {
         if (rnMapObject != null) {
             (rnMapObject as PolygonMapObject).geometry = polygon
-            (rnMapObject as PolygonMapObject).strokeWidth = strokeWidth
-            (rnMapObject as PolygonMapObject).strokeColor = strokeColor
-            (rnMapObject as PolygonMapObject).fillColor = fillColor
-            (rnMapObject as PolygonMapObject).zIndex = zIndex.toFloat()
+            (rnMapObject as PolygonMapObject).strokeWidth = _strokeWidth
+            (rnMapObject as PolygonMapObject).strokeColor = _strokeColor
+            (rnMapObject as PolygonMapObject).fillColor = _fillColor
+            (rnMapObject as PolygonMapObject).zIndex = _zIndex.toFloat()
         }
     }
 
@@ -93,14 +93,14 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
         updatePolygon()
     }
 
-    fun setHandled(_handled: Boolean) {
-        handled = _handled
+    fun setHandled(handled: Boolean) {
+        _handled = handled
     }
 
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
         val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
         eventDispatcher?.dispatchEvent(YamapPolygonPressEvent(getSurfaceId(context), id))
 
-        return handled
+        return _handled
     }
 }

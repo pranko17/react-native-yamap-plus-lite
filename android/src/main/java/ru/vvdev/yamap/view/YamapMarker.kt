@@ -2,6 +2,7 @@ package ru.vvdev.yamap.view
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.PointF
 import android.view.View
@@ -27,16 +28,16 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     ReactMapObject {
     @JvmField
     var point: Point? = null
-    private var zIndex = 1
-    private var scale = 1f
-    private var visible = true
-    private var handled = true
-    private var rotated = false
-    private var markerAnchor: PointF? = null
-    private var iconSource: String? = null
+    private var _zIndex = 1
+    private var _scale = 1f
+    private var _visible = true
+    private var _handled = true
+    private var _rotated = false
+    private var _markerAnchor: PointF? = null
+    private var _iconSource: String? = null
     private var _childView: View? = null
     override var rnMapObject: MapObject? = null
-    private val childs = ArrayList<View>()
+    private val _children = ArrayList<View>()
 
     // OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom -> updateMarker() }
     private val childLayoutListener =
@@ -46,56 +47,56 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     }
 
     // PROPS
-    fun setPoint(_point: Point?) {
-        point = _point
+    fun setPoint(point: Point?) {
+        this.point = point
         updateMarker()
     }
 
-    fun setZIndex(_zIndex: Int) {
-        zIndex = _zIndex
+    fun setZIndex(zIndex: Int) {
+        _zIndex = zIndex
         updateMarker()
     }
 
-    fun setScale(_scale: Float) {
-        scale = _scale
+    fun setScale(scale: Float) {
+        _scale = scale
         updateMarker()
     }
 
-    fun setHandled(_handled: Boolean) {
-        handled = _handled
+    fun setHandled(handled: Boolean) {
+        _handled = handled
     }
 
-    fun setRotated(_rotated: Boolean) {
-        rotated = _rotated
+    fun setRotated(rotated: Boolean) {
+        _rotated = rotated
         updateMarker()
     }
 
-    fun setVisible(_visible: Boolean) {
-        visible = _visible
+    fun setVisible(visible: Boolean) {
+        _visible = visible
         updateMarker()
     }
 
     fun setIconSource(source: String?) {
-        iconSource = source
+        _iconSource = source
         updateMarker()
     }
 
     fun setAnchor(anchor: PointF?) {
-        markerAnchor = anchor
+        _markerAnchor = anchor
         updateMarker()
     }
 
     private fun updateMarker() {
         if (rnMapObject != null && rnMapObject!!.isValid) {
             val iconStyle = IconStyle()
-            iconStyle.setScale(scale)
-            iconStyle.setRotationType(if (rotated) RotationType.ROTATE else RotationType.NO_ROTATION)
-            iconStyle.setVisible(visible)
-            if (markerAnchor != null) {
-                iconStyle.setAnchor(markerAnchor)
+            iconStyle.setScale(_scale)
+            iconStyle.setRotationType(if (_rotated) RotationType.ROTATE else RotationType.NO_ROTATION)
+            iconStyle.setVisible(_visible)
+            if (_markerAnchor != null) {
+                iconStyle.setAnchor(_markerAnchor)
             }
             (rnMapObject as PlacemarkMapObject).geometry = point!!
-            (rnMapObject as PlacemarkMapObject).zIndex = zIndex.toFloat()
+            (rnMapObject as PlacemarkMapObject).zIndex = _zIndex.toFloat()
             (rnMapObject as PlacemarkMapObject).setIconStyle(iconStyle)
 
             if (_childView != null) {
@@ -109,14 +110,14 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
                     e.printStackTrace()
                 }
             }
-            if (childs.size == 0) {
-                if (iconSource != "") {
-                    iconSource?.let {
-                        ImageCacheManager.getImage(context, it, fun (imageProvider: ImageProvider) {
-                            (rnMapObject as PlacemarkMapObject).setIcon(imageProvider)
+            if (_children.size == 0 && _iconSource != "") {
+                _iconSource?.let { source ->
+                    ImageCacheManager.getImage(context, source, fun (image: Bitmap?) {
+                        ImageProvider.fromBitmap(image).let {
+                            (rnMapObject as PlacemarkMapObject).setIcon(it)
                             (rnMapObject as PlacemarkMapObject).setIconStyle(iconStyle)
-                        })
-                    }
+                        }
+                    })
                 }
             }
         }
@@ -128,7 +129,7 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
         updateMarker()
     }
 
-    fun setChildView(view: View?) {
+    private fun setChildView(view: View?) {
         if (view == null) {
             _childView!!.removeOnLayoutChangeListener(childLayoutListener)
             _childView = null
@@ -140,20 +141,20 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     }
 
     fun addChildView(view: View, index: Int) {
-        childs.add(index, view)
-        setChildView(childs[0])
+        _children.add(index, view)
+        setChildView(_children[0])
     }
 
     fun removeChildView(index: Int) {
-        childs.removeAt(index)
-        setChildView(if (childs.size > 0) childs[0] else null)
+        _children.removeAt(index)
+        setChildView(if (_children.size > 0) _children[0] else null)
     }
 
-    fun moveAnimationLoop(lat: Double, lon: Double) {
+    private fun moveAnimationLoop(lat: Double, lon: Double) {
         (rnMapObject as PlacemarkMapObject).geometry = Point(lat, lon)
     }
 
-    fun rotateAnimationLoop(delta: Float) {
+    private fun rotateAnimationLoop(delta: Float) {
         (rnMapObject as PlacemarkMapObject).direction = delta
     }
 
@@ -199,6 +200,6 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
         val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
         eventDispatcher?.dispatchEvent(YamapMarkerPressEvent(getSurfaceId(context), id))
 
-        return handled
+        return _handled
     }
 }

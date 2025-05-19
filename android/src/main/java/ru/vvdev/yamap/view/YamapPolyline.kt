@@ -17,17 +17,17 @@ import ru.vvdev.yamap.models.ReactMapObject
 class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
     @JvmField
     var polyline: Polyline
-    var _points: ArrayList<Point> = ArrayList()
+    private var _points: ArrayList<Point> = ArrayList()
     override var rnMapObject: MapObject? = null
-    private var outlineColor = Color.BLACK
-    private var strokeColor = Color.BLACK
-    private var zIndex = 1
-    private var strokeWidth = 1f
-    private var dashLength = 1
-    private var gapLength = 0
-    private var dashOffset = 0f
-    private var outlineWidth = 0
-    private var handled = true
+    private var _outlineColor = Color.BLACK
+    private var _strokeColor = Color.BLACK
+    private var _zIndex = 1
+    private var _strokeWidth = 1f
+    private var _dashLength = 1
+    private var _gapLength = 0
+    private var _dashOffset = 0f
+    private var _outlineWidth = 0
+    private var _handled = true
 
     init {
         polyline = Polyline(ArrayList())
@@ -43,58 +43,58 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         updatePolyline()
     }
 
-    fun setZIndex(_zIndex: Int) {
-        zIndex = _zIndex
+    fun setZIndex(zIndex: Int) {
+        _zIndex = zIndex
         updatePolyline()
     }
 
-    fun setStrokeColor(_color: Int) {
-        strokeColor = _color
+    fun setStrokeColor(color: Int) {
+        _strokeColor = color
         updatePolyline()
     }
 
-    fun setDashLength(length: Int) {
-        dashLength = length
+    fun setDashLength(dashLength: Int) {
+        _dashLength = dashLength
         updatePolyline()
     }
 
     fun setDashOffset(offset: Float) {
-        dashOffset = offset
+        _dashOffset = offset
         updatePolyline()
     }
 
-    fun setGapLength(length: Int) {
-        gapLength = length
+    fun setGapLength(gapLength: Int) {
+        _gapLength = gapLength
         updatePolyline()
     }
 
     fun setOutlineWidth(width: Int) {
-        outlineWidth = width
+        _outlineWidth = width
         updatePolyline()
     }
 
     fun setOutlineColor(color: Int) {
-        outlineColor = color
+        _outlineColor = color
         updatePolyline()
     }
 
     fun setStrokeWidth(width: Float) {
-        strokeWidth = width
+        _strokeWidth = width
         updatePolyline()
     }
 
     private fun updatePolyline() {
-        if (rnMapObject != null) {
-            (rnMapObject as PolylineMapObject).geometry = polyline
-            (rnMapObject as PolylineMapObject).strokeWidth = strokeWidth
-            (rnMapObject as PolylineMapObject).setStrokeColor(strokeColor)
-            (rnMapObject as PolylineMapObject).zIndex = zIndex.toFloat()
-            (rnMapObject as PolylineMapObject).dashLength = dashLength.toFloat()
-            (rnMapObject as PolylineMapObject).gapLength = gapLength.toFloat()
-            (rnMapObject as PolylineMapObject).dashOffset = dashOffset
-            (rnMapObject as PolylineMapObject).outlineColor = outlineColor
-            (rnMapObject as PolylineMapObject).outlineWidth = outlineWidth.toFloat()
-        }
+        if (rnMapObject === null) return
+
+        (rnMapObject as PolylineMapObject).geometry = polyline
+        (rnMapObject as PolylineMapObject).strokeWidth = _strokeWidth
+        (rnMapObject as PolylineMapObject).setStrokeColor(_strokeColor)
+        (rnMapObject as PolylineMapObject).zIndex = _zIndex.toFloat()
+        (rnMapObject as PolylineMapObject).dashLength = _dashLength.toFloat()
+        (rnMapObject as PolylineMapObject).gapLength = _gapLength.toFloat()
+        (rnMapObject as PolylineMapObject).dashOffset = _dashOffset
+        (rnMapObject as PolylineMapObject).outlineColor = _outlineColor
+        (rnMapObject as PolylineMapObject).outlineWidth = _outlineWidth.toFloat()
     }
 
     fun setPolylineMapObject(obj: MapObject?) {
@@ -103,14 +103,14 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         updatePolyline()
     }
 
-    fun setHandled(_handled: Boolean) {
-        handled = _handled
+    fun setHandled(handled: Boolean) {
+        _handled = handled
     }
 
     override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
         val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
         eventDispatcher?.dispatchEvent(YamapPolylinePressEvent(getSurfaceId(context), id))
 
-        return handled
+        return _handled
     }
 }

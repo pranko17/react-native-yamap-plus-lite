@@ -19,16 +19,16 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
     var circle: Circle
 
     override var rnMapObject: MapObject? = null
-    private var handled = true
-    private var fillColor = Color.BLACK
-    private var strokeColor = Color.BLACK
-    private var zIndex = 1
-    private var strokeWidth = 1f
-    private var center = Point(0.0, 0.0)
-    private var radius = 0f
+    private var _handled = true
+    private var _fillColor = Color.BLACK
+    private var _strokeColor = Color.BLACK
+    private var _zIndex = 1
+    private var _strokeWidth = 1f
+    private var _center = Point(0.0, 0.0)
+    private var _radius = 0f
 
     init {
-        circle = Circle(center, radius)
+        circle = Circle(_center, _radius)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -36,52 +36,52 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
 
     // PROPS
     fun setCenter(point: Point) {
-        center = point
+        _center = point
         updateGeometry()
         updateCircle()
     }
 
-    fun setRadius(_radius: Float) {
-        radius = _radius
+    fun setRadius(radius: Float) {
+        _radius = radius
         updateGeometry()
         updateCircle()
     }
 
     private fun updateGeometry() {
-        circle = Circle(center, radius)
+        circle = Circle(_center, _radius)
     }
 
-    fun setZIndex(_zIndex: Int) {
-        zIndex = _zIndex
+    fun setZIndex(zIndex: Int) {
+        _zIndex = zIndex
         updateCircle()
     }
 
-    fun setHandled(_handled: Boolean) {
-        handled = _handled
+    fun setHandled(handled: Boolean) {
+        _handled = handled
     }
 
-    fun setStrokeColor(_color: Int) {
-        strokeColor = _color
+    fun setStrokeColor(color: Int) {
+        _strokeColor = color
         updateCircle()
     }
 
-    fun setFillColor(_color: Int) {
-        fillColor = _color
+    fun setFillColor(color: Int) {
+        _fillColor = color
         updateCircle()
     }
 
     fun setStrokeWidth(width: Float) {
-        strokeWidth = width
+        _strokeWidth = width
         updateCircle()
     }
 
     private fun updateCircle() {
         if (rnMapObject != null) {
             (rnMapObject as CircleMapObject).geometry = circle
-            (rnMapObject as CircleMapObject).strokeWidth = strokeWidth
-            (rnMapObject as CircleMapObject).strokeColor = strokeColor
-            (rnMapObject as CircleMapObject).fillColor = fillColor
-            (rnMapObject as CircleMapObject).zIndex = zIndex.toFloat()
+            (rnMapObject as CircleMapObject).strokeWidth = _strokeWidth
+            (rnMapObject as CircleMapObject).strokeColor = _strokeColor
+            (rnMapObject as CircleMapObject).fillColor = _fillColor
+            (rnMapObject as CircleMapObject).zIndex = _zIndex.toFloat()
         }
     }
 
@@ -95,6 +95,6 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
         val eventDispatcher = UIManagerHelper.getEventDispatcherForReactTag(context as ThemedReactContext, id)
         eventDispatcher?.dispatchEvent(YamapCirclePressEvent(getSurfaceId(context), id))
 
-        return handled
+        return _handled
     }
 }

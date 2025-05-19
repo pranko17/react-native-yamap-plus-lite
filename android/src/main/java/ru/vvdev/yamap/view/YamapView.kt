@@ -25,7 +25,6 @@ import com.yandex.mapkit.ScreenPoint
 import com.yandex.mapkit.directions.DirectionsFactory
 import com.yandex.mapkit.directions.driving.DrivingOptions
 import com.yandex.mapkit.directions.driving.DrivingRoute
-import com.yandex.mapkit.directions.driving.DrivingRouter
 import com.yandex.mapkit.directions.driving.DrivingRouterType
 import com.yandex.mapkit.directions.driving.DrivingSection
 import com.yandex.mapkit.directions.driving.DrivingSession.DrivingRouteListener
@@ -77,7 +76,7 @@ import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
-import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
+import ru.vvdev.yamap.utils.ImageCacheManager
 import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.utils.RouteManager
 import javax.annotation.Nonnull
@@ -91,7 +90,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     private var userLocationBitmap: Bitmap? = null
     private val routeMng = RouteManager()
     private val masstransitRouter = TransportFactory.getInstance().createMasstransitRouter()
-    private val drivingRouter: DrivingRouter
+    private val drivingRouter = DirectionsFactory.getInstance().createDrivingRouter(DrivingRouterType.ONLINE)
     private val pedestrianRouter = TransportFactory.getInstance().createPedestrianRouter()
     private var userLocationLayer: UserLocationLayer? = null
     private var userLocationAccuracyFillColor = 0
@@ -99,11 +98,9 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     private var userLocationAccuracyStrokeWidth = 0f
     private var trafficLayer: TrafficLayer? = null
     private var initializedRegion = false
-
     private var userLocationView: UserLocationView? = null
 
     init {
-        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter(DrivingRouterType.ONLINE)
         mapWindow.map.addCameraListener(this)
         mapWindow.map.addInputListener(this)
         mapWindow.map.setMapLoadedListener(this)
@@ -120,7 +117,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        when (event.getAction()) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> if (null == mViewParent) {
                 parent.requestDisallowInterceptTouchEvent(true)
             } else {
@@ -403,13 +400,9 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     fun setUserLocationIcon(iconSource: String) {
         // todo[0]: можно устанавливать разные иконки на покой и движение. Дополнительно можно устанавливать стиль иконки, например scale
         userLocationIcon = iconSource
-        DownloadImageBitmap(context, iconSource, object : Callback<Bitmap?> {
-            override fun invoke(arg: Bitmap?) {
-                if (iconSource == userLocationIcon) {
-                    userLocationBitmap = arg
-                    updateUserLocationIcon()
-                }
-            }
+        ImageCacheManager.getImage(context, iconSource, fun (image: Bitmap?) {
+            userLocationBitmap = image
+            updateUserLocationIcon()
         })
     }
 
@@ -769,8 +762,8 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     // location listener implementation
-    override fun onObjectAdded(@Nonnull _userLocationView: UserLocationView) {
-        userLocationView = _userLocationView
+    override fun onObjectAdded(@Nonnull view: UserLocationView) {
+        userLocationView = view
         updateUserLocationIcon()
     }
 
@@ -778,33 +771,35 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     override fun onObjectUpdated(
-        @Nonnull _userLocationView: UserLocationView,
+        @Nonnull view: UserLocationView,
         @Nonnull objectEvent: ObjectEvent
     ) {
-        userLocationView = _userLocationView
+        userLocationView = view
         updateUserLocationIcon()
     }
 
     private fun updateUserLocationIcon() {
-        if (userLocationView != null) {
-            val userIconStyle = IconStyle()
-            userIconStyle.setScale(userLocationIconScale)
+        if (userLocationView === null) return
 
-            val pin = userLocationView!!.pin
-            val arrow = userLocationView!!.arrow
-            if (userLocationBitmap != null) {
-                pin.setIcon(ImageProvider.fromBitmap(userLocationBitmap), userIconStyle)
-                arrow.setIcon(ImageProvider.fromBitmap(userLocationBitmap), userIconStyle)
-            }
-            val circle = userLocationView!!.accuracyCircle
-            if (userLocationAccuracyFillColor != 0) {
-                circle.fillColor = userLocationAccuracyFillColor
-            }
-            if (userLocationAccuracyStrokeColor != 0) {
-                circle.strokeColor = userLocationAccuracyStrokeColor
-            }
-            circle.strokeWidth = userLocationAccuracyStrokeWidth
+        val userIconStyle = IconStyle()
+        userIconStyle.setScale(userLocationIconScale)
+
+        val pin = userLocationView!!.pin
+        val arrow = userLocationView!!.arrow
+
+        userLocationBitmap?.let {
+            pin.setIcon(ImageProvider.fromBitmap(it), userIconStyle)
+            arrow.setIcon(ImageProvider.fromBitmap(it), userIconStyle)
         }
+
+        val circle = userLocationView!!.accuracyCircle
+        if (userLocationAccuracyFillColor != 0) {
+            circle.fillColor = userLocationAccuracyFillColor
+        }
+        if (userLocationAccuracyStrokeColor != 0) {
+            circle.strokeColor = userLocationAccuracyStrokeColor
+        }
+        circle.strokeWidth = userLocationAccuracyStrokeWidth
     }
 
     override fun onCameraPositionChanged(
@@ -860,7 +855,6 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         ))
     }
 
-    //trafficListener implementation
     override fun onTrafficChanged(trafficLevel: TrafficLevel?) {
     }
 
@@ -868,20 +862,5 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     override fun onTrafficExpired() {
-    }
-
-    companion object {
-        private val DEFAULT_VEHICLE_COLORS: HashMap<String?, String?> =
-            object : HashMap<String?, String?>() {
-                init {
-                    put("bus", "#59ACFF")
-                    put("railway", "#F8634F")
-                    put("tramway", "#C86DD7")
-                    put("suburban", "#3023AE")
-                    put("underground", "#BDCCDC")
-                    put("trolleybus", "#55CfDC")
-                    put("walk", "#333333")
-                }
-            }
     }
 }

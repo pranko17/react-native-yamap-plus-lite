@@ -20,7 +20,7 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
         return REACT_CLASS
     }
 
-    override fun getConstants(): Map<String, Any>? {
+    override fun getConstants(): Map<String, Any> {
         return HashMap()
     }
 

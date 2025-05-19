@@ -10,8 +10,8 @@ import ru.vvdev.yamap.utils.Callback
 
 class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
     ReactContextBaseJavaModule(reactContext) {
-    private var suggestClient: MapSuggestClient? = null
-    private val argsHelper = YandexSuggestRNArgsHelper()
+    private var _suggestClient: MapSuggestClient? = null
+    private val _argsHelper = YandexSuggestRNArgsHelper()
 
     override fun getName(): String {
         return "YamapSuggests"
@@ -28,7 +28,7 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
             getSuggestClient().suggest(text,
                 object : Callback<List<MapSuggestItem?>?> {
                     override fun invoke(arg: List<MapSuggestItem?>?) {
-                        promise.resolve(argsHelper.createSuggestsMapFrom(arg))
+                        promise.resolve(_argsHelper.createSuggestsMapFrom(arg))
                     }
                 },
                 object : Callback<Throwable?> {
@@ -51,7 +51,7 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
             getSuggestClient().suggest(text, options,
                 object : Callback<List<MapSuggestItem?>?> {
                     override fun invoke(arg: List<MapSuggestItem?>?) {
-                        promise.resolve(argsHelper.createSuggestsMapFrom(arg))
+                        promise.resolve(_argsHelper.createSuggestsMapFrom(arg))
                     }
                 },
                 object : Callback<Throwable?> {
@@ -69,11 +69,11 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
     }
 
     private fun getSuggestClient(): MapSuggestClient {
-        if (suggestClient == null) {
-            suggestClient = YandexMapSuggestClient()
+        if (_suggestClient == null) {
+            _suggestClient = YandexMapSuggestClient()
         }
 
-        return suggestClient as MapSuggestClient
+        return _suggestClient as MapSuggestClient
     }
 
     companion object {

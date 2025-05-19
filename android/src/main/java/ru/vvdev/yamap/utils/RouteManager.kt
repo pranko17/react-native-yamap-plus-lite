@@ -13,18 +13,6 @@ class RouteManager {
         data[id] = route
     }
 
-    fun putRouteMapObjects(id: String, objects: ArrayList<MapObject>) {
-        mapObjects[id] = objects
-    }
-
-    fun getRoute(id: String): Route? {
-        return data[id]
-    }
-
-    fun getRouteMapObjects(id: String): ArrayList<MapObject> {
-        return mapObjects[id]!!
-    }
-
     companion object {
         fun generateId(): String {
             return UUID.randomUUID().toString()

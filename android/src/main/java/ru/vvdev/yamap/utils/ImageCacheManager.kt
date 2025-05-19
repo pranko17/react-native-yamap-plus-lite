@@ -2,26 +2,62 @@ package ru.vvdev.yamap.utils
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.yandex.runtime.image.ImageProvider
-import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
+import android.graphics.BitmapFactory
+import android.os.Handler
+import android.os.Looper
+import java.io.BufferedInputStream
+import java.io.IOException
+import java.net.URL
 
 class ImageCacheManager {
     companion object {
-        private val imageCache = mutableMapOf<String, ImageProvider>()
+        private val imageCache = mutableMapOf<String, Bitmap?>()
 
-        fun getImage(context: Context, source: String, setPlacemark: (imageProvider: ImageProvider) -> Unit) {
+        @Throws(IOException::class)
+        private fun getBitmap(context: Context, url: String): Bitmap {
+            if (url.contains("http://") || url.contains("https://")) {
+                val aURL = URL(url)
+                val conn = aURL.openConnection()
+                conn.connect()
+                val `is` = conn.getInputStream()
+                val bis = BufferedInputStream(`is`)
+                val bitmap = BitmapFactory.decodeStream(bis)
+                bis.close()
+                `is`.close()
+                return bitmap
+            }
+            val id = context.resources.getIdentifier(url, "drawable", context.packageName)
+
+            return BitmapFactory.decodeResource(
+                context.resources,
+                id
+            )
+        }
+
+        private fun downloadImageBitmap(context: Context, url: String, cb: Callback<Bitmap?>) {
+            object : Thread() {
+                override fun run() {
+                    try {
+                        val bitmap = getBitmap(context, url)
+                        Handler(Looper.getMainLooper()).post { cb.invoke(bitmap) }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }.start()
+        }
+
+        fun getImage(context: Context, source: String, setImage: (image: Bitmap?) -> Unit) {
             imageCache[source]?.let {
-                setPlacemark(it)
+                setImage(it)
                 return
             }
 
-            DownloadImageBitmap(context, source, object : Callback<Bitmap?> {
+            downloadImageBitmap(context, source, object : Callback<Bitmap?> {
                 override fun invoke(arg: Bitmap?) {
                     try {
-                        ImageProvider.fromBitmap(arg).let {
-                            setPlacemark(it)
-                            imageCache[source] = it
-                        }
+                        setImage(arg)
+                        imageCache[source] = arg
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
