@@ -1,14 +1,13 @@
 package ru.vvdev.yamap
 
-import android.graphics.PointF
 import android.view.View
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapMarkerPressEvent
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapMarker
 import javax.annotation.Nonnull
 
@@ -39,11 +38,9 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
 
     // PROPS
     @ReactProp(name = "point")
-    fun setPoint(view: View, markerPoint: ReadableMap?) {
-        if (markerPoint != null) {
-            val lon = markerPoint.getDouble("lon")
-            val lat = markerPoint.getDouble("lat")
-            val point = Point(lat, lon)
+    fun setPoint(view: View, jsPoint: ReadableMap?) {
+        jsPoint?.let {
+            val point = PointUtil.readableMapToPoint(it)
             castToMarkerView(view).setPoint(point)
         }
     }
@@ -82,12 +79,8 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
 
     @ReactProp(name = "anchor")
     fun setAnchor(view: View, anchor: ReadableMap?) {
-        castToMarkerView(view).setAnchor(
-            if (anchor != null) PointF(
-                anchor.getDouble("x").toFloat(),
-                anchor.getDouble("y").toFloat()
-            ) else null
-        )
+        val pointF = PointUtil.jsPointToPointF(anchor)
+        castToMarkerView(view).setAnchor(pointF)
     }
 
     override fun addView(parent: YamapMarker, child: View, index: Int) {
@@ -105,19 +98,19 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
         commandType: String,
         args: ReadableArray?
     ) {
+        if (args === null) return
+
         when (commandType) {
             "animatedMoveTo" -> {
-                val markerPoint = args!!.getMap(0)
+                val jsPoint = args.getMap(0) ?: return
                 val moveDuration = args.getInt(1)
-                val lon = markerPoint!!.getDouble("lon").toFloat()
-                val lat = markerPoint!!.getDouble("lat").toFloat()
-                val point = Point(lat.toDouble(), lon.toDouble())
+                val point = PointUtil.readableMapToPoint(jsPoint)
                 castToMarkerView(view).animatedMoveTo(point, moveDuration.toFloat())
                 return
             }
 
             "animatedRotateTo" -> {
-                val angle = args!!.getInt(0)
+                val angle = args.getInt(0)
                 val rotateDuration = args.getInt(1)
                 castToMarkerView(view).animatedRotateTo(angle.toFloat(), rotateDuration.toFloat())
                 return

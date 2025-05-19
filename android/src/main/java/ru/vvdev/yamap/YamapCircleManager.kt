@@ -4,8 +4,8 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapCirclePressEvent
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapCircle
 import javax.annotation.Nonnull
 
@@ -33,10 +33,8 @@ class YamapCircleManager internal constructor() : ViewGroupManager<YamapCircle>(
     // PROPS
     @ReactProp(name = "center")
     fun setCenter(view: YamapCircle, center: ReadableMap?) {
-        if (center != null) {
-            val lon = center.getDouble("lon")
-            val lat = center.getDouble("lat")
-            val point = Point(lat, lon)
+        center?.let {
+            val point = PointUtil.readableMapToPoint(it)
             view.setCenter(point)
         }
     }

@@ -5,8 +5,8 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapPolylinePressEvent
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapPolyline
 import javax.annotation.Nonnull
 
@@ -37,18 +37,9 @@ class YamapPolylineManager internal constructor() : ViewGroupManager<YamapPolyli
 
     // PROPS
     @ReactProp(name = "points")
-    fun setPoints(view: View, points: ReadableArray?) {
-        if (points != null) {
-            val parsed = ArrayList<Point>()
-            for (i in 0 until points.size()) {
-                val markerMap = points.getMap(i)
-                val lon = markerMap!!.getDouble("lon")
-                val lat = markerMap!!.getDouble("lat")
-                val point = Point(lat, lon)
-                parsed.add(point)
-            }
-            castToPolylineView(view).setPolygonPoints(parsed)
-        }
+    fun setPoints(view: View, jsPoints: ReadableArray?) {
+        val points = jsPoints?.let { PointUtil.jsPointsToPoints(it) }
+        castToPolylineView(view).setPolygonPoints(points)
     }
 
     @ReactProp(name = "strokeWidth")

@@ -1,14 +1,12 @@
 package ru.vvdev.yamap
 
 import android.view.View
-import com.facebook.infer.annotation.Assertions
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
@@ -20,7 +18,7 @@ import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
 import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
-import ru.vvdev.yamap.utils.Points
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
 
@@ -107,56 +105,42 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         commandType: String,
         args: ReadableArray?
     ) {
-        Assertions.assertNotNull(view)
-        Assertions.assertNotNull(args)
+        if (args === null) return
 
         when (commandType) {
             "setCenter" -> setCenter(
                 castToYaMapView(view),
-                args!!.getMap(0),
+                args.getMap(0),
                 args.getDouble(1).toFloat(),
                 args.getDouble(2).toFloat(),
                 args.getDouble(3).toFloat(),
                 args.getDouble(4).toFloat(),
                 args.getInt(5)
             )
-
             "fitAllMarkers" -> fitAllMarkers(view)
-            "fitMarkers" -> if (args != null) {
-                fitMarkers(view, args.getArray(0))
-            }
-
-            "findRoutes" -> if (args != null) {
-                findRoutes(view, args.getArray(0), args.getArray(1), args.getString(2))
-            }
-
-            "setZoom" -> if (args != null) {
-                view.setZoom(
-                    args.getDouble(0).toFloat(),
-                    args.getDouble(1).toFloat(),
-                    args.getInt(2)
-                )
-            }
-
-            "getCameraPosition" -> if (args != null) {
-                view.emitCameraPositionToJS(args.getString(0))
-            }
-
-            "getVisibleRegion" -> if (args != null) {
-                view.emitVisibleRegionToJS(args.getString(0))
-            }
-
-            "setTrafficVisible" -> if (args != null) {
-                view.setTrafficVisible(args.getBoolean(0))
-            }
-
-            "getScreenPoints" -> if (args != null) {
-                view.emitWorldToScreenPoints(args.getArray(0), args.getString(1))
-            }
-
-            "getWorldPoints" -> if (args != null) {
-                view.emitScreenToWorldPoints(args.getArray(0), args.getString(1))
-            }
+            "fitMarkers" -> fitMarkers(view, args.getArray(0))
+            "findRoutes" -> findRoutes(
+                view,
+                args.getArray(0),
+                args.getArray(1),
+                args.getString(2)
+            )
+            "setZoom" -> view.setZoom(
+                args.getDouble(0).toFloat(),
+                args.getDouble(1).toFloat(),
+                args.getInt(2)
+            )
+            "getCameraPosition" -> view.emitCameraPositionToJS(args.getString(0))
+            "getVisibleRegion" -> view.emitVisibleRegionToJS(args.getString(0))
+            "setTrafficVisible" -> view.setTrafficVisible(args.getBoolean(0))
+            "getScreenPoints" -> view.emitWorldToScreenPoints(
+                args.getArray(0),
+                args.getString(1)
+            )
+            "getWorldPoints" -> view.emitScreenToWorldPoints(
+                args.getArray(0),
+                args.getString(1)
+            )
 
             else -> throw IllegalArgumentException(
                 String.format(
@@ -190,10 +174,10 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         duration: Float,
         animation: Int
     ) {
-        if (center != null) {
-            val centerPosition = Point(center.getDouble("lat"), center.getDouble("lon"))
-            val pos = CameraPosition(centerPosition, zoom, azimuth, tilt)
-            view.setCenter(pos, duration, animation)
+        center?.let {
+            val point = PointUtil.readableMapToPoint(it)
+            val position = CameraPosition(point, zoom, azimuth, tilt)
+            view.setCenter(position, duration, animation)
         }
     }
 
@@ -203,7 +187,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
     private fun fitMarkers(view: View, jsPoints: ReadableArray?) {
         if (jsPoints != null) {
-            val points = Points.jsPointsToPoints(jsPoints)
+            val points = PointUtil.jsPointsToPoints(jsPoints)
             castToYaMapView(view).fitMarkers(points)
         }
     }
@@ -215,7 +199,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         id: String?
     ) {
         if (jsPoints != null) {
-            val points = Points.jsPointsToPoints(jsPoints)
+            val points = PointUtil.jsPointsToPoints(jsPoints)
 
             val vehicles = ArrayList<String>()
 

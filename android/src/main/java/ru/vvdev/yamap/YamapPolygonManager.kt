@@ -7,6 +7,7 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapPolygonPressEvent
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapPolygon
 import javax.annotation.Nonnull
 
@@ -37,35 +38,21 @@ class YamapPolygonManager internal constructor() : ViewGroupManager<YamapPolygon
 
     // PROPS
     @ReactProp(name = "points")
-    fun setPoints(view: View, points: ReadableArray?) {
-        if (points != null) {
-            val parsed = ArrayList<Point>()
-            for (i in 0 until points.size()) {
-                val markerMap = points.getMap(i)
-                val lon = markerMap!!.getDouble("lon")
-                val lat = markerMap!!.getDouble("lat")
-                val point = Point(lat, lon)
-                parsed.add(point)
-            }
-            castToPolygonView(view).setPolygonPoints(parsed)
-        }
+    fun setPoints(view: View, jsPoints: ReadableArray?) {
+        if (jsPoints === null) return
+
+        val points = PointUtil.jsPointsToPoints(jsPoints)
+        castToPolygonView(view).setPolygonPoints(points)
     }
 
     @ReactProp(name = "innerRings")
-    fun setInnerRings(view: View, _rings: ReadableArray?) {
+    fun setInnerRings(view: View, jsRings: ReadableArray?) {
         val rings = ArrayList<ArrayList<Point>>()
-        if (_rings != null) {
-            for (j in 0 until _rings.size()) {
-                val points = _rings.getArray(j)
-                val parsed = ArrayList<Point>()
-                for (i in 0 until points!!.size()) {
-                    val markerMap = points.getMap(i)
-                    val lon = markerMap!!.getDouble("lon")
-                    val lat = markerMap!!.getDouble("lat")
-                    val point = Point(lat, lon)
-                    parsed.add(point)
-                }
-                rings.add(parsed)
+        if (jsRings != null) {
+            for (j in 0 until jsRings.size()) {
+                val jsPoints = jsRings.getArray(j) ?: return
+                val points = PointUtil.jsPointsToPoints(jsPoints)
+                rings.add(points)
             }
         }
         castToPolygonView(view).setPolygonInnerRings(rings)

@@ -78,6 +78,7 @@ import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageLoader.DownloadImageBitmap
+import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.utils.RouteManager
 import javax.annotation.Nonnull
 
@@ -167,12 +168,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
     }
 
     private fun worldPointToJSON(worldPoint: Point?): WritableMap {
-        val result = Arguments.createMap()
-
-        result.putDouble("lat", worldPoint!!.latitude)
-        result.putDouble("lon", worldPoint.longitude)
-
-        return result
+        return PointUtil.pointToJsPoint(worldPoint)
     }
 
     fun emitCameraPositionToJS(getCameraPositionId: String?) {
@@ -205,7 +201,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         if (worldPoints !== null && worldPoints.size() > 0) {
             for (i in 0 until worldPoints.size()) {
                 worldPoints.getMap(i)?.let {
-                    val worldPoint = Point(it.getDouble("lat"), it.getDouble("lon"))
+                    val worldPoint = PointUtil.readableMapToPoint(it)
                     val screenPoint = mapWindow.worldToScreen(worldPoint)
                     screenPoints.pushMap(screenPointToJSON(screenPoint))
                 }
@@ -473,9 +469,8 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         if (params.hasKey("tilt") && !params.isNull("tilt")) initialRegionTilt =
             params.getDouble("tilt").toFloat()
 
-        val initialPosition = Point(
-            params.getDouble("lat"), params.getDouble("lon")
-        )
+        val initialPosition = PointUtil.readableMapToPoint(params)
+
         val initialCameraPosition = CameraPosition(
             initialPosition,
             initialRegionZoom,
@@ -666,16 +661,14 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         routeMetadata.putMap("transports", wTransports)
         val subpolyline = SubpolylineHelper.subpolyline(route.geometry, section.geometry)
         val linePoints = subpolyline.points
-        val jsonPoints = Arguments.createArray()
+        val jsPoints = Arguments.createArray()
 
         for (point in linePoints) {
-            val jsonPoint = Arguments.createMap()
-            jsonPoint.putDouble("lat", point.latitude)
-            jsonPoint.putDouble("lon", point.longitude)
-            jsonPoints.pushMap(jsonPoint)
+            val jsPoint = PointUtil.pointToJsPoint(point)
+            jsPoints.pushMap(jsPoint)
         }
 
-        routeMetadata.putArray("points", jsonPoints)
+        routeMetadata.putArray("points", jsPoints)
 
         return routeMetadata
     }
@@ -715,10 +708,8 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val jsonPoints = Arguments.createArray()
 
         for (point in linePoints) {
-            val jsonPoint = Arguments.createMap()
-            jsonPoint.putDouble("lat", point.latitude)
-            jsonPoint.putDouble("lon", point.longitude)
-            jsonPoints.pushMap(jsonPoint)
+            val jsPoint = PointUtil.pointToJsPoint(point)
+            jsonPoints.pushMap(jsPoint)
         }
 
         routeMetadata.putArray("points", jsonPoints)

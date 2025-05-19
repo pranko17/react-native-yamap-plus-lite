@@ -1,6 +1,5 @@
 package ru.vvdev.yamap.search
 
-import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -17,6 +16,7 @@ import com.yandex.mapkit.search.SearchOptions
 import com.yandex.mapkit.search.SearchType
 import com.yandex.mapkit.search.Snippet
 import ru.vvdev.yamap.utils.Callback
+import ru.vvdev.yamap.utils.PointUtil
 
 class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
     ReactContextBaseJavaModule(reactContext) {
@@ -31,39 +31,47 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
         if (figure?.getMap("value")!=null && figure.getString("type") !=null) {
             return when (figure.getString("type")) {
                 "POINT" -> {
-                   Geometry.fromPoint(Point(figure.getMap("value")!!.getDouble("lat"), figure.getMap("value")!!.getDouble("lon")));
+                    val jsPoint = figure.getMap("value")
+                    val point = jsPoint?.let { PointUtil.readableMapToPoint(it) }
+                    Geometry.fromPoint(point ?: Point(0.0, 0.0))
                 }
 
                 "BOUNDINGBOX" -> {
-                    val southWest = Point(figure.getMap("value")!!.getMap("southWest")!!.getDouble("lat"), figure.getMap("value")!!.getMap("southWest")!!.getDouble("lon"));
-                    val northEast = Point(figure.getMap("value")!!.getMap("northEast")!!.getDouble("lat"), figure.getMap("value")!!.getMap("northEast")!!.getDouble("lon"));
-                    Geometry.fromBoundingBox(BoundingBox(southWest, northEast));
+                    val value = figure.getMap("value") ?:
+                    return Geometry.fromPoint(Point(0.0, 0.0))
+
+                    val southWestJsPoint = value.getMap("southWest")
+                    val southWestPoint = southWestJsPoint?.let { PointUtil.readableMapToPoint(it) }
+
+                    val northEastJsPoint = value.getMap("northEast")
+                    val northEastPoint = northEastJsPoint?.let { PointUtil.readableMapToPoint(it) }
+
+                    Geometry.fromBoundingBox(BoundingBox(
+                        southWestPoint ?: Point(0.0, 0.0),
+                        northEastPoint ?: Point(0.0, 0.0)
+                    ))
                 }
 
                 "POLYLINE" -> {
-                    val polylinePoints: ArrayList<Point> = ArrayList()
-                    val points = figure.getMap("value")!!.getArray("points");
-                    for (i in 0 until points!!.size()) {
-                        val markerMap = points.getMap(i)
-                        val lon = markerMap!!.getDouble("lon")
-                        val lat = markerMap!!.getDouble("lat")
-                        val point = Point(lat, lon)
-                        polylinePoints.add(point)
-                    }
-                    Geometry.fromPolyline(Polyline(polylinePoints))
+                    val value = figure.getMap("value") ?:
+                    return Geometry.fromPoint(Point(0.0, 0.0))
+
+                    val jsPoints = value.getArray("points") ?:
+                    return Geometry.fromPoint(Point(0.0, 0.0))
+
+                    val points = PointUtil.jsPointsToPoints(jsPoints)
+                    Geometry.fromPolyline(Polyline(points))
                 }
 
                 "POLYGON" -> {
-                    val polygonPoints: ArrayList<Point> = ArrayList()
-                    val points = figure.getMap("value")!!.getArray("points");
-                    for (i in 0 until points!!.size()) {
-                        val markerMap = points.getMap(i)
-                        val lon = markerMap!!.getDouble("lon")
-                        val lat = markerMap!!.getDouble("lat")
-                        val point = Point(lat, lon)
-                        polygonPoints.add(point)
-                    }
-                    Geometry.fromPolygon(Polygon(LinearRing(polygonPoints), ArrayList()));
+                    val value = figure.getMap("value") ?:
+                    return Geometry.fromPoint(Point(0.0, 0.0))
+
+                    val jsPoints = value.getArray("points") ?:
+                    return Geometry.fromPoint(Point(0.0, 0.0))
+
+                    val points = PointUtil.jsPointsToPoints(jsPoints)
+                    Geometry.fromPolygon(Polygon(LinearRing(points), ArrayList()));
                 }
 
                 else -> Geometry.fromPoint(Point(0.0, 0.0))
@@ -158,54 +166,50 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
     }
 
     @ReactMethod
-    fun searchByPoint(markerPoint: ReadableMap?, zoom: Double?, options: ReadableMap?, promise: Promise) {
-        if (markerPoint != null) {
-            val lon = markerPoint.getDouble("lon")
-            val lat = markerPoint.getDouble("lat")
-            val point = Point(lat, lon)
-            UiThreadUtil.runOnUiThread {
-                getSearchClient().searchPoint(point, (zoom?.toInt() ?: 10), getSearchOptions(options),
-                    object : Callback<MapSearchItem?> {
-                        override fun invoke(arg: MapSearchItem?) {
-                            promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
-                        }
-                    },
-                    object : Callback<Throwable?> {
-                        override fun invoke(arg: Throwable?) {
-                            promise.reject(ERR_SEARCH_FAILED, "search request: " + arg?.message)
-                        }
-                    }
-                )
-            }
-        } else {
+    fun searchByPoint(jsPoint: ReadableMap?, zoom: Double?, options: ReadableMap?, promise: Promise) {
+        if (jsPoint === null) {
             promise.reject(ERR_NO_REQUEST_ARG, "search request: text arg is not provided")
             return
+        }
+
+        val point = PointUtil.readableMapToPoint(jsPoint)
+        UiThreadUtil.runOnUiThread {
+            getSearchClient().searchPoint(point, (zoom?.toInt() ?: 10), getSearchOptions(options),
+                object : Callback<MapSearchItem?> {
+                    override fun invoke(arg: MapSearchItem?) {
+                        promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
+                    }
+                },
+                object : Callback<Throwable?> {
+                    override fun invoke(arg: Throwable?) {
+                        promise.reject(ERR_SEARCH_FAILED, "search request: " + arg?.message)
+                    }
+                }
+            )
         }
     }
 
     @ReactMethod
-    fun geoToAddress(markerPoint: ReadableMap?, promise: Promise) {
-        if (markerPoint != null) {
-            val lon = markerPoint.getDouble("lon")
-            val lat = markerPoint.getDouble("lat")
-            val point = Point(lat, lon)
-            UiThreadUtil.runOnUiThread {
-                getSearchClient().searchPoint(point, 10, getSearchOptions(null),
-                    object : Callback<MapSearchItem?> {
-                        override fun invoke(arg: MapSearchItem?) {
-                            promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
-                        }
-                    },
-                    object : Callback<Throwable?> {
-                        override fun invoke(arg: Throwable?) {
-                            promise.reject(ERR_SEARCH_FAILED, "search request: " + arg?.message)
-                        }
-                    }
-                )
-            }
-        } else {
+    fun geoToAddress(jsPoint: ReadableMap?, promise: Promise) {
+        if (jsPoint === null) {
             promise.reject(ERR_NO_REQUEST_ARG, "search request: text arg is not provided")
             return
+        }
+
+        val point = PointUtil.readableMapToPoint(jsPoint)
+        UiThreadUtil.runOnUiThread {
+            getSearchClient().searchPoint(point, 10, getSearchOptions(null),
+                object : Callback<MapSearchItem?> {
+                    override fun invoke(arg: MapSearchItem?) {
+                        promise.resolve(searchArgsHelper.createSearchMapFrom(arg))
+                    }
+                },
+                object : Callback<Throwable?> {
+                    override fun invoke(arg: Throwable?) {
+                        promise.reject(ERR_SEARCH_FAILED, "search request: " + arg?.message)
+                    }
+                }
+            )
         }
     }
 
@@ -216,10 +220,8 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
                 getSearchClient().searchAddress(text, Geometry.fromPoint(Point(0.0, 0.0)), SearchOptions(),
                     object : Callback<MapSearchItem?> {
                         override fun invoke(arg: MapSearchItem?) {
-                            val resultPoint = Arguments.createMap()
-                            arg?.point?.latitude?.let { resultPoint.putDouble("lat", it) }
-                            arg?.point?.longitude?.let { resultPoint.putDouble("lon", it) }
-                            promise.resolve(resultPoint)
+                            val jsPoint = PointUtil.pointToJsPoint(arg?.point)
+                            promise.resolve(jsPoint)
                         }
                     },
                     object : Callback<Throwable?> {

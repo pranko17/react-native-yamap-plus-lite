@@ -2,6 +2,7 @@ package ru.vvdev.yamap.search
 
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
+import ru.vvdev.yamap.utils.PointUtil
 
 class YandexSearchRNArgsHelper {
     fun createSearchMapFrom(data: MapSearchItem?): WritableMap {
@@ -17,13 +18,8 @@ class YandexSearchRNArgsHelper {
                 components.pushMap(mappedItem);
             }
             result.putArray("Components", components)
-            result.putString("uri", data.uri);
-            if (data.point!=null) {
-                val resultPoint = Arguments.createMap()
-                resultPoint.putDouble("lat", data.point!!.latitude)
-                resultPoint.putDouble("lon", data.point!!.longitude)
-                result.putMap("point", resultPoint);
-            }
+            result.putString("uri", data.uri)
+            result.putMap("point", PointUtil.pointToJsPoint(data.point))
         }
         return result
     }

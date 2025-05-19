@@ -1,9 +1,9 @@
 package ru.vvdev.yamap.events.yamap
 
-import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.Event
 import com.yandex.mapkit.geometry.Point
+import ru.vvdev.yamap.utils.PointUtil
 
 class YamapLongPressEvent(surfaceId: Int, viewId: Int, private val point: Point) : Event<YamapLongPressEvent>(surfaceId, viewId) {
     override fun getEventName(): String {
@@ -14,11 +14,8 @@ class YamapLongPressEvent(surfaceId: Int, viewId: Int, private val point: Point)
         return 0
     }
 
-    override fun getEventData(): WritableMap? {
-        val data = Arguments.createMap()
-        data.putDouble("lat", point.latitude)
-        data.putDouble("lon", point.longitude)
-        return data
+    override fun getEventData(): WritableMap {
+        return PointUtil.pointToJsPoint(point)
     }
 
     companion object {

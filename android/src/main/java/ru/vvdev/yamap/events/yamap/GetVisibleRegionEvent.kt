@@ -4,6 +4,7 @@ import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.events.Event
 import com.yandex.mapkit.map.VisibleRegion
+import ru.vvdev.yamap.utils.PointUtil
 
 class GetVisibleRegionEvent(surfaceId: Int, viewId: Int, private val region: VisibleRegion, private val id: String?)
     : Event<GetVisibleRegionEvent>(surfaceId, viewId) {
@@ -19,25 +20,10 @@ class GetVisibleRegionEvent(surfaceId: Int, viewId: Int, private val region: Vis
     override fun getEventData(): WritableMap? {
         val data = Arguments.createMap()
 
-        val bl = Arguments.createMap()
-        bl.putDouble("lat", region.bottomLeft.latitude)
-        bl.putDouble("lon", region.bottomLeft.longitude)
-        data.putMap("bottomLeft", bl)
-
-        val br = Arguments.createMap()
-        br.putDouble("lat", region.bottomRight.latitude)
-        br.putDouble("lon", region.bottomRight.longitude)
-        data.putMap("bottomRight", br)
-
-        val tl = Arguments.createMap()
-        tl.putDouble("lat", region.topLeft.latitude)
-        tl.putDouble("lon", region.topLeft.longitude)
-        data.putMap("topLeft", tl)
-
-        val tr = Arguments.createMap()
-        tr.putDouble("lat", region.topRight.latitude)
-        tr.putDouble("lon", region.topRight.longitude)
-        data.putMap("topRight", tr)
+        data.putMap("bottomLeft", PointUtil.pointToJsPoint(region.bottomLeft))
+        data.putMap("bottomRight", PointUtil.pointToJsPoint(region.bottomRight))
+        data.putMap("topLeft", PointUtil.pointToJsPoint(region.topLeft))
+        data.putMap("topRight", PointUtil.pointToJsPoint(region.topRight))
 
         data.putString("id", id)
 

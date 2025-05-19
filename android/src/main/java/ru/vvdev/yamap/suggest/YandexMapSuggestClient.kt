@@ -15,6 +15,7 @@ import com.yandex.mapkit.search.SuggestSession.SuggestListener
 import com.yandex.mapkit.search.SuggestType
 import com.yandex.runtime.Error
 import ru.vvdev.yamap.utils.Callback
+import ru.vvdev.yamap.utils.PointUtil
 
 class YandexMapSuggestClient : MapSuggestClient {
     private val searchManager: SearchManager
@@ -85,10 +86,7 @@ class YandexMapSuggestClient : MapSuggestClient {
 
         check(!(pointMap.getType(latKey) != ReadableType.Number || pointMap.getType(lonKey) != ReadableType.Number)) { "suggest error: lat or lon is not a Number" }
 
-        val lat = pointMap.getDouble(latKey)
-        val lon = pointMap.getDouble(lonKey)
-
-        return Point(lat, lon)
+        return PointUtil.readableMapToPoint(pointMap)
     }
 
     override fun suggest(
