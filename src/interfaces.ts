@@ -1,3 +1,5 @@
+import {NativeSyntheticEvent} from 'react-native';
+
 export interface Point {
   lat: number;
   lon: number;
@@ -8,10 +10,14 @@ export interface BoundingBox {
   northEast: Point;
 }
 
+export type WorldPointsCallback = (result: {worldPoints: Point[]}) => void
+
 export interface ScreenPoint {
   x: number;
   y: number;
 }
+
+export type ScreenPointsCallback = (result: {screenPoints: ScreenPoint[]}) => void
 
 export interface MapLoaded {
   renderObjectCount: number;
@@ -36,6 +42,18 @@ export interface InitialRegion {
 export type MasstransitVehicles = 'bus' | 'trolleybus' | 'tramway' | 'minibus' | 'suburban' | 'underground' | 'ferry' | 'cable' | 'funicular';
 
 export type Vehicles = MasstransitVehicles | 'walk' | 'car';
+
+export const ALL_MASSTRANSIT_VEHICLES: Vehicles[] = [
+  'bus',
+  'trolleybus',
+  'tramway',
+  'minibus',
+  'suburban',
+  'underground',
+  'ferry',
+  'cable',
+  'funicular',
+] as const;
 
 export type MapType = 'none' | 'raster' | 'vector';
 
@@ -73,6 +91,8 @@ export interface RoutesFoundEvent<T extends (DrivingInfo | MasstransitInfo)> {
   };
 }
 
+export type RoutesFoundCallback<T extends (DrivingInfo | MasstransitInfo)> = (event: RoutesFoundEvent<T>) => void
+
 export type CameraUpdateReason = 'APPLICATION' | 'GESTURES';
 
 export interface CameraPosition {
@@ -84,12 +104,18 @@ export interface CameraPosition {
   zoom: number;
 }
 
+export type CameraPositionCallback = (position: CameraPosition) => void
+
+export type NativeSyntheticEventCallback<T extends any> = (event: NativeSyntheticEvent<T>) => void
+
 export type VisibleRegion = {
   bottomLeft: Point;
   bottomRight: Point;
   topLeft: Point;
   topRight: Point;
 }
+
+export type VisibleRegionCallback = (visibleRegion: VisibleRegion) => void
 
 export enum Animation {
   SMOOTH,
