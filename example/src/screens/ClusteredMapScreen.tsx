@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {ClusteredYamap, Marker} from '../../../';
+import {ClusteredYamap, Marker, YamapRef} from '../../../';
 
 export const ClusteredMapScreen = () => {
-  const clusteredMapRef = useRef<ClusteredYamap | null>(null);
+  const clusteredMapRef = useRef<YamapRef | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
 
     useEffect(() => {

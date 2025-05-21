@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
-import YaMap, {Circle, Marker, MarkerRef, Polyline} from '../../../';
+import YaMap, {Circle, Marker, MarkerRef, Polyline, YamapRef} from '../../../';
 import {Polygon} from '../../../src';
 
 export const MapScreen = () => {
   const [mapLoaded, setMapLoaded] = useState(false);
-  const mapRef = useRef<YaMap>();
+  const mapRef = useRef<YamapRef | null>(null);
   const markerRef = useRef<MarkerRef | null>(null);
   const angleRef = useRef(0);
 

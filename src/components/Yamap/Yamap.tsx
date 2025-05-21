@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
+import React, {forwardRef, useMemo, useRef} from 'react';
 import {getImageUri, getProcessedColors} from '../../utils';
 import {YamapProps, YamapRef} from './types';
 import {
@@ -16,53 +16,9 @@ export const YaMap = forwardRef<YamapRef, YamapProps>(({
     ...props
   }, ref) => {
 
-  const mapRef = useRef<YamapNativeRef | null>(null);
+  const nativeRef = useRef<YamapNativeRef | null>(null);
 
-  const {
-    findRoutes,
-    findMasstransitRoutes,
-    findPedestrianRoutes,
-    findDrivingRoutes,
-    fitAllMarkers,
-    fitMarkers,
-    setTrafficVisible,
-    setCenter,
-    setZoom,
-    getCameraPosition,
-    getVisibleRegion,
-    getScreenPoints,
-    getWorldPoints,
-  } = useYamap(mapRef);
-
-  useImperativeHandle(ref, () => ({
-    findRoutes,
-    findMasstransitRoutes,
-    findPedestrianRoutes,
-    findDrivingRoutes,
-    fitAllMarkers,
-    fitMarkers,
-    setTrafficVisible,
-    setCenter,
-    setZoom,
-    getCameraPosition,
-    getVisibleRegion,
-    getScreenPoints,
-    getWorldPoints,
-  }), [
-    findRoutes,
-    findMasstransitRoutes,
-    findPedestrianRoutes,
-    findDrivingRoutes,
-    fitAllMarkers,
-    fitMarkers,
-    setTrafficVisible,
-    setCenter,
-    setZoom,
-    getCameraPosition,
-    getVisibleRegion,
-    getScreenPoints,
-    getWorldPoints,
-  ]);
+  useYamap(nativeRef, ref, 'YamapView');
 
   const nativeProps = useMemo(() =>
       getProcessedColors({
@@ -81,7 +37,7 @@ export const YaMap = forwardRef<YamapRef, YamapProps>(({
   return (
     <YamapNativeComponent
       {...nativeProps}
-      ref={mapRef}
+      ref={nativeRef}
     />
   );
 });
