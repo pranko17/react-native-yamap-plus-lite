@@ -1,13 +1,5 @@
 import {RefObject, useCallback} from 'react';
-import {
-  ALL_MASSTRANSIT_VEHICLES,
-  Animation,
-  DrivingInfo,
-  MasstransitInfo,
-  Point,
-  RoutesFoundCallback,
-  Vehicles,
-} from '../interfaces';
+import {ALL_MASSTRANSIT_VEHICLES, Animation} from '../interfaces';
 import {CallbacksManager} from '../utils';
 import {findNodeHandle, Platform, UIManager} from 'react-native';
 import {YamapNativeRef, YamapRef} from '../components/Yamap';
@@ -24,42 +16,42 @@ const dispatchCommand = (mapRef: RefObject<YamapNativeRef | null>, command: stri
 };
 
 export const useYamap = (mapRef: RefObject<YamapNativeRef | null>) => {
-  const _findRoutes = useCallback((points: Point[], vehicles: Vehicles[], callback: RoutesFoundCallback<DrivingInfo> | RoutesFoundCallback<MasstransitInfo> | RoutesFoundCallback<DrivingInfo | MasstransitInfo>) => {
+  const _findRoutes = useCallback<YamapRef['findRoutes']>((points, vehicles, callback) => {
     const cbId = CallbacksManager.addCallback(callback);
     const args = Platform.OS === 'ios' ? [{points, vehicles, id: cbId}] : [points, vehicles, cbId];
 
     dispatchCommand(mapRef, 'findRoutes', args);
   }, [mapRef]);
 
-  const findRoutes: YamapRef['findRoutes'] = useCallback((points, vehicles, callback) => {
+  const findRoutes = useCallback<YamapRef['findRoutes']>((points, vehicles, callback) => {
     _findRoutes(points, vehicles, callback);
   }, [_findRoutes]);
 
-  const findMasstransitRoutes: YamapRef['findMasstransitRoutes'] = useCallback((points, callback) => {
+  const findMasstransitRoutes = useCallback<YamapRef['findMasstransitRoutes']>((points, callback) => {
     _findRoutes(points, ALL_MASSTRANSIT_VEHICLES, callback);
   }, [_findRoutes]);
 
-  const findPedestrianRoutes: YamapRef['findPedestrianRoutes'] = useCallback((points, callback) => {
+  const findPedestrianRoutes = useCallback<YamapRef['findPedestrianRoutes']>((points, callback) => {
     _findRoutes(points, [], callback);
   }, [_findRoutes]);
 
-  const findDrivingRoutes: YamapRef['findDrivingRoutes'] = useCallback((points, callback) => {
+  const findDrivingRoutes = useCallback<YamapRef['findDrivingRoutes']>((points, callback) => {
     _findRoutes(points, ['car'], callback);
   }, [_findRoutes]);
 
-  const fitAllMarkers: YamapRef['fitAllMarkers'] = useCallback(() => {
+  const fitAllMarkers = useCallback<YamapRef['fitAllMarkers']>(() => {
     dispatchCommand(mapRef, 'fitAllMarkers', []);
   }, [mapRef]);
 
-  const fitMarkers: YamapRef['fitMarkers'] = useCallback((points) => {
+  const fitMarkers = useCallback<YamapRef['fitMarkers']>((points) => {
     dispatchCommand(mapRef, 'fitMarkers', [points]);
   }, [mapRef]);
 
-  const setTrafficVisible: YamapRef['setTrafficVisible'] = useCallback((isVisible: boolean) => {
+  const setTrafficVisible = useCallback<YamapRef['setTrafficVisible']>((isVisible: boolean) => {
     dispatchCommand(mapRef, 'setTrafficVisible', [isVisible]);
   }, [mapRef]);
 
-  const setCenter: YamapRef['setCenter'] = useCallback((
+  const setCenter = useCallback<YamapRef['setCenter']>((
     center,
     zoom = center.zoom || 10,
     azimuth = 0,
@@ -70,26 +62,26 @@ export const useYamap = (mapRef: RefObject<YamapNativeRef | null>) => {
     dispatchCommand(mapRef, 'setCenter', [center, zoom, azimuth, tilt, duration, animation]);
   }, [mapRef]);
 
-  const setZoom: YamapRef['setZoom'] = useCallback((zoom, duration = 0, animation = Animation.SMOOTH) => {
+  const setZoom = useCallback<YamapRef['setZoom']>((zoom, duration = 0, animation = Animation.SMOOTH) => {
     dispatchCommand(mapRef, 'setZoom', [zoom, duration, animation]);
   }, [mapRef]);
 
-  const getCameraPosition: YamapRef['getCameraPosition'] = useCallback((callback) => {
+  const getCameraPosition = useCallback<YamapRef['getCameraPosition']>((callback) => {
     const cbId = CallbacksManager.addCallback(callback);
     dispatchCommand(mapRef, 'getCameraPosition', [cbId]);
   }, [mapRef]);
 
-  const getVisibleRegion: YamapRef['getVisibleRegion'] = useCallback((callback) => {
+  const getVisibleRegion = useCallback<YamapRef['getVisibleRegion']>((callback) => {
     const cbId = CallbacksManager.addCallback(callback);
     dispatchCommand(mapRef, 'getVisibleRegion', [cbId]);
   }, [mapRef]);
 
-  const getScreenPoints: YamapRef['getScreenPoints'] = useCallback((points, callback) => {
+  const getScreenPoints = useCallback<YamapRef['getScreenPoints']>((points, callback) => {
     const cbId = CallbacksManager.addCallback(callback);
     dispatchCommand(mapRef, 'getScreenPoints', [points, cbId]);
   }, [mapRef]);
 
-  const getWorldPoints: YamapRef['getWorldPoints'] = useCallback((points, callback) => {
+  const getWorldPoints = useCallback<YamapRef['getWorldPoints']>((points, callback) => {
     const cbId = CallbacksManager.addCallback(callback);
     dispatchCommand(mapRef, 'getWorldPoints', [points, cbId]);
   }, [mapRef]);
