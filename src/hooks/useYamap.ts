@@ -47,7 +47,7 @@ export const useYamap = (mapRef: RefObject<YamapNativeRef | null>) => {
     dispatchCommand(mapRef, 'fitMarkers', [points]);
   }, [mapRef]);
 
-  const setTrafficVisible = useCallback<YamapRef['setTrafficVisible']>((isVisible: boolean) => {
+  const setTrafficVisible = useCallback<YamapRef['setTrafficVisible']>((isVisible) => {
     dispatchCommand(mapRef, 'setTrafficVisible', [isVisible]);
   }, [mapRef]);
 
