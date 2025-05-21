@@ -1,4 +1,4 @@
-import {ImageSourcePropType, NativeMethods, ViewProps} from 'react-native';
+import {ImageSourcePropType, ViewProps} from 'react-native';
 import {
   Animation,
   CameraPosition,
@@ -18,8 +18,6 @@ import {
   YandexLogoPadding,
   YandexLogoPosition,
 } from '../../interfaces';
-import {OmitEx} from '../../utils';
-import {Component} from 'react';
 
 export interface YamapProps extends ViewProps {
   userLocationIcon?: ImageSourcePropType;
@@ -57,7 +55,14 @@ export type YamapRef = {
   ) => void;
   fitAllMarkers: () => void;
   fitMarkers: (points: Point[]) => void;
-  findRoutes: (points: Point[], vehicles: Vehicles[], callback: RoutesFoundCallback<DrivingInfo | MasstransitInfo>) => void;
+  findRoutes: (
+    points: Point[],
+    vehicles: Vehicles[],
+    callback:
+      RoutesFoundCallback<DrivingInfo> |
+      RoutesFoundCallback<MasstransitInfo> |
+      RoutesFoundCallback<DrivingInfo | MasstransitInfo>
+  ) => void;
   setZoom: (zoom: number, duration: number, animation: Animation) => void;
   getCameraPosition: (callback: CameraPositionCallback) => void;
   getVisibleRegion: (callback: VisibleRegionCallback) => void;
@@ -69,9 +74,3 @@ export type YamapRef = {
   findPedestrianRoutes: (points: Point[], callback: RoutesFoundCallback<MasstransitInfo>) => void;
   findDrivingRoutes: (points: Point[], callback: RoutesFoundCallback<DrivingInfo>) => void;
 };
-
-export type YamapNativeComponentProps = OmitEx<YamapProps, 'userLocationIcon'> & {
-  userLocationIcon: string | undefined;
-};
-
-export type YamapNativeRef = Component<YamapNativeComponentProps, {}, any> & Readonly<NativeMethods>

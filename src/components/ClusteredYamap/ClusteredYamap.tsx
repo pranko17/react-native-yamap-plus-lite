@@ -1,12 +1,5 @@
-import React, {Component} from 'react';
-import {
-  Platform,
-  requireNativeComponent,
-  UIManager,
-  findNodeHandle,
-  ListRenderItemInfo,
-  NativeMethods,
-} from 'react-native';
+import React from 'react';
+import {Platform, UIManager, findNodeHandle} from 'react-native';
 import {
   Animation,
   Point,
@@ -18,29 +11,17 @@ import {
   VisibleRegion,
   ScreenPoint,
   ALL_MASSTRANSIT_VEHICLES,
-} from '../interfaces';
-import {CallbacksManager, getImageUri, getProcessedColors, OmitEx} from '../utils';
+} from '../../interfaces';
+import {CallbacksManager, getImageUri, getProcessedColors} from '../../utils';
 import {
   onCameraPositionReceived,
-  onRouteFound, onScreenToWorldPointsReceived,
+  onRouteFound,
+  onScreenToWorldPointsReceived,
   onVisibleRegionReceived,
   onWorldToScreenPointsReceived,
-  YamapProps,
-} from './Yamap';
-
-export interface ClusteredYamapProps<T = any> extends YamapProps {
-  clusterColor?: string;
-  clusteredMarkers: ReadonlyArray<{point: Point, data: T}>
-  renderMarker: (info: {point: Point, data: ListRenderItemInfo<T>}, index: number) => React.ReactElement
-}
-
-export type ClusteredYamapNativeComponentProps = OmitEx<ClusteredYamapProps, 'userLocationIcon' | 'clusteredMarkers'> & {
-  userLocationIcon: string | undefined;
-  clusteredMarkers: Point[];
-};
-
-const YaMapNativeComponent =
-  requireNativeComponent<ClusteredYamapNativeComponentProps>('ClusteredYamapView');
+} from '../Yamap/events';
+import {ClusteredYamapProps} from './types';
+import {ClusteredYamapNativeComponent, ClusteredYamapNativeRef} from './ClusteredYamapNativeComponent';
 
 export class ClusteredYamap extends React.Component<ClusteredYamapProps, {}> {
   static defaultProps = {
@@ -48,7 +29,7 @@ export class ClusteredYamap extends React.Component<ClusteredYamapProps, {}> {
     clusterColor: 'red',
   };
 
-  map = React.createRef<Component<ClusteredYamapNativeComponentProps, {}, any> & Readonly<NativeMethods>>();
+  map = React.createRef<ClusteredYamapNativeRef>();
 
   public findRoutes(points: Point[], vehicles: Vehicles[], callback: (event: RoutesFoundEvent<DrivingInfo | MasstransitInfo>) => void) {
     this._findRoutes(points, vehicles, callback);
@@ -173,7 +154,7 @@ export class ClusteredYamap extends React.Component<ClusteredYamapProps, {}> {
 
   render() {
     return (
-      <YaMapNativeComponent
+      <ClusteredYamapNativeComponent
         {...this.getProps()}
         ref={this.map}
       />

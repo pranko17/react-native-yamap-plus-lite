@@ -1,21 +1,21 @@
 import { NativeModules } from 'react-native';
 
-const { yamap: NativeYamapModule } = NativeModules;
+const { yamap: YamapNativeModule } = NativeModules;
 
 export class YamapInstance {
   public static init(apiKey: string): Promise<void> {
-    return NativeYamapModule.init(apiKey);
+    return YamapNativeModule.init(apiKey);
   }
 
   public static setLocale(locale: string): Promise<void> {
-    return NativeYamapModule.setLocale(locale);
+    return YamapNativeModule.setLocale(locale);
   }
 
   public static getLocale(): Promise<string> {
-    return NativeYamapModule.getLocale();
+    return YamapNativeModule.getLocale();
   }
 
   public static resetLocale(): Promise<void> {
-    return NativeYamapModule.resetLocale();
+    return YamapNativeModule.resetLocale();
   }
 }

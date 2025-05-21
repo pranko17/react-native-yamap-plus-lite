@@ -1,7 +1,6 @@
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
-import {requireNativeComponent} from 'react-native';
 import {getImageUri, getProcessedColors} from '../../utils';
-import {YamapNativeComponentProps, YamapNativeRef, YamapProps, YamapRef} from './types';
+import {YamapProps, YamapRef} from './types';
 import {
   onCameraPositionReceived,
   onRouteFound,
@@ -10,8 +9,7 @@ import {
   onWorldToScreenPointsReceived,
 } from './events';
 import {useYamap} from '../../hooks/useYamap';
-
-const YamapNativeComponent = requireNativeComponent<YamapNativeComponentProps>('YamapView');
+import {YamapNativeComponent, YamapNativeRef} from './YamapNativeComponent';
 
 export const YaMap = forwardRef<YamapRef, YamapProps>(({
     showUserPosition = true,

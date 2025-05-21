@@ -2,7 +2,8 @@ import {RefObject, useCallback} from 'react';
 import {ALL_MASSTRANSIT_VEHICLES, Animation} from '../interfaces';
 import {CallbacksManager} from '../utils';
 import {findNodeHandle, Platform, UIManager} from 'react-native';
-import {YamapNativeRef, YamapRef} from '../components/Yamap';
+import {YamapRef} from '../components/Yamap';
+import {YamapNativeRef} from '../components/Yamap/YamapNativeComponent';
 
 const getCommand = (cmd: string) =>
   Platform.OS === 'ios' ? UIManager.getViewManagerConfig('YamapView').Commands[cmd] : cmd;
