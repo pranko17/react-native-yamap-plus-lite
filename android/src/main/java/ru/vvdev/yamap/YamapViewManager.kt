@@ -109,7 +109,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
 
         when (commandType) {
             "setCenter" -> setCenter(
-                castToYaMapView(view),
+                castToYamapView(view),
                 args.getMap(0),
                 args.getDouble(1).toFloat(),
                 args.getDouble(2).toFloat(),
@@ -152,7 +152,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         }
     }
 
-    private fun castToYaMapView(view: View): YamapView {
+    private fun castToYamapView(view: View): YamapView {
         return view as YamapView
     }
 
@@ -182,13 +182,13 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
     }
 
     private fun fitAllMarkers(view: View) {
-        castToYaMapView(view).fitAllMarkers()
+        castToYamapView(view).fitAllMarkers()
     }
 
     private fun fitMarkers(view: View, jsPoints: ReadableArray?) {
         if (jsPoints != null) {
             val points = PointUtil.jsPointsToPoints(jsPoints)
-            castToYaMapView(view).fitMarkers(points)
+            castToYamapView(view).fitMarkers(points)
         }
     }
 
@@ -209,7 +209,7 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                 }
             }
 
-            castToYaMapView(view).findRoutes(points, vehicles, id)
+            castToYamapView(view).findRoutes(points, vehicles, id)
         }
     }
 
@@ -217,102 +217,102 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
     @ReactProp(name = "userLocationIcon")
     fun setUserLocationIcon(view: View, icon: String?) {
         if (icon != null) {
-            castToYaMapView(view).setUserLocationIcon(icon)
+            castToYamapView(view).setUserLocationIcon(icon)
         }
     }
 
     @ReactProp(name = "userLocationIconScale")
     fun setUserLocationIconScale(view: View, scale: Float) {
-        castToYaMapView(view).setUserLocationIconScale(scale)
+        castToYamapView(view).setUserLocationIconScale(scale)
     }
 
     @ReactProp(name = "userLocationAccuracyFillColor")
     fun setUserLocationAccuracyFillColor(view: View, color: Int) {
-        castToYaMapView(view).setUserLocationAccuracyFillColor(color)
+        castToYamapView(view).setUserLocationAccuracyFillColor(color)
     }
 
     @ReactProp(name = "userLocationAccuracyStrokeColor")
     fun setUserLocationAccuracyStrokeColor(view: View, color: Int) {
-        castToYaMapView(view).setUserLocationAccuracyStrokeColor(color)
+        castToYamapView(view).setUserLocationAccuracyStrokeColor(color)
     }
 
     @ReactProp(name = "userLocationAccuracyStrokeWidth")
     fun setUserLocationAccuracyStrokeWidth(view: View, width: Float) {
-        castToYaMapView(view).setUserLocationAccuracyStrokeWidth(width)
+        castToYamapView(view).setUserLocationAccuracyStrokeWidth(width)
     }
 
     @ReactProp(name = "showUserPosition")
     fun setShowUserPosition(view: View, show: Boolean?) {
-        castToYaMapView(view).setShowUserPosition(show!!)
+        castToYamapView(view).setShowUserPosition(show!!)
     }
 
     @ReactProp(name = "nightMode")
     fun setNightMode(view: View, nightMode: Boolean?) {
-        castToYaMapView(view).setNightMode(nightMode ?: false)
+        castToYamapView(view).setNightMode(nightMode ?: false)
     }
 
     @ReactProp(name = "scrollGesturesEnabled")
     fun setScrollGesturesEnabled(view: View, scrollGesturesEnabled: Boolean) {
-        castToYaMapView(view).setScrollGesturesEnabled(scrollGesturesEnabled)
+        castToYamapView(view).setScrollGesturesEnabled(scrollGesturesEnabled)
     }
 
     @ReactProp(name = "rotateGesturesEnabled")
     fun setRotateGesturesEnabled(view: View, rotateGesturesEnabled: Boolean) {
-        castToYaMapView(view).setRotateGesturesEnabled(rotateGesturesEnabled)
+        castToYamapView(view).setRotateGesturesEnabled(rotateGesturesEnabled)
     }
 
     @ReactProp(name = "zoomGesturesEnabled")
     fun setZoomGesturesEnabled(view: View, zoomGesturesEnabled: Boolean) {
-        castToYaMapView(view).setZoomGesturesEnabled(zoomGesturesEnabled)
+        castToYamapView(view).setZoomGesturesEnabled(zoomGesturesEnabled)
     }
 
     @ReactProp(name = "tiltGesturesEnabled")
     fun setTiltGesturesEnabled(view: View, tiltGesturesEnabled: Boolean) {
-        castToYaMapView(view).setTiltGesturesEnabled(tiltGesturesEnabled)
+        castToYamapView(view).setTiltGesturesEnabled(tiltGesturesEnabled)
     }
 
     @ReactProp(name = "fastTapEnabled")
     fun setFastTapEnabled(view: View, fastTapEnabled: Boolean) {
-        castToYaMapView(view).setFastTapEnabled(fastTapEnabled)
+        castToYamapView(view).setFastTapEnabled(fastTapEnabled)
     }
 
     @ReactProp(name = "mapStyle")
     fun setMapStyle(view: View, style: String?) {
         if (style != null) {
-            castToYaMapView(view).setMapStyle(style)
+            castToYamapView(view).setMapStyle(style)
         }
     }
 
     @ReactProp(name = "mapType")
     fun setMapType(view: View, type: String?) {
         if (type != null) {
-            castToYaMapView(view).setMapType(type)
+            castToYamapView(view).setMapType(type)
         }
     }
 
     @ReactProp(name = "initialRegion")
     fun setInitialRegion(view: View, params: ReadableMap?) {
         if (params != null) {
-            castToYaMapView(view).setInitialRegion(params)
+            castToYamapView(view).setInitialRegion(params)
         }
     }
 
     @ReactProp(name = "interactive")
     fun setInteractive(view: View, interactive: Boolean) {
-        castToYaMapView(view).setInteractive(interactive)
+        castToYamapView(view).setInteractive(interactive)
     }
 
     @ReactProp(name = "logoPosition")
     fun setLogoPosition(view: View, params: ReadableMap?) {
         if (params != null) {
-            castToYaMapView(view).setLogoPosition(params)
+            castToYamapView(view).setLogoPosition(params)
         }
     }
 
     @ReactProp(name = "logoPadding")
     fun setLogoPadding(view: View, params: ReadableMap?) {
         if (params != null) {
-            castToYaMapView(view).setLogoPadding(params)
+            castToYamapView(view).setLogoPadding(params)
         }
     }
 

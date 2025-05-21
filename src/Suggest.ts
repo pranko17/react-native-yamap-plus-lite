@@ -1,17 +1,14 @@
-import { BoundingBox, Point } from './interfaces';
-import { NativeModules } from 'react-native';
+import {BoundingBox, Point, YamapCoords} from './interfaces';
+import {NativeModules} from 'react-native';
 
-const { YamapSuggests } = NativeModules;
+const {YamapSuggests} = NativeModules;
 
 export type YamapSuggest = {
   title: string;
   subtitle?: string;
   uri?: string;
 };
-export type YamapCoords = {
-  lon: number;
-  lat: number;
-};
+
 export type YamapSuggestWithCoords = YamapSuggest & Partial<YamapCoords>;
 
 export enum SuggestTypes {
@@ -43,7 +40,7 @@ const suggest: SuggestFetcher = (query, options) => {
     return YamapSuggests.suggestWithOptions(query, options);
   }
   return YamapSuggests.suggest(query);
-}
+};
 
 type SuggestWithCoordsFetcher = (query: string, options?: SuggestOptions) => Promise<Array<YamapSuggestWithCoords>>;
 const suggestWithCoords: SuggestWithCoordsFetcher = async (query, options) => {
@@ -66,7 +63,9 @@ const getCoordsFromSuggest: LatLonGetter = (suggest) => {
     ?.split('&')
     ?.find((param) => param.startsWith('ll'))
     ?.split('=')[1];
-  if (!coords) return;
+  if (!coords) {
+    return;
+  }
 
   const splittedCoords = coords.split('%2C');
   const lon = Number(splittedCoords[0]);
@@ -75,11 +74,9 @@ const getCoordsFromSuggest: LatLonGetter = (suggest) => {
   return { lat, lon };
 };
 
-const Suggest = {
+export const Suggest = {
   suggest,
   suggestWithCoords,
   reset,
-  getCoordsFromSuggest
+  getCoordsFromSuggest,
 };
-
-export default Suggest;

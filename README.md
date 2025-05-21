@@ -95,11 +95,11 @@ YamapInstance.resetLocale();
 
 ```jsx
 import React from 'react';
-import YaMap from 'react-native-yamap-plus';
+import {Yamap} from 'react-native-yamap-plus';
 
 const Map = () => {
   return (
-    <YaMap
+    <Yamap
       userLocationIcon={{ uri: 'https://www.clipartmax.com/png/middle/180-1801760_pin-png.png' }}
       initialRegion={{
         lat: 50,
@@ -294,11 +294,11 @@ type YandexLogoPadding = {
 ### Marker
 
 ```jsx
-import { Marker } from 'react-native-yamap-plus';
+import {Yamap, Marker} from 'react-native-yamap-plus';
 
-<YaMap>
-  <Marker point={{ lat: 50, lon: 50 }}/>
-</YaMap>
+<Yamap>
+  <Marker point={{ lat: 50, lon: 50 }} />
+</Yamap>
 ```
 
 #### Доступные `props` для примитива **Marker**:
@@ -323,11 +323,11 @@ import { Marker } from 'react-native-yamap-plus';
 ### Circle
 
 ```jsx
-import { Circle } from 'react-native-yamap-plus';
+import {Yamap, Circle} from 'react-native-yamap-plus';
 
-<YaMap>
+<Yamap>
   <Circle center={{ lat: 50, lon: 50 }} radius={300} />
-</YaMap>
+</Yamap>
 ```
 
 #### Доступные `props` для примитива **Circle**:
@@ -346,9 +346,9 @@ import { Circle } from 'react-native-yamap-plus';
 ### Polyline
 
 ```jsx
-import { Polyline } from 'react-native-yamap-plus';
+import {Yamap, Polyline} from 'react-native-yamap-plus';
 
-<YaMap>
+<Yamap>
   <Polyline
     points={[
       { lat: 50, lon: 50 },
@@ -356,7 +356,7 @@ import { Polyline } from 'react-native-yamap-plus';
       { lat: 20, lon: 20 },
     ]}
   />
-</YaMap>
+</Yamap>
 ```
 
 #### Доступные `props` для примитива **Polyline**:
@@ -378,9 +378,9 @@ import { Polyline } from 'react-native-yamap-plus';
 ### Polygon
 
 ```jsx
-import { Polygon } from 'react-native-yamap-plus';
+import {Yamap, Polygon} from 'react-native-yamap-plus';
 
-<YaMap>
+<Yamap>
   <Polygon
     points={[
       { lat: 50, lon: 50 },
@@ -388,7 +388,7 @@ import { Polygon } from 'react-native-yamap-plus';
       { lat: 20, lon: 20 },
     ]}
   />
-</YaMap>
+</Yamap>
 ```
 
 #### Доступные `props` для примитива **Polygon**:
@@ -406,7 +406,7 @@ import { Polygon } from 'react-native-yamap-plus';
 
 ## Запрос маршрутов
 
-Маршруты можно запросить используя метод `findRoutes` компонента `YaMap` (через ref).
+Маршруты можно запросить используя метод `findRoutes` компонента `Yamap` (через ref).
 
 `findRoutes(points: Point[], vehicles: Vehicles[], callback: (event: RoutesFoundEvent) => void)` - запрос маршрутов через точки `points` с использованием транспорта `vehicles`. При получении маршрутов будет вызван `callback` с информацией обо всех маршрутах.
 
@@ -452,7 +452,7 @@ interface Address {
 
 ```typescript
 
-import { Suggest } from 'react-native-yamap-plus';
+import {Suggest} from 'react-native-yamap-plus';
 
 const find = async (query: string, options?: SuggestOptions) => {
   const suggestions = await Suggest.suggest(query, options);
@@ -483,7 +483,7 @@ const find = async (query: string, options?: SuggestOptions) => {
 
 ```typescript
 
-import { Search } from 'react-native-yamap-plus';
+import {Search} from 'react-native-yamap-plus';
 
 const find = async (query: string, options?: SuggestOptions) => {
   // можно использовать Point, BoundingBox, Polyline и Polygon (4 точки, без innerRings)
@@ -518,7 +518,7 @@ const find = async (query: string, options?: SuggestOptions) => {
 
 ```typescript
 
-import { Search } from 'react-native-yamap-plus';
+import {Search} from 'react-native-yamap-plus';
 
 const address = Search.geocodePoint({lat: 54, lon: 53});
 
@@ -535,7 +535,7 @@ const point = Search.geocodeAddress(address.formatted);
 
 ```jsx
 import React from 'react';
-import { ClusteredYamap } from 'react-native-yamap-plus';
+import {ClusteredYamap} from 'react-native-yamap-plus';
 
 const Map = () => {
   return (

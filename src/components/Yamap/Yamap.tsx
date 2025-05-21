@@ -11,7 +11,7 @@ import {
 import {useYamap} from '../../hooks/useYamap';
 import {YamapNativeComponent, YamapNativeRef} from './YamapNativeComponent';
 
-export const YaMap = forwardRef<YamapRef, YamapProps>(({
+export const Yamap = forwardRef<YamapRef, YamapProps>(({
     showUserPosition = true,
     ...props
   }, ref) => {

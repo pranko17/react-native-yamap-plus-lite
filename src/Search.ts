@@ -1,17 +1,14 @@
-import { Address, BoundingBox, Point } from './interfaces';
-import { NativeModules } from 'react-native';
+import {Address, BoundingBox, Point, YamapCoords} from './interfaces';
+import {NativeModules} from 'react-native';
 
-const { YamapSearch } = NativeModules;
+const {YamapSearch} = NativeModules;
 
 export type YamapSearch = {
   title: string;
   subtitle?: string;
   uri?: string;
 };
-export type YamapCoords = {
-  lon: number;
-  lat: number;
-};
+
 export type YamapSearchWithCoords = YamapSearch & Partial<YamapCoords>;
 
 export enum SearchTypes {
@@ -108,7 +105,7 @@ const geocodeAddress = (address: string): Promise<Point> => {
   return YamapSearch.addressToGeo(address);
 };
 
-const Search = {
+export const Search = {
   searchText,
   searchPoint,
   geocodePoint,
@@ -116,5 +113,3 @@ const Search = {
   resolveURI,
   searchByURI,
 };
-
-export default Search;

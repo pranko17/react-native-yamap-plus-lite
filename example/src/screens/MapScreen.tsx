@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
-import YaMap, {Circle, Marker, MarkerRef, Polyline, YamapRef} from '../../../';
+import {Yamap, Circle, Marker, MarkerRef, Polyline, YamapRef} from '../../../';
 import {Polygon} from '../../../src';
 
 export const MapScreen = () => {
@@ -31,7 +31,7 @@ export const MapScreen = () => {
     }, [mapLoaded]);
 
   return (
-    <YaMap
+    <Yamap
       ref={mapRef}
       initialRegion={{lat: 55.751244, lon: 37.618423, zoom: 12}}
       style={styles.container}
@@ -109,7 +109,7 @@ export const MapScreen = () => {
           console.log('polyline press');
         }}
       />
-    </YaMap>
+    </Yamap>
   );
 };
 
