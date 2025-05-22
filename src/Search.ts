@@ -1,4 +1,4 @@
-import {Address, BoundingBox, Point, YamapCoords} from './interfaces';
+import {Address, BoundingBox, Point} from './interfaces';
 import {NativeModules} from 'react-native';
 
 const {YamapSearch} = NativeModules;
@@ -9,7 +9,7 @@ export type YamapSearch = {
   uri?: string;
 };
 
-export type YamapSearchWithCoords = YamapSearch & Partial<YamapCoords>;
+export type YamapSearchWithCoords = YamapSearch & Partial<Point>;
 
 export enum SearchTypes {
   YMKSearchTypeUnspecified = 0b00,

@@ -143,8 +143,3 @@ export interface Anchor {
   x: number;
   y: number;
 }
-
-export type YamapCoords = {
-  lon: number;
-  lat: number;
-};
