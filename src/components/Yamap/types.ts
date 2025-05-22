@@ -47,11 +47,11 @@ export interface YamapProps extends ViewProps {
 export type YamapRef = {
   setCenter: (
     center: { lon: number, lat: number, zoom?: number },
-    zoom: number,
-    azimuth: number,
-    tilt: number,
-    duration: number,
-    animation: Animation
+    zoom?: number,
+    azimuth?: number,
+    tilt?: number,
+    duration?: number,
+    animation?: Animation
   ) => void;
   fitAllMarkers: () => void;
   fitMarkers: (points: Point[]) => void;
