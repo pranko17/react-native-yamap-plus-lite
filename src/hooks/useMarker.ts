@@ -2,7 +2,7 @@ import {ForwardedRef, useCallback, useImperativeHandle, useRef} from 'react';
 import {findNodeHandle, Platform, UIManager} from 'react-native';
 import {Point} from '../interfaces';
 import {MarkerNativeRef} from '../components/Marker/MarkerNativeComponent';
-import {MarkerRef} from '../components/Marker';
+import {MarkerRef} from '../components';
 
 const getCommand = (cmd: string) => {
   return Platform.OS === 'ios' ? UIManager.getViewManagerConfig('YamapMarker').Commands[cmd] : cmd;

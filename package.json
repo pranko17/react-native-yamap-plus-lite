@@ -83,5 +83,13 @@
   "workspaces": [
     "example"
   ],
+  "codegenConfig": {
+    "name": "RNYamapPlusSpec",
+    "type": "all",
+    "jsSrcsDir": "./src/spec",
+    "android": {
+      "javaPackageName": "ru.vvdev.yamap"
+    }
+  },
   "packageManager": "yarn@4.9.1"
 }
