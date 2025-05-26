@@ -96,22 +96,22 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
     override fun receiveCommand(
         view: YamapMarker,
         commandType: String,
-        args: ReadableArray?
+        argsArr: ReadableArray?
     ) {
-        if (args === null) return
+        val args = argsArr?.getArray(0)?.getMap(0) ?: return
 
         when (commandType) {
             "animatedMoveTo" -> {
-                val jsPoint = args.getMap(0) ?: return
-                val moveDuration = args.getInt(1)
+                val jsPoint = args.getMap("coords") ?: return
+                val moveDuration = args.getDouble("duration")
                 val point = PointUtil.readableMapToPoint(jsPoint)
                 castToMarkerView(view).animatedMoveTo(point, moveDuration.toFloat())
                 return
             }
 
             "animatedRotateTo" -> {
-                val angle = args.getInt(0)
-                val rotateDuration = args.getInt(1)
+                val angle = args.getDouble("angle")
+                val rotateDuration = args.getDouble("duration")
                 castToMarkerView(view).animatedRotateTo(angle.toFloat(), rotateDuration.toFloat())
                 return
             }

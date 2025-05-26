@@ -87,7 +87,7 @@ RCT_CUSTOM_VIEW_PROPERTY(source, NSString, YamapMarkerView) {
 }
 
 // REF
-RCT_EXPORT_METHOD(animatedMoveTo:(nonnull NSNumber*)reactTag json:(NSDictionary*)json duration:(NSNumber*_Nonnull)duration) {
+RCT_EXPORT_METHOD(animatedMoveTo:(nonnull NSNumber*)reactTag argsArr:(NSArray*)argsArr) {
     @try  {
         [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber*, UIView*> *viewRegistry) {
             YamapMarkerView* view = (YamapMarkerView*)viewRegistry[reactTag];
@@ -97,15 +97,16 @@ RCT_EXPORT_METHOD(animatedMoveTo:(nonnull NSNumber*)reactTag json:(NSDictionary*
                 return;
             }
 
-            YMKPoint* point = [RCTConvert YMKPoint:json];
-            [view animatedMoveTo:point withDuration:[duration floatValue]];
+            NSDictionary* args = argsArr.firstObject;
+            YMKPoint* point = [RCTConvert YMKPoint:args[@"coords"]];
+            [view animatedMoveTo:point withDuration:[args[@"duration"] floatValue]];
         }];
     } @catch (NSException *exception) {
         NSLog(@"Reason: %@ ",exception.reason);
     }
 }
 
-RCT_EXPORT_METHOD(animatedRotateTo:(nonnull NSNumber*)reactTag  angle:(NSNumber*_Nonnull)angle duration:(NSNumber*_Nonnull)duration) {
+RCT_EXPORT_METHOD(animatedRotateTo:(nonnull NSNumber*)reactTag argsArr:(NSArray*)argsArr) {
     @try  {
         [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber*, UIView*> *viewRegistry) {
             YamapMarkerView* view = (YamapMarkerView*)viewRegistry[reactTag];
@@ -115,7 +116,8 @@ RCT_EXPORT_METHOD(animatedRotateTo:(nonnull NSNumber*)reactTag  angle:(NSNumber*
                 return;
             }
 
-            [view animatedRotateTo:[angle floatValue] withDuration:[duration floatValue]];
+            NSDictionary* args = argsArr.firstObject;
+            [view animatedRotateTo:[args[@"angle"] floatValue] withDuration:[args[@"duration"] floatValue]];
         }];
     } @catch (NSException *exception) {
         NSLog(@"Reason: %@ ",exception.reason);
