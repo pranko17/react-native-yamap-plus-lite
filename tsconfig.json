@@ -14,5 +14,5 @@
     "sourceMap": true,
     "skipLibCheck": true
   },
-  "exclude": ["example"]
+  "exclude": ["example", "lib"]
 }
