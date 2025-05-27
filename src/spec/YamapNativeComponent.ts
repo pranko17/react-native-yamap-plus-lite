@@ -1,5 +1,5 @@
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import {YamapNativeCommands} from './commands/yamap';
 import {
   BubblingEventHandler,
   DirectEventHandler,
@@ -8,7 +8,6 @@ import {
 } from 'react-native/Libraries/Types/CodegenTypes';
 import {NativeMethods, ViewProps} from 'react-native';
 import {Component} from 'react';
-import {Animation, ScreenPoint, Vehicles} from '../interfaces';
 
 interface InitialRegion {
   lat: Double;
@@ -83,93 +82,6 @@ export interface YamapNativeProps extends ViewProps {
 export type YamapNativeRef = Component<YamapNativeProps, {}, any> & Readonly<NativeMethods>
 export type YamapComponentType = NativeComponentType<YamapNativeProps> & Readonly<YamapNativeCommands>;
 
-export interface YamapNativeCommands {
-  setCenter: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      duration: Double;
-      center: Point,
-      zoom: Double;
-      azimuth: Double;
-      tilt: Double;
-      animation: Animation
-    }>>,
-  ) => void;
-  fitAllMarkers: (viewRef: React.ElementRef<YamapComponentType>, args: Array<Readonly<{}>>) => void;
-  fitMarkers: (viewRef: React.ElementRef<YamapComponentType>, points: Array<Readonly<{points: Point[]}>>) => void;
-  findRoutes: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[],
-      vehicles: Vehicles[],
-      id: string
-    }>>
-  ) => void;
-  setZoom: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      zoom: Double
-      duration: Double,
-      animation: Animation,
-    }>>
-  ) => void;
-  getCameraPosition: (viewRef: React.ElementRef<YamapComponentType>, args: Array<Readonly<{id: string}>>) => void;
-  getVisibleRegion: (viewRef: React.ElementRef<YamapComponentType>, args: Array<Readonly<{id: string}>>) => void;
-  setTrafficVisible: (viewRef: React.ElementRef<YamapComponentType>, args: Array<Readonly<{isVisible: boolean}>>) => void;
-  getScreenPoints: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  getWorldPoints: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: ScreenPoint[]
-      id: string
-    }>>
-  ) => void;
-
-  findMasstransitRoutes: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  findPedestrianRoutes: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  findDrivingRoutes: (
-    viewRef: React.ElementRef<YamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-}
-
-export const Commands = codegenNativeCommands<YamapNativeCommands>({
-  supportedCommands: [
-    'setCenter',
-    'fitAllMarkers',
-    'fitMarkers',
-    'findRoutes',
-    'setZoom',
-    'getCameraPosition',
-    'getVisibleRegion',
-    'setTrafficVisible',
-    'getScreenPoints',
-    'getWorldPoints',
-    'findMasstransitRoutes',
-    'findPedestrianRoutes',
-    'findDrivingRoutes',
-  ],
-});
+require('./commands/yamap');
 
 export default codegenNativeComponent<YamapNativeProps>('YamapView');

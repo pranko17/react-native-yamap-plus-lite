@@ -8,12 +8,10 @@ import {
   onWorldToScreenPointsReceived,
 } from '../Yamap/events';
 import {ClusteredYamapProps} from './types';
-import ClusteredYamapNativeComponent, {
-  ClusteredYamapNativeRef,
-  Commands,
-} from '../../spec/ClusteredYamapNativeComponent';
+import ClusteredYamapNativeComponent, {ClusteredYamapNativeRef} from '../../spec/ClusteredYamapNativeComponent';
 import {useYamap} from '../../hooks/useYamap';
 import {YamapRef} from '../Yamap';
+import {Commands} from '../../spec/commands/yamap';
 
 export const ClusteredYamap = forwardRef<YamapRef, ClusteredYamapProps>(({
     showUserPosition = true,

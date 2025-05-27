@@ -2,13 +2,13 @@ import {ForwardedRef, RefObject, useImperativeHandle} from 'react';
 import {ALL_MASSTRANSIT_VEHICLES, Animation} from '../interfaces';
 import {CallbacksManager} from '../utils';
 import {YamapRef} from '../components';
-import {YamapNativeCommands} from '../spec/YamapNativeComponent';
-import {ClusteredYamapNativeCommands} from '../spec/ClusteredYamapNativeComponent';
+import {YamapNativeCommands} from '../spec/commands/yamap';
+import {YamapNativeRef} from '../spec/YamapNativeComponent';
 
 export const useYamap = (
-  nativeRef: RefObject<any>,
+  nativeRef: RefObject<YamapNativeRef | null>,
   ref: ForwardedRef<YamapRef>,
-  nativeCommands: YamapNativeCommands | ClusteredYamapNativeCommands,
+  nativeCommands: YamapNativeCommands,
 ) => {
   useImperativeHandle(ref, () => ({
     setCenter: (center, zoom = 10, azimuth = 0, tilt = 0, duration = 0, animation = Animation.SMOOTH) =>

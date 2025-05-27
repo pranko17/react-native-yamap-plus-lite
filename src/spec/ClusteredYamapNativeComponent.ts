@@ -1,5 +1,4 @@
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import {
   BubblingEventHandler,
   DirectEventHandler,
@@ -8,7 +7,7 @@ import {
 } from 'react-native/Libraries/Types/CodegenTypes';
 import {NativeMethods, ViewProps} from 'react-native';
 import {Component} from 'react';
-import {Animation, ScreenPoint, Vehicles} from '../interfaces';
+import {YamapNativeCommands} from './commands/yamap';
 
 interface MapLoaded {
   renderObjectCount: Double;
@@ -84,95 +83,8 @@ export interface ClusteredYamapNativeProps extends ViewProps {
 }
 
 export type ClusteredYamapNativeRef = Component<ClusteredYamapNativeProps, {}, any> & Readonly<NativeMethods>
-export type ClusteredYamapComponentType = NativeComponentType<ClusteredYamapNativeProps> & Readonly<ClusteredYamapNativeCommands>;
+export type ClusteredYamapComponentType = NativeComponentType<ClusteredYamapNativeProps> & Readonly<YamapNativeCommands>;
 
-export interface ClusteredYamapNativeCommands {
-  setCenter: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      duration: Double;
-      center: Point,
-      zoom: Double;
-      azimuth: Double;
-      tilt: Double;
-      animation: Animation
-    }>>,
-  ) => void;
-  fitAllMarkers: (viewRef: React.ElementRef<ClusteredYamapComponentType>, args: Array<Readonly<{}>>) => void;
-  fitMarkers: (viewRef: React.ElementRef<ClusteredYamapComponentType>, points: Array<Readonly<{points: Point[]}>>) => void;
-  findRoutes: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[],
-      vehicles: Vehicles[],
-      id: string
-    }>>
-  ) => void;
-  setZoom: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      zoom: Double
-      duration: Double,
-      animation: Animation,
-    }>>
-  ) => void;
-  getCameraPosition: (viewRef: React.ElementRef<ClusteredYamapComponentType>, args: Array<Readonly<{id: string}>>) => void;
-  getVisibleRegion: (viewRef: React.ElementRef<ClusteredYamapComponentType>, args: Array<Readonly<{id: string}>>) => void;
-  setTrafficVisible: (viewRef: React.ElementRef<ClusteredYamapComponentType>, args: Array<Readonly<{isVisible: boolean}>>) => void;
-  getScreenPoints: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  getWorldPoints: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: ScreenPoint[]
-      id: string
-    }>>
-  ) => void;
-
-  findMasstransitRoutes: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  findPedestrianRoutes: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-  findDrivingRoutes: (
-    viewRef: React.ElementRef<ClusteredYamapComponentType>,
-    args: Array<Readonly<{
-      points: Point[]
-      id: string
-    }>>
-  ) => void;
-}
-
-export const Commands = codegenNativeCommands<ClusteredYamapNativeCommands>({
-  supportedCommands: [
-    'setCenter',
-    'fitAllMarkers',
-    'fitMarkers',
-    'findRoutes',
-    'setZoom',
-    'getCameraPosition',
-    'getVisibleRegion',
-    'setTrafficVisible',
-    'getScreenPoints',
-    'getWorldPoints',
-    'findMasstransitRoutes',
-    'findPedestrianRoutes',
-    'findDrivingRoutes',
-  ],
-});
+require('./commands/yamap');
 
 export default codegenNativeComponent<ClusteredYamapNativeProps>('ClusteredYamapView');
