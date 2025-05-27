@@ -1,11 +1,14 @@
 import {
-  CameraPosition,
   DrivingInfo,
   MasstransitInfo,
-  NativeSyntheticEventCallback, Point,
-  RoutesFoundEvent, ScreenPoint, VisibleRegion,
+  NativeSyntheticEventCallback,
+  Point,
+  RoutesFoundEvent,
+  ScreenPoint,
+  VisibleRegion,
 } from '../../interfaces';
 import {CallbacksManager} from '../../utils';
+import {CameraPosition} from '../../spec/YamapNativeComponent';
 
 export const onRouteFound: NativeSyntheticEventCallback<{ id: string } & RoutesFoundEvent<DrivingInfo | MasstransitInfo>> = (event) => {
   const { id, ...routes } = event.nativeEvent;

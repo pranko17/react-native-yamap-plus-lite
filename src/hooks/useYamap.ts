@@ -2,8 +2,8 @@ import {ForwardedRef, RefObject, useCallback, useImperativeHandle} from 'react';
 import {ALL_MASSTRANSIT_VEHICLES, Animation} from '../interfaces';
 import {CallbacksManager} from '../utils';
 import {findNodeHandle, Platform, UIManager} from 'react-native';
-import {YamapRef} from '../components/Yamap';
-import {YamapNativeRef} from '../components/Yamap/YamapNativeComponent';
+import {YamapRef} from '../components';
+import {YamapNativeRef} from '../spec/YamapNativeComponent';
 
 export const useYamap = (
   nativeRef: RefObject<YamapNativeRef | null>,

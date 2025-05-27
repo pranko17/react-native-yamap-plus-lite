@@ -8,7 +8,7 @@ import {
   onWorldToScreenPointsReceived,
 } from '../Yamap/events';
 import {ClusteredYamapProps} from './types';
-import {ClusteredYamapNativeComponent, ClusteredYamapNativeRef} from './ClusteredYamapNativeComponent';
+import ClusteredYamapNativeComponent, {ClusteredYamapNativeRef} from '../../spec/ClusteredYamapNativeComponent';
 import {useYamap} from '../../hooks/useYamap';
 import {YamapRef} from '../Yamap';
 

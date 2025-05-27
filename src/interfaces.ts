@@ -1,4 +1,5 @@
 import {NativeSyntheticEvent} from 'react-native';
+import {CameraPosition} from './spec/YamapNativeComponent';
 
 export interface Point {
   lat: number;
@@ -18,26 +19,6 @@ export interface ScreenPoint {
 }
 
 export type ScreenPointsCallback = (result: {screenPoints: ScreenPoint[]}) => void
-
-export interface MapLoaded {
-  renderObjectCount: number;
-  curZoomModelsLoaded: number;
-  curZoomPlacemarksLoaded: number;
-  curZoomLabelsLoaded: number;
-  curZoomGeometryLoaded: number;
-  tileMemoryUsage: number;
-  delayedGeometryLoaded: number;
-  fullyAppeared: number;
-  fullyLoaded: number;
-}
-
-export interface InitialRegion {
-  lat: number;
-  lon: number;
-  zoom?: number;
-  azimuth?: number;
-  tilt?: number;
-}
 
 export type MasstransitVehicles = 'bus' | 'trolleybus' | 'tramway' | 'minibus' | 'suburban' | 'underground' | 'ferry' | 'cable' | 'funicular';
 
@@ -93,17 +74,6 @@ export interface RoutesFoundEvent<T extends (DrivingInfo | MasstransitInfo)> {
 
 export type RoutesFoundCallback<T extends (DrivingInfo | MasstransitInfo)> = (event: RoutesFoundEvent<T>) => void
 
-export type CameraUpdateReason = 'APPLICATION' | 'GESTURES';
-
-export interface CameraPosition {
-  azimuth: number;
-  finished: boolean;
-  point: Point;
-  reason: CameraUpdateReason;
-  tilt: number;
-  zoom: number;
-}
-
 export type CameraPositionCallback = (position: CameraPosition) => void
 
 export type NativeSyntheticEventCallback<T extends any> = (event: NativeSyntheticEvent<T>) => void
@@ -120,16 +90,6 @@ export type VisibleRegionCallback = (visibleRegion: VisibleRegion) => void
 export enum Animation {
   SMOOTH,
   LINEAR
-}
-
-export type YandexLogoPosition = {
-  horizontal?: 'left' | 'center' | 'right';
-  vertical?: 'top' | 'bottom';
-}
-
-export type YandexLogoPadding = {
-  horizontal?: number;
-  vertical?: number;
 }
 
 export interface Address {

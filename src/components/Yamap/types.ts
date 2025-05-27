@@ -1,13 +1,9 @@
-import {ImageSourcePropType, ViewProps} from 'react-native';
+import {ImageSourcePropType} from 'react-native';
 import {
   Animation,
-  CameraPosition,
   CameraPositionCallback,
   DrivingInfo,
-  InitialRegion,
-  MapLoaded,
   MasstransitInfo,
-  NativeSyntheticEventCallback,
   Point,
   RoutesFoundCallback,
   ScreenPoint,
@@ -15,33 +11,12 @@ import {
   Vehicles,
   VisibleRegionCallback,
   WorldPointsCallback,
-  YandexLogoPadding,
-  YandexLogoPosition,
 } from '../../interfaces';
+import {OmitEx} from '../../utils';
+import {YamapNativeProps} from '../../spec/YamapNativeComponent';
 
-export interface YamapProps extends ViewProps {
+export type YamapProps = OmitEx<YamapNativeProps, 'userLocationIcon'> & {
   userLocationIcon?: ImageSourcePropType;
-  userLocationIconScale?: number;
-  showUserPosition?: boolean;
-  nightMode?: boolean;
-  mapStyle?: string;
-  onCameraPositionChange?: NativeSyntheticEventCallback<CameraPosition>;
-  onCameraPositionChangeEnd?: NativeSyntheticEventCallback<CameraPosition>;
-  onMapPress?: NativeSyntheticEventCallback<Point>;
-  onMapLongPress?: NativeSyntheticEventCallback<Point>;
-  onMapLoaded?: NativeSyntheticEventCallback<MapLoaded>;
-  userLocationAccuracyFillColor?: string;
-  userLocationAccuracyStrokeColor?: string;
-  userLocationAccuracyStrokeWidth?: number;
-  scrollGesturesEnabled?: boolean;
-  zoomGesturesEnabled?: boolean;
-  tiltGesturesEnabled?: boolean;
-  rotateGesturesEnabled?: boolean;
-  fastTapEnabled?: boolean;
-  initialRegion?: InitialRegion;
-  followUser?: boolean;
-  logoPosition?: YandexLogoPosition;
-  logoPadding?: YandexLogoPadding;
 }
 
 export type YamapRef = {

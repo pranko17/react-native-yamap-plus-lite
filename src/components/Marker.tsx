@@ -22,12 +22,10 @@ export const Marker = forwardRef<MarkerRef, MarkerProps>(({source, ...props}, re
   const imageUri = useMemo(() => getImageUri(source), [source]);
 
   useImperativeHandle<MarkerRef, any>(ref, () => ({
-    animatedMoveTo: (coords: Point, duration: number) => {
-      Commands.animatedMoveTo(nativeRef.current!, [{coords, duration}]);
-    },
-    animatedRotateTo: (angle: number, duration: number) => {
-      Commands.animatedRotateTo(nativeRef.current!, [{angle, duration}]);
-    },
+    animatedMoveTo: (coords: Point, duration: number) =>
+      Commands.animatedMoveTo(nativeRef.current!, [{coords, duration}]),
+    animatedRotateTo: (angle: number, duration: number) =>
+      Commands.animatedRotateTo(nativeRef.current!, [{angle, duration}]),
   }), []);
 
   return (

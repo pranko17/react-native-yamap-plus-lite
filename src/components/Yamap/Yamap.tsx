@@ -9,7 +9,7 @@ import {
   onWorldToScreenPointsReceived,
 } from './events';
 import {useYamap} from '../../hooks/useYamap';
-import {YamapNativeComponent, YamapNativeRef} from './YamapNativeComponent';
+import YamapNativeComponent, {YamapNativeRef} from '../../spec/YamapNativeComponent';
 
 export const Yamap = forwardRef<YamapRef, YamapProps>(({
     showUserPosition = true,
