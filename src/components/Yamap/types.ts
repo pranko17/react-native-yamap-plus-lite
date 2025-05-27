@@ -21,7 +21,7 @@ export type YamapProps = OmitEx<YamapNativeProps, 'userLocationIcon'> & {
 
 export type YamapRef = {
   setCenter: (
-    center: { lon: number, lat: number, zoom?: number },
+    center: Point,
     zoom?: number,
     azimuth?: number,
     tilt?: number,
@@ -38,7 +38,7 @@ export type YamapRef = {
       RoutesFoundCallback<MasstransitInfo> |
       RoutesFoundCallback<DrivingInfo | MasstransitInfo>
   ) => void;
-  setZoom: (zoom: number, duration: number, animation: Animation) => void;
+  setZoom: (zoom: number, duration?: number, animation?: Animation) => void;
   getCameraPosition: (callback: CameraPositionCallback) => void;
   getVisibleRegion: (callback: VisibleRegionCallback) => void;
   setTrafficVisible: (isVisible: boolean) => void;

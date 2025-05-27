@@ -9,7 +9,7 @@ import {
   onWorldToScreenPointsReceived,
 } from './events';
 import {useYamap} from '../../hooks/useYamap';
-import YamapNativeComponent, {YamapNativeRef} from '../../spec/YamapNativeComponent';
+import YamapNativeComponent, {Commands, YamapNativeRef} from '../../spec/YamapNativeComponent';
 
 export const Yamap = forwardRef<YamapRef, YamapProps>(({
     showUserPosition = true,
@@ -18,7 +18,7 @@ export const Yamap = forwardRef<YamapRef, YamapProps>(({
 
   const nativeRef = useRef<YamapNativeRef | null>(null);
 
-  useYamap(nativeRef, ref, 'YamapView');
+  useYamap(nativeRef, ref, Commands);
 
   const nativeProps = useMemo(() =>
       getProcessedColors({

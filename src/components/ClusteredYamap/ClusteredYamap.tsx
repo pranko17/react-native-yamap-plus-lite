@@ -8,7 +8,10 @@ import {
   onWorldToScreenPointsReceived,
 } from '../Yamap/events';
 import {ClusteredYamapProps} from './types';
-import ClusteredYamapNativeComponent, {ClusteredYamapNativeRef} from '../../spec/ClusteredYamapNativeComponent';
+import ClusteredYamapNativeComponent, {
+  ClusteredYamapNativeRef,
+  Commands,
+} from '../../spec/ClusteredYamapNativeComponent';
 import {useYamap} from '../../hooks/useYamap';
 import {YamapRef} from '../Yamap';
 
@@ -20,7 +23,7 @@ export const ClusteredYamap = forwardRef<YamapRef, ClusteredYamapProps>(({
 
   const nativeRef = useRef<ClusteredYamapNativeRef | null>(null);
 
-  useYamap(nativeRef, ref, 'ClusteredYamapView');
+  useYamap(nativeRef, ref, Commands);
 
   const nativeProps = useMemo(() =>
     getProcessedColors({

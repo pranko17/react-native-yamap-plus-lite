@@ -23,6 +23,11 @@ export const ClusteredMapScreen = () => {
         // clusteredMapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
         //   console.log('clustered findRoutes', e);
         // });
+        // setTimeout(() => clusteredMapRef.current?.setTrafficVisible(true), 3000);
+        // setTimeout(() => clusteredMapRef.current?.setCenter({lat: 56, lon: 38}), 3000);
+        // setTimeout(() => clusteredMapRef.current?.fitAllMarkers(), 3000);
+        // setTimeout(() => clusteredMapRef.current?.fitMarkers([{lat: 56, lon: 38}]), 3000);
+        // setTimeout(() => clusteredMapRef.current?.setZoom(10, 1), 3000);
       }
     }, [mapLoaded]);
 

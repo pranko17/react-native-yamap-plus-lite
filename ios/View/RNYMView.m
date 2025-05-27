@@ -272,7 +272,7 @@
         }
         NSMutableDictionary* response = [[NSMutableDictionary alloc] init];
         [response setValue:_id forKey:@"id"];
-        [response setValue:@"status" forKey:@"success"];
+        [response setValue:@"success" forKey:@"status"];
         NSMutableArray *jsonRoutes = [[NSMutableArray alloc] init];
         for (int i = 0; i < [routes count]; ++i) {
             YMKMasstransitRoute *_route = [routes objectAtIndex:i];

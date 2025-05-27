@@ -103,43 +103,43 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
     override fun receiveCommand(
         view: YamapView,
         commandType: String,
-        args: ReadableArray?
+        argsArr: ReadableArray?
     ) {
-        if (args === null) return
+        val args = argsArr?.getArray(0)?.getMap(0) ?: return
 
         when (commandType) {
             "setCenter" -> setCenter(
                 castToYamapView(view),
-                args.getMap(0),
-                args.getDouble(1).toFloat(),
-                args.getDouble(2).toFloat(),
-                args.getDouble(3).toFloat(),
-                args.getDouble(4).toFloat(),
-                args.getInt(5)
+                args.getMap("center"),
+                args.getDouble("zoom").toFloat(),
+                args.getDouble("azimuth").toFloat(),
+                args.getDouble("tilt").toFloat(),
+                args.getDouble("duration").toFloat(),
+                args.getInt("animation")
             )
             "fitAllMarkers" -> fitAllMarkers(view)
-            "fitMarkers" -> fitMarkers(view, args.getArray(0))
+            "fitMarkers" -> fitMarkers(view, args.getArray("points"))
             "findRoutes" -> findRoutes(
                 view,
-                args.getArray(0),
-                args.getArray(1),
-                args.getString(2)
+                args.getArray("points"),
+                args.getArray("vehicles"),
+                args.getString("id")
             )
             "setZoom" -> view.setZoom(
-                args.getDouble(0).toFloat(),
-                args.getDouble(1).toFloat(),
-                args.getInt(2)
+                args.getDouble("zoom").toFloat(),
+                args.getDouble("duration").toFloat(),
+                args.getInt("animation")
             )
-            "getCameraPosition" -> view.emitCameraPositionToJS(args.getString(0))
-            "getVisibleRegion" -> view.emitVisibleRegionToJS(args.getString(0))
-            "setTrafficVisible" -> view.setTrafficVisible(args.getBoolean(0))
+            "getCameraPosition" -> view.emitCameraPositionToJS(args.getString("id"))
+            "getVisibleRegion" -> view.emitVisibleRegionToJS(args.getString("id"))
+            "setTrafficVisible" -> view.setTrafficVisible(args.getBoolean("isVisible"))
             "getScreenPoints" -> view.emitWorldToScreenPoints(
-                args.getArray(0),
-                args.getString(1)
+                args.getArray("points"),
+                args.getString("id")
             )
             "getWorldPoints" -> view.emitScreenToWorldPoints(
-                args.getArray(0),
-                args.getString(1)
+                args.getArray("points"),
+                args.getString("id")
             )
 
             else -> throw IllegalArgumentException(

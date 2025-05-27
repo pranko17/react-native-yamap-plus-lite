@@ -175,7 +175,7 @@ RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
 }
 
 // ref
-RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag) {
+RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
@@ -186,7 +186,7 @@ RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag) {
     }];
 }
 
-RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json) {
+RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView*> *viewRegistry) {
         RNYMView *view = (RNYMView *)viewRegistry[reactTag];
 
@@ -195,74 +195,85 @@ RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json) {
             return;
         }
 
-        NSArray<YMKPoint *> *points = [RCTConvert Points:json];
+        NSDictionary* args = argsArr.firstObject;
+        NSArray<YMKPoint *> *points = [RCTConvert Points:args[@"points"]];
         [view fitMarkers: points];
     }];
 }
 
-RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag json:(NSDictionary*) json) {
+RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        NSArray<YMKPoint*>* points = [RCTConvert Points:json[@"points"]];
+
+        NSDictionary* args = argsArr.firstObject;
+        NSArray<YMKPoint*>* points = [RCTConvert Points:args[@"points"]];
         NSMutableArray<YMKRequestPoint*>* requestPoints = [[NSMutableArray alloc] init];
         for (int i = 0; i < [points count]; ++i) {
             YMKRequestPoint * requestPoint = [YMKRequestPoint requestPointWithPoint:[points objectAtIndex:i] type:YMKRequestPointTypeWaypoint pointContext:nil drivingArrivalPointId:nil indoorLevelId:nil];
             [requestPoints addObject:requestPoint];
         }
-        NSArray<NSString*>* vehicles = [RCTConvert Vehicles:json[@"vehicles"]];
-        [view findRoutes: requestPoints vehicles: vehicles withId:json[@"id"]];
+        NSArray<NSString*>* vehicles = [RCTConvert Vehicles:args[@"vehicles"]];
+        [view findRoutes: requestPoints vehicles: vehicles withId:args[@"id"]];
     }];
 }
 
-RCT_EXPORT_METHOD(setCenter:(nonnull NSNumber*) reactTag center:(NSDictionary*_Nonnull) center zoom:(NSNumber*_Nonnull) zoom azimuth:(NSNumber*_Nonnull) azimuth tilt:(NSNumber*_Nonnull) tilt duration: (NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
+RCT_EXPORT_METHOD(setCenter:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        [self setCenterForMap: view center:center zoom: [zoom floatValue] azimuth: [azimuth floatValue] tilt: [tilt floatValue] duration: [duration floatValue] animation: [animation intValue]];
+
+        NSDictionary* args = argsArr.firstObject;
+        [self setCenterForMap: view center:args[@"center"] zoom:[args[@"zoom"] floatValue] azimuth:[args[@"azimuth"] floatValue] tilt: [args[@"tilt"] floatValue] duration: [args[@"duration"] floatValue] animation: [args[@"animation"] intValue]];
     }];
 }
 
-RCT_EXPORT_METHOD(setZoom:(nonnull NSNumber*) reactTag zoom:(NSNumber*_Nonnull) zoom duration:(NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
+RCT_EXPORT_METHOD(setZoom:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        [view setZoom: [zoom floatValue] withDuration:[duration floatValue] withAnimation:[animation intValue]];
+
+        NSDictionary* args = argsArr.firstObject;
+        [view setZoom:[args[@"zoom"] floatValue] withDuration:[args[@"duration"] floatValue] withAnimation:[args[@"animation"] intValue]];
     }];
 }
 
-RCT_EXPORT_METHOD(getCameraPosition:(nonnull NSNumber*) reactTag _id:(NSString*_Nonnull) _id) {
+RCT_EXPORT_METHOD(getCameraPosition:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        [view emitCameraPositionToJS:_id];
+
+        NSDictionary* args = argsArr.firstObject;
+        [view emitCameraPositionToJS:args[@"id"]];
     }];
 }
 
-RCT_EXPORT_METHOD(getVisibleRegion:(nonnull NSNumber*) reactTag _id:(NSString*_Nonnull) _id) {
+RCT_EXPORT_METHOD(getVisibleRegion:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        [view emitVisibleRegionToJS:_id];
+
+        NSDictionary* args = argsArr.firstObject;
+        [view emitVisibleRegionToJS:args[@"id"]];
     }];
 }
 
-RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag json:(id)json _id:(NSString *_Nonnull)_id) {
+RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
         RNYMView *view = (RNYMView *)viewRegistry[reactTag];
 
@@ -271,12 +282,13 @@ RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag json:(id)json _id
             return;
         }
 
-        NSArray<YMKPoint *> *mapPoints = [RCTConvert Points:json];
-        [view emitWorldToScreenPoint:mapPoints withId:_id];
+        NSDictionary* args = argsArr.firstObject;
+        NSArray<YMKPoint *> *mapPoints = [RCTConvert Points:args[@"points"]];
+        [view emitWorldToScreenPoint:mapPoints withId:args[@"id"]];
     }];
 }
 
-RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag json:(id)json _id:(NSString *_Nonnull)_id) {
+RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
         RNYMView *view = (RNYMView *)viewRegistry[reactTag];
 
@@ -285,8 +297,23 @@ RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag json:(id)json _id:
             return;
         }
 
-        NSArray<YMKScreenPoint *> *screenPoints = [RCTConvert ScreenPoints:json];
-        [view emitScreenToWorldPoint:screenPoints withId:_id];
+        NSDictionary* args = argsArr.firstObject;
+        NSArray<YMKScreenPoint *> *screenPoints = [RCTConvert ScreenPoints:args[@"points"]];
+        [view emitScreenToWorldPoint:screenPoints withId:args[@"id"]];
+    }];
+}
+
+RCT_EXPORT_METHOD(setTrafficVisible:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
+        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+
+        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+            RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
+            return;
+        }
+
+        NSDictionary* args = argsArr.firstObject;
+        [view setTrafficVisible:args[@"isVisible"]];
     }];
 }
 

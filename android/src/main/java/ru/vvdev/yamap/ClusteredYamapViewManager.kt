@@ -98,59 +98,44 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
     override fun receiveCommand(
         view: ClusteredYamapView,
         commandType: String,
-        args: ReadableArray?
+        argsArr: ReadableArray?
     ) {
-        Assertions.assertNotNull(view)
-        Assertions.assertNotNull(args)
+        val args = argsArr?.getArray(0)?.getMap(0) ?: return
 
         when (commandType) {
             "setCenter" -> setCenter(
                 castToYamapView(view),
-                args!!.getMap(0),
-                args.getDouble(1).toFloat(),
-                args.getDouble(2).toFloat(),
-                args.getDouble(3).toFloat(),
-                args.getDouble(4).toFloat(),
-                args.getInt(5)
+                args.getMap("center"),
+                args.getDouble("zoom").toFloat(),
+                args.getDouble("azimuth").toFloat(),
+                args.getDouble("tilt").toFloat(),
+                args.getDouble("duration").toFloat(),
+                args.getInt("animation")
             )
-
             "fitAllMarkers" -> fitAllMarkers(view)
-            "fitMarkers" -> if (args != null) {
-                fitMarkers(view, args.getArray(0))
-            }
-
-            "findRoutes" -> if (args != null) {
-                findRoutes(view, args.getArray(0), args.getArray(1), args.getString(2))
-            }
-
-            "setZoom" -> if (args != null) {
-                view.setZoom(
-                    args.getDouble(0).toFloat(),
-                    args.getDouble(1).toFloat(),
-                    args.getInt(2)
-                )
-            }
-
-            "getCameraPosition" -> if (args != null) {
-                view.emitCameraPositionToJS(args.getString(0))
-            }
-
-            "getVisibleRegion" -> if (args != null) {
-                view.emitVisibleRegionToJS(args.getString(0))
-            }
-
-            "setTrafficVisible" -> if (args != null) {
-                view.setTrafficVisible(args.getBoolean(0))
-            }
-
-            "getScreenPoints" -> if (args != null) {
-                view.emitWorldToScreenPoints(args.getArray(0), args.getString(1))
-            }
-
-            "getWorldPoints" -> if (args != null) {
-                view.emitScreenToWorldPoints(args.getArray(0), args.getString(1))
-            }
-
+            "fitMarkers" -> fitMarkers(view, args.getArray("points"))
+            "findRoutes" -> findRoutes(
+                view,
+                args.getArray("points"),
+                args.getArray("vehicles"),
+                args.getString("id")
+            )
+            "setZoom" -> view.setZoom(
+                args.getDouble("zoom").toFloat(),
+                args.getDouble("duration").toFloat(),
+                args.getInt("animation")
+            )
+            "getCameraPosition" -> view.emitCameraPositionToJS(args.getString("id"))
+            "getVisibleRegion" -> view.emitVisibleRegionToJS(args.getString("id"))
+            "setTrafficVisible" -> view.setTrafficVisible(args.getBoolean("isVisible"))
+            "getScreenPoints" -> view.emitWorldToScreenPoints(
+                args.getArray("points"),
+                args.getString("id")
+            )
+            "getWorldPoints" -> view.emitScreenToWorldPoints(
+                args.getArray("points"),
+                args.getString("id")
+            )
             else -> throw IllegalArgumentException(
                 String.format(
                     "Unsupported command %d received by %s.",

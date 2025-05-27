@@ -9,26 +9,33 @@ export const MapScreen = () => {
   const markerRef = useRef<MarkerRef | null>(null);
   const angleRef = useRef(0);
 
-    useEffect(() => {
-      if (mapLoaded) {
-        mapRef.current?.getCameraPosition(e => {
-          console.log('getCameraPosition', e);
-        });
-        mapRef.current?.getVisibleRegion(e => {
-          console.log('getVisibleRegion', e);
-        });
-        mapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
-          console.log('getWorldPoints', e);
-        });
-        mapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
-          console.log('getScreenPoints', e);
-        });
-        // mapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
-        //   console.log('findRoutes', e);
-        // });
-        // mapRef.current?.setTrafficVisible(true);
-      }
-    }, [mapLoaded]);
+  useEffect(() => {
+    if (mapLoaded) {
+      // mapRef.current?.getCameraPosition(e => {
+      //   console.log('getCameraPosition', e);
+      // });
+      // mapRef.current?.getVisibleRegion(e => {
+      //   console.log('getVisibleRegion', e);
+      // });
+      // mapRef.current?.getWorldPoints([{x: 100, y: 100}], e => {
+      //   console.log('getWorldPoints', e);
+      // });
+      // mapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
+      //   console.log('getScreenPoints', e);
+      // });
+      // mapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
+      //   console.log('findRoutes', e);
+      // });
+      // mapRef.current?.findDrivingRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], e => {
+      //   console.log(Platform.OS, 'findDrivingRoutes', e);
+      // });
+      // setTimeout(() => mapRef.current?.setTrafficVisible(true), 3000);
+      //setTimeout(() => mapRef.current?.setCenter({lat: 56, lon: 38}), 3000);
+      //setTimeout(() => mapRef.current?.fitAllMarkers(), 3000);
+      //setTimeout(() => mapRef.current?.fitMarkers([{lat: 56, lon: 38}]), 3000);
+      setTimeout(() => mapRef.current?.setZoom(10, 1), 3000);
+    }
+  }, [mapLoaded]);
 
   return (
     <Yamap
