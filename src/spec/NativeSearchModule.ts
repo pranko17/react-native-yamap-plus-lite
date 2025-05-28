@@ -42,18 +42,18 @@ export interface PolygonParams {
 
 type FigureParams = PointParams | BoundingBoxParams | PolylineParams | PolygonParams
 
-type SearchOptions = {
+export interface SearchOptions {
   disableSpellingCorrection?: boolean;
   geometry?: boolean;
   snippets?: SearchType;
   searchTypes?: SearchType;
-};
+}
 
-type YamapSearch = {
+export interface YamapSearch {
   title: string;
   subtitle?: string;
   uri?: string;
-};
+}
 
 interface Spec extends TurboModule {
   searchByAddress(query: string, figure?: FigureParams, options?: SearchOptions): Promise<Array<YamapSearch>>
