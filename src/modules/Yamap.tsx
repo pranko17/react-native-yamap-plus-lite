@@ -1,21 +1,16 @@
-import { NativeModules } from 'react-native';
-
-const { yamap: YamapNativeModule } = NativeModules;
+import NativeYamapModule from '../spec/NativeYamapModule';
 
 export class YamapInstance {
-  public static init(apiKey: string): Promise<void> {
-    return YamapNativeModule.init(apiKey);
+  public static init(apiKey: string) {
+    return NativeYamapModule.init(apiKey);
   }
-
-  public static setLocale(locale: string): Promise<void> {
-    return YamapNativeModule.setLocale(locale);
+  public static setLocale(locale: string) {
+    return NativeYamapModule.setLocale(locale);
   }
-
-  public static getLocale(): Promise<string> {
-    return YamapNativeModule.getLocale();
+  public static getLocale() {
+    return NativeYamapModule.getLocale();
   }
-
-  public static resetLocale(): Promise<void> {
-    return YamapNativeModule.resetLocale();
+  public static resetLocale() {
+    return NativeYamapModule.resetLocale();
   }
 }

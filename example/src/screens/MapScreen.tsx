@@ -33,7 +33,7 @@ export const MapScreen = () => {
       //setTimeout(() => mapRef.current?.setCenter({lat: 56, lon: 38}), 3000);
       //setTimeout(() => mapRef.current?.fitAllMarkers(), 3000);
       //setTimeout(() => mapRef.current?.fitMarkers([{lat: 56, lon: 38}]), 3000);
-      setTimeout(() => mapRef.current?.setZoom(10, 1), 3000);
+      //setTimeout(() => mapRef.current?.setZoom(10, 1), 3000);
     }
   }, [mapLoaded]);
 
