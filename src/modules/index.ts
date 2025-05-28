@@ -1,1 +1,1 @@
-export * from './Yamap';
+export * from './YamapInstance';
