@@ -2,7 +2,7 @@ import {Double} from 'react-native/Libraries/Types/CodegenTypes';
 import {TurboModule, TurboModuleRegistry} from 'react-native';
 import {Address, BoundingBox} from '../interfaces';
 
-enum SearchType {
+export enum SearchType {
   YMKSearchTypeUnspecified, // Toponyms
   YMKSearchTypeGeo, // Companies
   YMKSearchTypeBiz, // Mass transit routes
@@ -15,29 +15,29 @@ enum GeoFigureType {
   POLYGON = 'POLYGON',
 }
 
-interface Point {
+export interface Point {
   lat: Double;
   lon: Double;
 }
 
-interface PointParams {
+export interface PointParams {
   type: GeoFigureType.POINT
   value: Point
 }
 
-interface BoundingBoxParams {
+export interface BoundingBoxParams {
   type: GeoFigureType.BOUNDINGBOX
   value: BoundingBox
 }
 
-interface PolylineParams {
+export interface PolylineParams {
   type: GeoFigureType.POLYLINE
-  value: PolylineParams
+  value: Point[]
 }
 
-interface PolygonParams {
+export interface PolygonParams {
   type: GeoFigureType.POLYGON
-  value: PolygonParams
+  value: Point[]
 }
 
 type FigureParams = PointParams | BoundingBoxParams | PolylineParams | PolygonParams
