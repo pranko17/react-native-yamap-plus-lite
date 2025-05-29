@@ -1,3 +1,3 @@
-export * from './Search';
-export * from './Suggest';
-export * from './YamapInstance';
+export {Search} from './Search';
+export {Suggest} from './Suggest';
+export {YamapInstance} from './YamapInstance';

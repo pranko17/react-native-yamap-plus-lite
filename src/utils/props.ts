@@ -1,4 +1,7 @@
-import {processColor} from 'react-native';
+import {Image, ImageSourcePropType, processColor} from 'react-native';
+
+export const getImageUri = (source: ImageSourcePropType | undefined) =>
+  source ? Image.resolveAssetSource(source).uri : undefined;
 
 export const getProcessedColors = <T extends { [key: string]: any }>(props: T, colorProps: Array<keyof T>): T => {
   const _props = {...props};
