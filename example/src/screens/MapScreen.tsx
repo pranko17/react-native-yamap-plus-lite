@@ -97,6 +97,21 @@ export const MapScreen = () => {
         onPress={() => {
           console.log('polygon press');
         }}
+        zIndex={5}
+      />
+      <Polygon
+        points={[
+          {lat: 55.77, lon: 37.57},
+          {lat: 55.7, lon: 37.62},
+          {lat: 55.78, lon: 37.60},
+        ]}
+        fillColor={'red'}
+        strokeWidth={0}
+        handled={false}
+        onPress={() => {
+          console.log('polygon press');
+        }}
+        zIndex={7}
       />
       <Polyline
         points={[
@@ -115,6 +130,7 @@ export const MapScreen = () => {
         onPress={() => {
           console.log('polyline press');
         }}
+        zIndex={11}
       />
     </Yamap>
   );

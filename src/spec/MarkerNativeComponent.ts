@@ -14,7 +14,6 @@ type Anchor = {
 }
 
 export interface MarkerNativeProps extends ViewProps {
-  zIndex?: Double;
   scale?: Double;
   rotated?: boolean;
   onPress?: BubblingEventHandler<undefined>;

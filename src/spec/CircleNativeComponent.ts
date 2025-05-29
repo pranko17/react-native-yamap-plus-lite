@@ -11,7 +11,6 @@ export interface CircleNativeProps extends ViewProps {
   fillColor?: Double;
   strokeColor?: Double;
   strokeWidth?: Double;
-  zIndex?: Double;
   onPress?: BubblingEventHandler<undefined>;
   center: Point;
   radius: Double;

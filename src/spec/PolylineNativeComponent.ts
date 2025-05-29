@@ -15,7 +15,6 @@ export interface PolylineNativeProps extends ViewProps {
   dashLength?: Double;
   dashOffset?: Double;
   gapLength?: Double;
-  zIndex?: Double;
   onPress?: BubblingEventHandler<undefined>;
   points: Point[];
   handled?: boolean;

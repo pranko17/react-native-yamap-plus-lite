@@ -11,7 +11,6 @@ export interface PolygonNativeProps extends ViewProps {
   fillColor?: Double;
   strokeColor?: Double;
   strokeWidth?: Double;
-  zIndex?: Double;
   onPress?: BubblingEventHandler<undefined>;
   points: Point[];
   innerRings?: (Point[])[];
