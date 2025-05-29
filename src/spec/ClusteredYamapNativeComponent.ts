@@ -79,7 +79,7 @@ export interface ClusteredYamapNativeProps extends ViewProps {
   userLocationIcon: string | undefined;
 
   clusteredMarkers: Point[];
-  clusterColor?: string;
+  clusterColor?: Double;
 }
 
 export type ClusteredYamapNativeRef = Component<ClusteredYamapNativeProps, {}, any> & Readonly<NativeMethods>
