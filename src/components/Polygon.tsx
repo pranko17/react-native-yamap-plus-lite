@@ -1,12 +1,17 @@
 import React, { FC, useMemo } from 'react';
-import {getProcessedColors} from '../utils';
+import {OmitEx, processColorsToNative} from '../utils';
 import PolygonNativeComponent, {PolygonNativeProps} from '../spec/PolygonNativeComponent';
 
-export const Polygon: FC<PolygonNativeProps> = (props) => {
-  const processedProps = useMemo(() =>
-      getProcessedColors(props, ['fillColor', 'strokeColor']),
+type PolygonProps = OmitEx<PolygonNativeProps, 'fillColor' | 'strokeColor'> & {
+  fillColor?: string;
+  strokeColor?: string;
+}
+
+export const Polygon: FC<PolygonProps> = (props) => {
+  const nativeProps = useMemo(() =>
+    processColorsToNative(props, ['fillColor', 'strokeColor']),
     [props]
   );
 
-  return <PolygonNativeComponent {...processedProps} />;
+  return <PolygonNativeComponent {...nativeProps} />;
 };

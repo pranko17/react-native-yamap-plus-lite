@@ -1,5 +1,5 @@
 import React, {forwardRef, useMemo, useRef} from 'react';
-import {getImageUri, getProcessedColors} from '../../utils';
+import {getImageUri, processColorsToNative} from '../../utils';
 import {
   onCameraPositionReceived,
   onRouteFound,
@@ -24,7 +24,7 @@ export const ClusteredYamap = forwardRef<YamapRef, ClusteredYamapProps>(({
   useYamap(nativeRef, ref, Commands);
 
   const nativeProps = useMemo(() =>
-    getProcessedColors({
+    processColorsToNative({
       ...props,
       onRouteFound,
       onCameraPositionReceived,

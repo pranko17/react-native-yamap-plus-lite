@@ -1,12 +1,17 @@
 import React, {FC, useMemo} from 'react';
-import {getProcessedColors} from '../utils';
+import {OmitEx, processColorsToNative} from '../utils';
 import CircleNativeComponent, {CircleNativeProps} from '../spec/CircleNativeComponent';
 
-export const Circle: FC<CircleNativeProps> = (props) => {
-  const processedProps = useMemo(() =>
-    getProcessedColors(props, ['fillColor', 'strokeColor']),
+type CircleProps = OmitEx<CircleNativeProps, 'fillColor' | 'strokeColor'> & {
+  fillColor?: string;
+  strokeColor?: string;
+}
+
+export const Circle: FC<CircleProps> = (props) => {
+  const nativeProps = useMemo(() =>
+    processColorsToNative(props, ['fillColor', 'strokeColor']),
     [props]
   );
 
-  return <CircleNativeComponent {...processedProps} />;
+  return <CircleNativeComponent {...nativeProps} />;
 };

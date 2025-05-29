@@ -1,5 +1,5 @@
 import React, {forwardRef, useMemo, useRef} from 'react';
-import {getImageUri, getProcessedColors} from '../../utils';
+import {getImageUri, processColorsToNative} from '../../utils';
 import {YamapProps, YamapRef} from './types';
 import {
   onCameraPositionReceived,
@@ -22,16 +22,16 @@ export const Yamap = forwardRef<YamapRef, YamapProps>(({
   useYamap(nativeRef, ref, Commands);
 
   const nativeProps = useMemo(() =>
-      getProcessedColors({
-        ...props,
-        onRouteFound,
-        onCameraPositionReceived,
-        onVisibleRegionReceived,
-        onWorldToScreenPointsReceived,
-        onScreenToWorldPointsReceived,
-        showUserPosition,
-        userLocationIcon: getImageUri(props.userLocationIcon),
-      }, ['userLocationAccuracyFillColor', 'userLocationAccuracyStrokeColor']),
+    processColorsToNative({
+      ...props,
+      onRouteFound,
+      onCameraPositionReceived,
+      onVisibleRegionReceived,
+      onWorldToScreenPointsReceived,
+      onScreenToWorldPointsReceived,
+      showUserPosition,
+      userLocationIcon: getImageUri(props.userLocationIcon),
+    }, ['userLocationAccuracyFillColor', 'userLocationAccuracyStrokeColor']),
     [props, showUserPosition]
   );
 
