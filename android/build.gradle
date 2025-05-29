@@ -65,6 +65,7 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 def play_services_location_version = getExtOrDefault("playServicesLocationVersion")
 def maps_mobile_version = getExtOrDefault("mapsMobileVersion")
 
+println "isNewArchitectureEnabled=" + isNewArchitectureEnabled()
 println "kotlin_version=" + kotlin_version
 println "play_services_location_version=" + play_services_location_version
 println "maps_mobile_version=" + maps_mobile_version

@@ -2,29 +2,17 @@ package ru.vvdev.yamap
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.UiThreadUtil
-import com.facebook.react.bridge.WritableMap
-import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.runtime.i18n.I18nManagerFactory
 
-class RNYamapModule internal constructor(context: ReactApplicationContext?) :
-    ReactContextBaseJavaModule(context) {
-    init {
-        Companion.context = context
-    }
+class RNYamapImpl(reactContext: ReactApplicationContext) {
+    private val reactApplicationContext = reactContext
 
-    override fun getName(): String {
-        return REACT_CLASS
-    }
-
-    override fun getConstants(): Map<String, Any> {
+    fun getConstants(): Map<String, Any> {
         return HashMap()
     }
 
-    @ReactMethod
     fun init(apiKey: String?, promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread(Runnable {
             var apiKeyException: Throwable? = null
@@ -38,7 +26,7 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
                     apiKeyException = exception
                 }
 
-                MapKitFactory.initialize(context)
+                MapKitFactory.initialize(reactApplicationContext)
                 MapKitFactory.getInstance().onStart()
                 promise.resolve(null)
             } catch (exception: Exception) {
@@ -51,7 +39,6 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
         }))
     }
 
-    @ReactMethod
     fun setLocale(locale: String?, promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
             try {
@@ -63,7 +50,6 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
         })
     }
 
-    @ReactMethod
     fun getLocale(promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
             try {
@@ -75,7 +61,6 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
         })
     }
 
-    @ReactMethod
     fun resetLocale(promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread {
             try {
@@ -88,14 +73,6 @@ class RNYamapModule internal constructor(context: ReactApplicationContext?) :
     }
 
     companion object {
-        private const val REACT_CLASS = "yamap"
-
-        private var context: ReactApplicationContext? = null
-
-        private fun emitDeviceEvent(eventName: String, eventData: WritableMap?) {
-            context!!.getJSModule(
-                DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
-            ).emit(eventName, eventData)
-        }
+        const val NAME = "yamap"
     }
 }
