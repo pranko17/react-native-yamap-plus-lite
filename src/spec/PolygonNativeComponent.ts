@@ -1,5 +1,5 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import {BubblingEventHandler, Double} from 'react-native/Libraries/Types/CodegenTypes';
+import {BubblingEventHandler, Double, Int32} from 'react-native/Libraries/Types/CodegenTypes';
 import {ViewProps} from 'react-native';
 
 interface Point {
@@ -15,6 +15,7 @@ export interface PolygonNativeProps extends ViewProps {
   points: Point[];
   innerRings?: (Point[])[];
   handled?: boolean;
+  zI?: Int32;
 }
 
 export default codegenNativeComponent<PolygonNativeProps>('YamapPolygon');

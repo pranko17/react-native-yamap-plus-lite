@@ -72,7 +72,7 @@ RCT_CUSTOM_VIEW_PROPERTY(outlineWidth, NSNumber, YamapPolylineView) {
     [view setOutlineWidth: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zIndex, NSNumber, YamapPolylineView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapPolylineView) {
     [view setZIndex: json];
 }
 

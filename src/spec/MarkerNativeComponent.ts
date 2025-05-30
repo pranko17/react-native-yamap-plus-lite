@@ -1,6 +1,6 @@
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
-import {BubblingEventHandler, Double, Float} from 'react-native/Libraries/Types/CodegenTypes';
+import {BubblingEventHandler, Double, Float, Int32} from 'react-native/Libraries/Types/CodegenTypes';
 import {ViewProps} from 'react-native';
 
 interface Point {
@@ -22,6 +22,7 @@ export interface MarkerNativeProps extends ViewProps {
   visible?: boolean;
   handled?: boolean;
   source?: string;
+  zI?: Int32;
 }
 
 type MarkerComponentType = NativeComponentType<MarkerNativeProps> & Readonly<MarkerNativeCommands>;

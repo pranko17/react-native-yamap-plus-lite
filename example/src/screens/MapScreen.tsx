@@ -98,7 +98,7 @@ export const MapScreen = () => {
         onPress={() => {
           console.log('polygon press');
         }}
-        zIndex={5}
+        zI={5}
       />
       <Polygon
         points={[
@@ -112,7 +112,7 @@ export const MapScreen = () => {
         onPress={() => {
           console.log('polygon press');
         }}
-        zIndex={7}
+        zI={7}
       />
       <Polyline
         points={[
@@ -131,7 +131,7 @@ export const MapScreen = () => {
         onPress={() => {
           console.log('polyline press');
         }}
-        zIndex={11}
+        zI={11}
       />
     </Yamap>
   );

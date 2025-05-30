@@ -52,8 +52,8 @@ class YamapPolylineManager internal constructor() : ViewGroupManager<YamapPolyli
         castToPolylineView(view).setStrokeColor(color)
     }
 
-    @ReactProp(name = "zIndex")
-    fun setZIndex(view: View, zIndex: Int) {
+    @ReactProp(name = "zI")
+    fun setZI(view: View, zIndex: Int) {
         castToPolylineView(view).setZIndex(zIndex)
     }
 

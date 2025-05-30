@@ -45,8 +45,8 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
         }
     }
 
-    @ReactProp(name = "zIndex")
-    fun setZIndex(view: View, zIndex: Int) {
+    @ReactProp(name = "zI")
+    fun setZI(view: View, zIndex: Int) {
         castToMarkerView(view).setZIndex(zIndex)
     }
 

@@ -61,7 +61,7 @@ RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, YamapCircleView) {
     [view setStrokeWidth: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zIndex, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapCircleView) {
     [view setZIndex: json];
 }
 

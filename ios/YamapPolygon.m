@@ -68,7 +68,7 @@ RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, YamapPolygonView) {
     [view setStrokeWidth: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zIndex, NSNumber, YamapPolygonView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapPolygonView) {
     [view setZIndex: json];
 }
 

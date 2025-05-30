@@ -78,7 +78,7 @@ RCT_CUSTOM_VIEW_PROPERTY(anchor, NSDictionary, YamapMarkerView) {
     [view setAnchor: [NSValue valueWithCGPoint:point]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zIndex, NSNumber, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapMarkerView) {
     [view setZIndex: json];
 }
 
