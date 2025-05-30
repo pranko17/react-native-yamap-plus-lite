@@ -21,12 +21,12 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
     override var rnMapObject: MapObject? = null
     private var _outlineColor = Color.BLACK
     private var _strokeColor = Color.BLACK
-    private var _zIndex = 1
+    private var _zIndex = 1f
     private var _strokeWidth = 1f
-    private var _dashLength = 1
-    private var _gapLength = 0
+    private var _dashLength = 1f
+    private var _gapLength = 0f
     private var _dashOffset = 0f
-    private var _outlineWidth = 0
+    private var _outlineWidth = 0f
     private var _handled = true
 
     init {
@@ -43,7 +43,7 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         updatePolyline()
     }
 
-    fun setZIndex(zIndex: Int) {
+    fun setZIndex(zIndex: Float) {
         _zIndex = zIndex
         updatePolyline()
     }
@@ -53,7 +53,7 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         updatePolyline()
     }
 
-    fun setDashLength(dashLength: Int) {
+    fun setDashLength(dashLength: Float) {
         _dashLength = dashLength
         updatePolyline()
     }
@@ -63,12 +63,12 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         updatePolyline()
     }
 
-    fun setGapLength(gapLength: Int) {
+    fun setGapLength(gapLength: Float) {
         _gapLength = gapLength
         updatePolyline()
     }
 
-    fun setOutlineWidth(width: Int) {
+    fun setOutlineWidth(width: Float) {
         _outlineWidth = width
         updatePolyline()
     }
@@ -89,12 +89,12 @@ class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListene
         (rnMapObject as PolylineMapObject).geometry = polyline
         (rnMapObject as PolylineMapObject).strokeWidth = _strokeWidth
         (rnMapObject as PolylineMapObject).setStrokeColor(_strokeColor)
-        (rnMapObject as PolylineMapObject).zIndex = _zIndex.toFloat()
-        (rnMapObject as PolylineMapObject).dashLength = _dashLength.toFloat()
-        (rnMapObject as PolylineMapObject).gapLength = _gapLength.toFloat()
+        (rnMapObject as PolylineMapObject).zIndex = _zIndex
+        (rnMapObject as PolylineMapObject).dashLength = _dashLength
+        (rnMapObject as PolylineMapObject).gapLength = _gapLength
         (rnMapObject as PolylineMapObject).dashOffset = _dashOffset
         (rnMapObject as PolylineMapObject).outlineColor = _outlineColor
-        (rnMapObject as PolylineMapObject).outlineWidth = _outlineWidth.toFloat()
+        (rnMapObject as PolylineMapObject).outlineWidth = _outlineWidth
     }
 
     fun setPolylineMapObject(obj: MapObject?) {
