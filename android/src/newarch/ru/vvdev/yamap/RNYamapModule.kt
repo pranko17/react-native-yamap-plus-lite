@@ -5,15 +5,9 @@ import com.facebook.react.bridge.ReactApplicationContext
 
 class RNYamapModule(reactContext: ReactApplicationContext) : NativeYamapModuleSpec(reactContext) {
 
-    private var implementation = RNYamapImpl(reactContext)
+    private val implementation = RNYamapImpl(reactContext)
 
-    override fun getName(): String {
-        return RNYamapImpl.NAME
-    }
-
-    override fun getConstants(): Map<String, Any> {
-        return implementation.getConstants()
-    }
+    override fun getName() = RNYamapImpl.NAME
 
     override fun init(apiKey: String?, promise: Promise) {
         implementation.init(apiKey, promise)

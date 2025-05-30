@@ -10,11 +10,10 @@ import javax.annotation.Nonnull
 
 class YamapPolygonManager : ViewGroupManager<YamapPolygon>(),  YamapPolygonManagerInterface<YamapPolygon> {
 
+    private val implementation = YamapPolygonImpl()
     private val delegate = YamapPolygonManagerDelegate(this)
 
     override fun getDelegate() = delegate
-
-    private var implementation = YamapPolygonImpl()
 
     override fun getName() = YamapPolygonImpl.NAME
 

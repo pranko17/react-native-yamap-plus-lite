@@ -6,6 +6,7 @@ import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.YamapCircle
 
 class YamapCircleImpl() {
+
     fun getExportedCustomDirectEventTypeConstants() = mapOf(
         YamapCirclePressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
     )

@@ -8,7 +8,7 @@ import ru.vvdev.yamap.view.YamapPolygon
 
 class YamapPolygonManager : ViewGroupManager<YamapPolygon>() {
 
-    private var implementation = YamapPolygonImpl()
+    private val implementation = YamapPolygonImpl()
 
     override fun getName() = YamapPolygonImpl.NAME
 

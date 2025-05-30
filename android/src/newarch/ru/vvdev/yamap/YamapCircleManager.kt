@@ -9,11 +9,10 @@ import ru.vvdev.yamap.view.YamapCircle
 
 class YamapCircleManager : ViewGroupManager<YamapCircle>(), YamapCircleManagerInterface<YamapCircle> {
 
+    private val implementation = YamapCircleImpl()
     private val delegate = YamapCircleManagerDelegate(this)
 
     override fun getDelegate() = delegate
-
-    private var implementation = YamapCircleImpl()
 
     override fun getName() = YamapCircleImpl.NAME
 

@@ -125,7 +125,6 @@ export const MapScreen = () => {
         strokeColor={'black'}
         outlineColor={'orange'}
         outlineWidth={2}
-        handled={false}
         gapLength={5}
         dashLength={20}
         onPress={() => {

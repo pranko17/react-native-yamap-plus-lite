@@ -7,14 +7,15 @@ import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.view.YamapCircle
 
 class YamapCircleManager : ViewGroupManager<YamapCircle>() {
-    private var implementation = YamapCircleImpl()
+
+    private val implementation = YamapCircleImpl()
 
     override fun getName() = YamapCircleImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    public override fun createViewInstance(context: ThemedReactContext) = YamapCircle(context)
+    override fun createViewInstance(context: ThemedReactContext) = YamapCircle(context)
 
     // PROPS
     @ReactProp(name = "center")

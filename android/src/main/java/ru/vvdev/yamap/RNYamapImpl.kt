@@ -7,11 +7,8 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.runtime.i18n.I18nManagerFactory
 
 class RNYamapImpl(reactContext: ReactApplicationContext) {
-    private val reactApplicationContext = reactContext
 
-    fun getConstants(): Map<String, Any> {
-        return HashMap()
-    }
+    private val reactApplicationContext = reactContext
 
     fun init(apiKey: String?, promise: Promise) {
         UiThreadUtil.runOnUiThread(Thread(Runnable {
