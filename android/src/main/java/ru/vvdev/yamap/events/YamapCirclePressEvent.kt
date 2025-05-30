@@ -16,6 +16,6 @@ class YamapCirclePressEvent(surfaceId: Int, viewId: Int) : Event<YamapCirclePres
     override fun getEventData(): WritableMap? = Arguments.createMap()
 
     companion object {
-        const val EVENT_NAME = "topCirclePress"
+        const val EVENT_NAME = "topPress"
     }
 }

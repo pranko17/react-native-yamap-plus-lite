@@ -340,7 +340,7 @@ import {Yamap, Circle} from 'react-native-yamap-plus';
 | strokeColor | string | Цвет границы |
 | strokeWidth | number | Толщина границы |
 | onPress | function | Действие при нажатии/клике |
-| zIndex | number | Отображение элемента по оси Z |
+| zI | number | zIndex для объекта на карте |
 | handled | boolean | Включение(**false**)/отключение(**true**) всплытия события нажатия для родителя `default:true` |
 
 ### Polyline

@@ -73,7 +73,7 @@ export const MapScreen = () => {
         }}
       />
       <Circle
-        center={{lat: 55.74, lon: 37.65}}
+        center={{lat: 55.74, lon: 37.64}}
         radius={500}
         strokeWidth={5}
         strokeColor={'red'}
@@ -83,6 +83,7 @@ export const MapScreen = () => {
           angleRef.current = angleRef.current + 180;
           markerRef.current?.animatedRotateTo(angleRef.current, 300);
         }}
+        zI={100}
       />
       <Polygon
         points={[
