@@ -16,6 +16,6 @@ class YamapMarkerPressEvent(surfaceId: Int, viewId: Int) : Event<YamapMarkerPres
     override fun getEventData(): WritableMap? = Arguments.createMap()
 
     companion object {
-        const val EVENT_NAME = "topMarkerPress"
+        const val EVENT_NAME = "topPress"
     }
 }

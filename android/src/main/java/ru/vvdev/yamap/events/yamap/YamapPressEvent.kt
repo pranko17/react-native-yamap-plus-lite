@@ -19,6 +19,6 @@ class YamapPressEvent(surfaceId: Int, viewId: Int, private val point: Point) : E
     }
 
     companion object {
-        const val EVENT_NAME = "topYamapPress"
+        const val EVENT_NAME = "topMapPress"
     }
 }
