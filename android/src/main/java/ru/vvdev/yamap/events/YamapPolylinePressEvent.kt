@@ -16,6 +16,6 @@ class YamapPolylinePressEvent(surfaceId: Int, viewId: Int) : Event<YamapPolyline
     override fun getEventData(): WritableMap? = Arguments.createMap()
 
     companion object {
-        const val EVENT_NAME = "topPolylinePress"
+        const val EVENT_NAME = "topPress"
     }
 }

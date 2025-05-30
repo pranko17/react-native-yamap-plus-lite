@@ -19,6 +19,6 @@ class YamapLongPressEvent(surfaceId: Int, viewId: Int, private val point: Point)
     }
 
     companion object {
-        const val EVENT_NAME = "topYamapLongPress"
+        const val EVENT_NAME = "topMapLongPress"
     }
 }

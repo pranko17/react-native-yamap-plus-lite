@@ -16,6 +16,6 @@ class YamapPolygonPressEvent(surfaceId: Int, viewId: Int) : Event<YamapPolygonPr
     override fun getEventData(): WritableMap? = Arguments.createMap()
 
     companion object {
-        const val EVENT_NAME = "topPolygonPress"
+        const val EVENT_NAME = "topPress"
     }
 }
