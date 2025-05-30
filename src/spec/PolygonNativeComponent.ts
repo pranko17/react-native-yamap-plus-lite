@@ -8,8 +8,8 @@ interface Point {
 }
 
 export interface PolygonNativeProps extends ViewProps {
-  fillColor?: Double;
-  strokeColor?: Double;
+  fillColor?: Int32;
+  strokeColor?: Int32;
   strokeWidth?: Double;
   onPress?: BubblingEventHandler<undefined>;
   points: Point[];

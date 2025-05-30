@@ -3,6 +3,7 @@ import {
   BubblingEventHandler,
   DirectEventHandler,
   Double,
+  Int32,
   WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
 import {NativeMethods, ViewProps} from 'react-native';
@@ -79,7 +80,7 @@ export interface ClusteredYamapNativeProps extends ViewProps {
   userLocationIcon: string | undefined;
 
   clusteredMarkers: Point[];
-  clusterColor?: Double;
+  clusterColor?: Int32;
 }
 
 export type ClusteredYamapNativeRef = Component<ClusteredYamapNativeProps, {}, any> & Readonly<NativeMethods>

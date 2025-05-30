@@ -8,8 +8,8 @@ interface Point {
 }
 
 export interface PolylineNativeProps extends ViewProps {
-  strokeColor?: Double;
-  outlineColor?: Double;
+  strokeColor?: Int32;
+  outlineColor?: Int32;
   strokeWidth?: Double;
   outlineWidth?: Double;
   dashLength?: Double;
