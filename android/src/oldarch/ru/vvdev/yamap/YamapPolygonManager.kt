@@ -44,7 +44,7 @@ class YamapPolygonManager : ViewGroupManager<YamapPolygon>() {
     }
 
     @ReactProp(name = "zI")
-    fun setZI(view: YamapPolygon, zIndex: Int) {
+    fun setZI(view: YamapPolygon, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 

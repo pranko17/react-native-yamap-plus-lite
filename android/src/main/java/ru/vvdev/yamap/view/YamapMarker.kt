@@ -28,7 +28,7 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
     ReactMapObject {
     @JvmField
     var point: Point? = null
-    private var _zIndex = 1
+    private var _zIndex = 1f
     private var _scale = 1f
     private var _visible = true
     private var _handled = true
@@ -52,7 +52,7 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
         updateMarker()
     }
 
-    fun setZIndex(zIndex: Int) {
+    fun setZIndex(zIndex: Float) {
         _zIndex = zIndex
         updateMarker()
     }
@@ -96,7 +96,7 @@ class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapList
                 iconStyle.setAnchor(_markerAnchor)
             }
             (rnMapObject as PlacemarkMapObject).geometry = point!!
-            (rnMapObject as PlacemarkMapObject).zIndex = _zIndex.toFloat()
+            (rnMapObject as PlacemarkMapObject).zIndex = _zIndex
             (rnMapObject as PlacemarkMapObject).setIconStyle(iconStyle)
 
             if (_childView != null) {

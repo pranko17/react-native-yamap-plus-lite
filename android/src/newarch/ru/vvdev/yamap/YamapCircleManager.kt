@@ -41,7 +41,7 @@ class YamapCircleManager : ViewGroupManager<YamapCircle>(), YamapCircleManagerIn
         implementation.setFillColor(view, color)
     }
 
-    override fun setZI(view: YamapCircle, zIndex: Int) {
+    override fun setZI(view: YamapCircle, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 

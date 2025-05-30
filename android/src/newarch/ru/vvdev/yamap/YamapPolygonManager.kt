@@ -43,7 +43,7 @@ class YamapPolygonManager : ViewGroupManager<YamapPolygon>(),  YamapPolygonManag
         implementation.setFillColor(view, color)
     }
 
-    override fun setZI(view: YamapPolygon, zIndex: Int) {
+    override fun setZI(view: YamapPolygon, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 

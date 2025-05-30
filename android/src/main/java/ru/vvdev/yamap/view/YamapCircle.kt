@@ -22,7 +22,7 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
     private var _handled = true
     private var _fillColor = Color.BLACK
     private var _strokeColor = Color.BLACK
-    private var _zIndex = 1
+    private var _zIndex = 1f
     private var _strokeWidth = 1f
     private var _center = Point(0.0, 0.0)
     private var _radius = 0f
@@ -51,7 +51,7 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
         circle = Circle(_center, _radius)
     }
 
-    fun setZIndex(zIndex: Int) {
+    fun setZIndex(zIndex: Float) {
         _zIndex = zIndex
         updateCircle()
     }
@@ -81,7 +81,7 @@ class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener,
             (rnMapObject as CircleMapObject).strokeWidth = _strokeWidth
             (rnMapObject as CircleMapObject).strokeColor = _strokeColor
             (rnMapObject as CircleMapObject).fillColor = _fillColor
-            (rnMapObject as CircleMapObject).zIndex = _zIndex.toFloat()
+            (rnMapObject as CircleMapObject).zIndex = _zIndex
         }
     }
 

@@ -44,7 +44,7 @@ class YamapCircleManager : ViewGroupManager<YamapCircle>() {
     }
 
     @ReactProp(name = "zI")
-    fun setZI(view: YamapCircle, zIndex: Int) {
+    fun setZI(view: YamapCircle, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 

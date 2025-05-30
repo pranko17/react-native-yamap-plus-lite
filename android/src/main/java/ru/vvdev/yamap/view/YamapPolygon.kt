@@ -23,7 +23,7 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
     override var rnMapObject: MapObject? = null
     private var _fillColor = Color.BLACK
     private var _strokeColor = Color.BLACK
-    private var _zIndex = 1
+    private var _zIndex = 1f
     private var _strokeWidth = 1f
     private var _handled = true
 
@@ -57,7 +57,7 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
         polygon = Polygon(LinearRing(_points), rings)
     }
 
-    fun setZIndex(zIndex: Int) {
+    fun setZIndex(zIndex: Float) {
         _zIndex = zIndex
         updatePolygon()
     }
@@ -83,7 +83,7 @@ class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener
             (rnMapObject as PolygonMapObject).strokeWidth = _strokeWidth
             (rnMapObject as PolygonMapObject).strokeColor = _strokeColor
             (rnMapObject as PolygonMapObject).fillColor = _fillColor
-            (rnMapObject as PolygonMapObject).zIndex = _zIndex.toFloat()
+            (rnMapObject as PolygonMapObject).zIndex = _zIndex
         }
     }
 

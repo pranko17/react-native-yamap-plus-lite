@@ -35,7 +35,7 @@ class YamapCircleImpl() {
         view.setFillColor(color)
     }
 
-    fun setZI(view: YamapCircle, zIndex: Int) {
+    fun setZI(view: YamapCircle, zIndex: Float) {
         view.setZIndex(zIndex)
     }
 

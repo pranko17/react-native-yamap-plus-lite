@@ -15,7 +15,7 @@ export interface PolygonNativeProps extends ViewProps {
   points: Point[];
   innerRings?: (Point[])[];
   handled?: boolean;
-  zI?: Int32;
+  zI?: Float;
 }
 
 export default codegenNativeComponent<PolygonNativeProps>('YamapPolygon');

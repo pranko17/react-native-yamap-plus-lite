@@ -20,7 +20,7 @@ export interface CircleNativeProps extends ViewProps {
   center: Point;
   radius: Float;
   handled?: boolean;
-  zI?: Int32;
+  zI?: Float;
 }
 
 export default codegenNativeComponent<CircleNativeProps>('YamapCircle');

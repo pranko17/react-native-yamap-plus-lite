@@ -44,7 +44,7 @@ class YamapPolygonImpl() {
         view.setFillColor(color)
     }
 
-    fun setZI(view: YamapPolygon, zIndex: Int) {
+    fun setZI(view: YamapPolygon, zIndex: Float) {
         view.setZIndex(zIndex)
     }
 
