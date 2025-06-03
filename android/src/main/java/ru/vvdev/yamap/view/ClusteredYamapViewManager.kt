@@ -1,7 +1,6 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import android.view.View
-import com.facebook.infer.annotation.Assertions
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
@@ -13,7 +12,6 @@ import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.ClusteredYamapView
 import javax.annotation.Nonnull
 
 class ClusteredYamapViewManager internal constructor() : ViewGroupManager<ClusteredYamapView>() {
