@@ -5,10 +5,9 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapPolygonManagerDelegate
 import com.facebook.react.viewmanagers.YamapPolygonManagerInterface
-import ru.vvdev.yamap.view.YamapPolygon
-import javax.annotation.Nonnull
+import ru.vvdev.yamap.view.PolygonView
 
-class YamapPolygonManager : ViewGroupManager<YamapPolygon>(),  YamapPolygonManagerInterface<YamapPolygon> {
+class YamapPolygonManager : ViewGroupManager<PolygonView>(),  YamapPolygonManagerInterface<PolygonView> {
 
     private val implementation = YamapPolygonImpl()
     private val delegate = YamapPolygonManagerDelegate(this)
@@ -20,34 +19,34 @@ class YamapPolygonManager : ViewGroupManager<YamapPolygon>(),  YamapPolygonManag
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    override fun createViewInstance(@Nonnull context: ThemedReactContext) = YamapPolygon(context)
+    override fun createViewInstance(context: ThemedReactContext) = PolygonView(context)
 
     // PROPS
-    override fun setPoints(view: YamapPolygon, jsPoints: ReadableArray?) {
+    override fun setPoints(view: PolygonView, jsPoints: ReadableArray?) {
         implementation.setPoints(view, jsPoints)
     }
 
-    override fun setInnerRings(view: YamapPolygon, jsRings: ReadableArray?) {
+    override fun setInnerRings(view: PolygonView, jsRings: ReadableArray?) {
         implementation.setInnerRings(view, jsRings)
     }
 
-    override fun setStrokeWidth(view: YamapPolygon, width: Float) {
+    override fun setStrokeWidth(view: PolygonView, width: Float) {
         implementation.setStrokeWidth(view, width)
     }
 
-    override fun setStrokeColor(view: YamapPolygon, color: Int) {
+    override fun setStrokeColor(view: PolygonView, color: Int) {
         implementation.setStrokeColor(view, color)
     }
 
-    override fun setFillColor(view: YamapPolygon, color: Int) {
+    override fun setFillColor(view: PolygonView, color: Int) {
         implementation.setFillColor(view, color)
     }
 
-    override fun setZI(view: YamapPolygon, zIndex: Float) {
+    override fun setZI(view: PolygonView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
-    override fun setHandled(view: YamapPolygon, handled: Boolean) {
+    override fun setHandled(view: PolygonView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 }

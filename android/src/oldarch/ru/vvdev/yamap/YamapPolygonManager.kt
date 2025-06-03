@@ -4,9 +4,9 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import ru.vvdev.yamap.view.YamapPolygon
+import ru.vvdev.yamap.view.PolygonView
 
-class YamapPolygonManager : ViewGroupManager<YamapPolygon>() {
+class YamapPolygonManager : ViewGroupManager<PolygonView>() {
 
     private val implementation = YamapPolygonImpl()
 
@@ -15,41 +15,41 @@ class YamapPolygonManager : ViewGroupManager<YamapPolygon>() {
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    override fun createViewInstance(context: ThemedReactContext) = YamapPolygon(context)
+    override fun createViewInstance(context: ThemedReactContext) = PolygonView(context)
 
     // PROPS
     @ReactProp(name = "points")
-    fun setPoints(view: YamapPolygon, jsPoints: ReadableArray?) {
+    fun setPoints(view: PolygonView, jsPoints: ReadableArray?) {
         implementation.setPoints(view, jsPoints)
     }
 
     @ReactProp(name = "innerRings")
-    fun setInnerRings(view: YamapPolygon, jsRings: ReadableArray?) {
+    fun setInnerRings(view: PolygonView, jsRings: ReadableArray?) {
         implementation.setInnerRings(view, jsRings)
     }
 
     @ReactProp(name = "strokeWidth")
-    fun setStrokeWidth(view: YamapPolygon, width: Float) {
+    fun setStrokeWidth(view: PolygonView, width: Float) {
         implementation.setStrokeWidth(view, width)
     }
 
     @ReactProp(name = "strokeColor")
-    fun setStrokeColor(view: YamapPolygon, color: Int) {
+    fun setStrokeColor(view: PolygonView, color: Int) {
         implementation.setStrokeColor(view, color)
     }
 
     @ReactProp(name = "fillColor")
-    fun setFillColor(view: YamapPolygon, color: Int) {
+    fun setFillColor(view: PolygonView, color: Int) {
         implementation.setFillColor(view, color)
     }
 
     @ReactProp(name = "zI")
-    fun setZI(view: YamapPolygon, zIndex: Float) {
+    fun setZI(view: PolygonView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
     @ReactProp(name = "handled")
-    fun setHandled(view: YamapPolygon, handled: Boolean) {
+    fun setHandled(view: PolygonView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 }

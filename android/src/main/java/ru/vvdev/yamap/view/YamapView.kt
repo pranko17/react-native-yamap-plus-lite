@@ -732,7 +732,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
     // CHILDREN
     open fun addFeature(child: View?, index: Int) {
-        if (child is YamapPolygon) {
+        if (child is PolygonView) {
             val obj = mapWindow.map.mapObjects.addPolygon(child.polygon)
             child.setPolygonMapObject(obj)
         } else if (child is YamapPolyline) {

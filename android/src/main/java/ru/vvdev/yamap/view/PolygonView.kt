@@ -15,7 +15,7 @@ import com.yandex.mapkit.map.PolygonMapObject
 import ru.vvdev.yamap.events.YamapPolygonPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
-class YamapPolygon(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
+class PolygonView(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
     @JvmField
     var polygon: Polygon
     private var _points: ArrayList<Point> = ArrayList()

@@ -4,7 +4,7 @@ import com.facebook.react.bridge.ReadableArray
 import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapPolygonPressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.YamapPolygon
+import ru.vvdev.yamap.view.PolygonView
 
 class YamapPolygonImpl() {
 
@@ -13,14 +13,14 @@ class YamapPolygonImpl() {
     )
 
     // PROPS
-    fun setPoints(view: YamapPolygon, jsPoints: ReadableArray?) {
+    fun setPoints(view: PolygonView, jsPoints: ReadableArray?) {
         jsPoints?.let {
             val points = PointUtil.jsPointsToPoints(it)
             view.setPolygonPoints(points)
         }
     }
 
-    fun setInnerRings(view: YamapPolygon, jsRings: ReadableArray?) {
+    fun setInnerRings(view: PolygonView, jsRings: ReadableArray?) {
         val rings = ArrayList<ArrayList<Point>>()
         jsRings?.let {
             for (j in 0 until it.size()) {
@@ -32,23 +32,23 @@ class YamapPolygonImpl() {
         view.setPolygonInnerRings(rings)
     }
 
-    fun setStrokeWidth(view: YamapPolygon, width: Float) {
+    fun setStrokeWidth(view: PolygonView, width: Float) {
         view.setStrokeWidth(width)
     }
 
-    fun setStrokeColor(view: YamapPolygon, color: Int) {
+    fun setStrokeColor(view: PolygonView, color: Int) {
         view.setStrokeColor(color)
     }
 
-    fun setFillColor(view: YamapPolygon, color: Int) {
+    fun setFillColor(view: PolygonView, color: Int) {
         view.setFillColor(color)
     }
 
-    fun setZI(view: YamapPolygon, zIndex: Float) {
+    fun setZI(view: PolygonView, zIndex: Float) {
         view.setZIndex(zIndex)
     }
 
-    fun setHandled(view: YamapPolygon, handled: Boolean) {
+    fun setHandled(view: PolygonView, handled: Boolean) {
         view.setHandled(handled)
     }
 
