@@ -22,7 +22,7 @@ class RNYamapPackage : ReactPackage {
         return listOf(
             YamapViewManager(),
             ClusteredYamapViewManager(),
-            YamapPolygonManager(),
+            PolygonViewManager(),
             YamapPolylineManager(),
             MarkerViewManager(),
             CircleViewManager()

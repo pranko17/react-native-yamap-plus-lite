@@ -1,12 +1,11 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import com.facebook.react.bridge.ReadableArray
 import com.yandex.mapkit.geometry.Point
 import ru.vvdev.yamap.events.YamapPolygonPressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.PolygonView
 
-class YamapPolygonImpl() {
+class PolygonViewManagerImpl() {
 
     fun getExportedCustomDirectEventTypeConstants() = mapOf(
         YamapPolygonPressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")

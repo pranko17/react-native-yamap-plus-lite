@@ -5,12 +5,13 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.view.PolygonView
+import ru.vvdev.yamap.view.PolygonViewManagerImpl
 
-class YamapPolygonManager : ViewGroupManager<PolygonView>() {
+class PolygonViewManager : ViewGroupManager<PolygonView>() {
 
-    private val implementation = YamapPolygonImpl()
+    private val implementation = PolygonViewManagerImpl()
 
-    override fun getName() = YamapPolygonImpl.NAME
+    override fun getName() = PolygonViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()

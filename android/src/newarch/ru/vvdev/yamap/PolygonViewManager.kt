@@ -6,15 +6,16 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapPolygonManagerDelegate
 import com.facebook.react.viewmanagers.YamapPolygonManagerInterface
 import ru.vvdev.yamap.view.PolygonView
+import ru.vvdev.yamap.view.PolygonViewManagerImpl
 
-class YamapPolygonManager : ViewGroupManager<PolygonView>(),  YamapPolygonManagerInterface<PolygonView> {
+class PolygonViewManager : ViewGroupManager<PolygonView>(),  YamapPolygonManagerInterface<PolygonView> {
 
-    private val implementation = YamapPolygonImpl()
+    private val implementation = PolygonViewManagerImpl()
     private val delegate = YamapPolygonManagerDelegate(this)
 
     override fun getDelegate() = delegate
 
-    override fun getName() = YamapPolygonImpl.NAME
+    override fun getName() = PolygonViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
