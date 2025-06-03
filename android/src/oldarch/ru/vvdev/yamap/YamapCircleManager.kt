@@ -4,9 +4,9 @@ import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import ru.vvdev.yamap.view.YamapCircle
+import ru.vvdev.yamap.view.CircleView
 
-class YamapCircleManager : ViewGroupManager<YamapCircle>() {
+class YamapCircleManager : ViewGroupManager<CircleView>() {
 
     private val implementation = YamapCircleImpl()
 
@@ -15,41 +15,41 @@ class YamapCircleManager : ViewGroupManager<YamapCircle>() {
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    override fun createViewInstance(context: ThemedReactContext) = YamapCircle(context)
+    override fun createViewInstance(context: ThemedReactContext) = CircleView(context)
 
     // PROPS
     @ReactProp(name = "center")
-    fun setCenter(view: YamapCircle, center: ReadableMap?) {
+    fun setCenter(view: CircleView, center: ReadableMap?) {
         implementation.setCenter(view, center)
     }
 
     @ReactProp(name = "radius")
-    fun setRadius(view: YamapCircle, radius: Float) {
+    fun setRadius(view: CircleView, radius: Float) {
         implementation.setRadius(view, radius)
     }
 
     @ReactProp(name = "strokeWidth")
-    fun setStrokeWidth(view: YamapCircle, width: Float) {
+    fun setStrokeWidth(view: CircleView, width: Float) {
         implementation.setStrokeWidth(view, width)
     }
 
     @ReactProp(name = "strokeColor")
-    fun setStrokeColor(view: YamapCircle, color: Int) {
+    fun setStrokeColor(view: CircleView, color: Int) {
         implementation.setStrokeColor(view, color)
     }
 
     @ReactProp(name = "fillColor")
-    fun setFillColor(view: YamapCircle, color: Int) {
+    fun setFillColor(view: CircleView, color: Int) {
         implementation.setFillColor(view, color)
     }
 
     @ReactProp(name = "zI")
-    fun setZI(view: YamapCircle, zIndex: Float) {
+    fun setZI(view: CircleView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
     @ReactProp(name = "handled")
-    fun setHandled(view: YamapCircle, handled: Boolean) {
+    fun setHandled(view: CircleView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 }

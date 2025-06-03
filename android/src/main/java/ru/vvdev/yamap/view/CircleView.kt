@@ -14,7 +14,7 @@ import com.yandex.mapkit.map.MapObjectTapListener
 import ru.vvdev.yamap.events.YamapCirclePressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
-class YamapCircle(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
+class CircleView(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
     @JvmField
     var circle: Circle
 

@@ -3,7 +3,7 @@ package ru.vvdev.yamap
 import com.facebook.react.bridge.ReadableMap
 import ru.vvdev.yamap.events.YamapCirclePressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.YamapCircle
+import ru.vvdev.yamap.view.CircleView
 
 class YamapCircleImpl() {
 
@@ -12,34 +12,34 @@ class YamapCircleImpl() {
     )
 
     // PROPS
-    fun setCenter(view: YamapCircle, center: ReadableMap?) {
+    fun setCenter(view: CircleView, center: ReadableMap?) {
         center?.let {
             val point = PointUtil.readableMapToPoint(it)
             view.setCenter(point)
         }
     }
 
-    fun setRadius(view: YamapCircle, radius: Float) {
+    fun setRadius(view: CircleView, radius: Float) {
         view.setRadius(radius)
     }
 
-    fun setStrokeWidth(view: YamapCircle, width: Float) {
+    fun setStrokeWidth(view: CircleView, width: Float) {
         view.setStrokeWidth(width)
     }
 
-    fun setStrokeColor(view: YamapCircle, color: Int) {
+    fun setStrokeColor(view: CircleView, color: Int) {
         view.setStrokeColor(color)
     }
 
-    fun setFillColor(view: YamapCircle, color: Int) {
+    fun setFillColor(view: CircleView, color: Int) {
         view.setFillColor(color)
     }
 
-    fun setZI(view: YamapCircle, zIndex: Float) {
+    fun setZI(view: CircleView, zIndex: Float) {
         view.setZIndex(zIndex)
     }
 
-    fun setHandled(view: YamapCircle, handled: Boolean) {
+    fun setHandled(view: CircleView, handled: Boolean) {
         view.setHandled(handled)
     }
 

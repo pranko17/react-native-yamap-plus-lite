@@ -75,12 +75,10 @@ import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.models.ReactMapObject
-import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.ImageCacheManager
 import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.utils.RouteManager
 import javax.annotation.Nonnull
-
 
 open class YamapView(context: Context?) : MapView(context), UserLocationObjectListener,
     CameraListener, InputListener, TrafficListener, MapLoadedListener {
@@ -745,7 +743,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
             obj.setIcon(ImageProvider.fromBitmap(createBitmap(1, 1)))
             obj.geometry = child.point!!
             child.setMarkerMapObject(obj)
-        } else if (child is YamapCircle) {
+        } else if (child is CircleView) {
             val obj = mapWindow.map.mapObjects.addCircle(child.circle)
             child.setCircleMapObject(obj)
         }

@@ -5,9 +5,9 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapCircleManagerDelegate
 import com.facebook.react.viewmanagers.YamapCircleManagerInterface
-import ru.vvdev.yamap.view.YamapCircle
+import ru.vvdev.yamap.view.CircleView
 
-class YamapCircleManager : ViewGroupManager<YamapCircle>(), YamapCircleManagerInterface<YamapCircle> {
+class YamapCircleManager : ViewGroupManager<CircleView>(), YamapCircleManagerInterface<CircleView> {
 
     private val implementation = YamapCircleImpl()
     private val delegate = YamapCircleManagerDelegate(this)
@@ -19,33 +19,33 @@ class YamapCircleManager : ViewGroupManager<YamapCircle>(), YamapCircleManagerIn
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    override fun createViewInstance(context: ThemedReactContext)  = YamapCircle(context)
+    override fun createViewInstance(context: ThemedReactContext)  = CircleView(context)
 
-    override fun setCenter(view: YamapCircle, center: ReadableMap?) {
+    override fun setCenter(view: CircleView, center: ReadableMap?) {
         implementation.setCenter(view, center)
     }
 
-    override fun setRadius(view: YamapCircle, radius: Float) {
+    override fun setRadius(view: CircleView, radius: Float) {
         implementation.setRadius(view, radius)
     }
 
-    override fun setStrokeWidth(view: YamapCircle, width: Float) {
+    override fun setStrokeWidth(view: CircleView, width: Float) {
         implementation.setStrokeWidth(view, width)
     }
 
-    override fun setStrokeColor(view: YamapCircle, color: Int) {
+    override fun setStrokeColor(view: CircleView, color: Int) {
         implementation.setStrokeColor(view, color)
     }
 
-    override fun setFillColor(view: YamapCircle, color: Int) {
+    override fun setFillColor(view: CircleView, color: Int) {
         implementation.setFillColor(view, color)
     }
 
-    override fun setZI(view: YamapCircle, zIndex: Float) {
+    override fun setZI(view: CircleView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
-    override fun setHandled(view: YamapCircle, handled: Boolean) {
+    override fun setHandled(view: CircleView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 }
