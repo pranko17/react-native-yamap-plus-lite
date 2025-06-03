@@ -1,11 +1,10 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import com.facebook.react.bridge.ReadableMap
 import ru.vvdev.yamap.events.YamapCirclePressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.CircleView
 
-class YamapCircleImpl() {
+class CircleViewManagerImpl() {
 
     fun getExportedCustomDirectEventTypeConstants() = mapOf(
         YamapCirclePressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")

@@ -6,15 +6,16 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapCircleManagerDelegate
 import com.facebook.react.viewmanagers.YamapCircleManagerInterface
 import ru.vvdev.yamap.view.CircleView
+import ru.vvdev.yamap.view.CircleViewManagerImpl
 
-class YamapCircleManager : ViewGroupManager<CircleView>(), YamapCircleManagerInterface<CircleView> {
+class CircleViewManager : ViewGroupManager<CircleView>(), YamapCircleManagerInterface<CircleView> {
 
-    private val implementation = YamapCircleImpl()
+    private val implementation = CircleViewManagerImpl()
     private val delegate = YamapCircleManagerDelegate(this)
 
     override fun getDelegate() = delegate
 
-    override fun getName() = YamapCircleImpl.NAME
+    override fun getName() = CircleViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()

@@ -5,12 +5,13 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.view.CircleView
+import ru.vvdev.yamap.view.CircleViewManagerImpl
 
-class YamapCircleManager : ViewGroupManager<CircleView>() {
+class CircleViewManager : ViewGroupManager<CircleView>() {
 
-    private val implementation = YamapCircleImpl()
+    private val implementation = CircleViewManagerImpl()
 
-    override fun getName() = YamapCircleImpl.NAME
+    override fun getName() = CircleViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
