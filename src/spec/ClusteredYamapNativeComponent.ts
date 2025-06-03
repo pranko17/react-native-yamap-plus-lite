@@ -3,6 +3,7 @@ import {
   BubblingEventHandler,
   DirectEventHandler,
   Double,
+  Float,
   Int32,
   WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
@@ -60,14 +61,15 @@ export interface ClusteredYamapNativeProps extends ViewProps {
   showUserPosition?: boolean;
   nightMode?: boolean;
   mapStyle?: string;
+  mapType?: WithDefault<'none' | 'raster' | 'vector', 'none'>;
   onCameraPositionChange?: DirectEventHandler<CameraPosition>;
   onCameraPositionChangeEnd?: DirectEventHandler<CameraPosition>;
   onMapPress?: BubblingEventHandler<Point>;
   onMapLongPress?: BubblingEventHandler<Point>;
   onMapLoaded?: DirectEventHandler<MapLoaded>;
-  userLocationAccuracyFillColor?: string;
-  userLocationAccuracyStrokeColor?: string;
-  userLocationAccuracyStrokeWidth?: Double;
+  userLocationAccuracyFillColor?: Int32;
+  userLocationAccuracyStrokeColor?: Int32;
+  userLocationAccuracyStrokeWidth?: Float;
   scrollGesturesEnabled?: boolean;
   zoomGesturesEnabled?: boolean;
   tiltGesturesEnabled?: boolean;
@@ -78,6 +80,7 @@ export interface ClusteredYamapNativeProps extends ViewProps {
   logoPosition?: YandexLogoPosition;
   logoPadding?: YandexLogoPadding;
   userLocationIcon: string | undefined;
+  interactive?: boolean;
 
   onRouteFound: DirectEventHandler<undefined>;
   onCameraPositionReceived: DirectEventHandler<undefined>;

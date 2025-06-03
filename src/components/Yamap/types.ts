@@ -16,13 +16,19 @@ import {OmitEx} from '../../utils';
 import {YamapNativeProps} from '../../spec/YamapNativeComponent';
 
 export type YamapProps = OmitEx<YamapNativeProps,
+  'userLocationAccuracyFillColor' |
+  'userLocationAccuracyStrokeColor' |
   'userLocationIcon' |
   'onRouteFound' |
   'onCameraPositionReceived' |
   'onVisibleRegionReceived' |
   'onWorldToScreenPointsReceived' |
   'onScreenToWorldPointsReceived'
-> & {userLocationIcon?: ImageSourcePropType}
+> & {
+  userLocationAccuracyFillColor?: string;
+  userLocationAccuracyStrokeColor?: string;
+  userLocationIcon?: ImageSourcePropType;
+}
 
 export type YamapRef = {
   setCenter: (

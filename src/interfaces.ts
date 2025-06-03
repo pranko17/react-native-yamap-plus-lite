@@ -36,8 +36,6 @@ export const ALL_MASSTRANSIT_VEHICLES: Vehicles[] = [
   'funicular',
 ] as const;
 
-export type MapType = 'none' | 'raster' | 'vector';
-
 export interface DrivingInfo {
   time: string;
   timeWithTraffic: string;

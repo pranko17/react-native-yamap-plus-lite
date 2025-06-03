@@ -432,10 +432,10 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
     fun setMapType(type: String?) {
         if (type != null) {
-            when (type) {
-                "none" -> mapWindow.map.mapType = MapType.NONE
-                "raster" -> mapWindow.map.mapType = MapType.MAP
-                else -> mapWindow.map.mapType = MapType.VECTOR_MAP
+            mapWindow.map.mapType = when (type) {
+                "none" -> MapType.NONE
+                "raster" -> MapType.MAP
+                else -> MapType.VECTOR_MAP
             }
         }
     }
