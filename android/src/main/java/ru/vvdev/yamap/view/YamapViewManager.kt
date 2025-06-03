@@ -1,4 +1,4 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import android.view.View
 import com.facebook.react.bridge.ReadableArray
@@ -19,86 +19,47 @@ import ru.vvdev.yamap.events.yamap.MapLoadedEvent
 import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
 import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.YamapView
 import javax.annotation.Nonnull
 
 class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
-    override fun getName(): String {
-        return REACT_CLASS
-    }
 
-    override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
-        return mapOf()
-    }
+    override fun getName() = REACT_CLASS
 
-    override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
-        return mutableMapOf(
-            FindRoutesEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onRouteFound")
-                    ),
-            GetCameraPositionEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onCameraPositionReceived")
-                    ),
-            CameraPositionChangeEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onCameraPositionChange")
-                    ),
-            CameraPositionChangeEndEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onCameraPositionChangeEnd")
-                    ),
-            GetVisibleRegionEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onVisibleRegionReceived")
-                    ),
-            YamapPressEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to
-                            mapOf("bubbled" to "onMapPress")
-                    ),
-            YamapLongPressEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onMapLongPress")
-                    ),
-            MapLoadedEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onMapLoaded")
-                    ),
-            GetScreenToWorldPointsEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onScreenToWorldPointsReceived")
-                    ),
-            GetWorldToScreenPointsEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onWorldToScreenPointsReceived")
-                    ),
-            )
-    }
+    override fun getExportedCustomBubblingEventTypeConstants() = mutableMapOf(
+        FindRoutesEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onRouteFound")),
+        GetCameraPositionEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionReceived")),
+        CameraPositionChangeEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChange")),
+        CameraPositionChangeEndEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChangeEnd")),
+        GetVisibleRegionEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onVisibleRegionReceived")),
+        YamapPressEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapPress")),
+        YamapLongPressEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLongPress")),
+        MapLoadedEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLoaded")),
+        GetScreenToWorldPointsEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onScreenToWorldPointsReceived")),
+        GetWorldToScreenPointsEvent.EVENT_NAME to
+                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onWorldToScreenPointsReceived")),
+    )
 
-    override fun getCommandsMap(): Map<String, Int> {
-        return mapOf(
-            "setCenter" to SET_CENTER,
-            "fitAllMarkers" to FIT_ALL_MARKERS,
-            "findRoutes" to FIND_ROUTES,
-            "setZoom" to SET_ZOOM,
-            "getCameraPosition" to GET_CAMERA_POSITION,
-            "getVisibleRegion" to GET_VISIBLE_REGION,
-            "setTrafficVisible" to SET_TRAFFIC_VISIBLE,
-            "fitMarkers" to FIT_MARKERS,
-            "getScreenPoints" to GET_SCREEN_POINTS,
-            "getWorldPoints" to GET_WORLD_POINTS,
-        )
-    }
+    override fun getCommandsMap() = mapOf(
+        "setCenter" to SET_CENTER,
+        "fitAllMarkers" to FIT_ALL_MARKERS,
+        "findRoutes" to FIND_ROUTES,
+        "setZoom" to SET_ZOOM,
+        "getCameraPosition" to GET_CAMERA_POSITION,
+        "getVisibleRegion" to GET_VISIBLE_REGION,
+        "setTrafficVisible" to SET_TRAFFIC_VISIBLE,
+        "fitMarkers" to FIT_MARKERS,
+        "getScreenPoints" to GET_SCREEN_POINTS,
+        "getWorldPoints" to GET_WORLD_POINTS,
+    )
 
     override fun receiveCommand(
         view: YamapView,

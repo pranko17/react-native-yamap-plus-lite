@@ -8,6 +8,7 @@ import ru.vvdev.yamap.search.RNYandexSearchModule
 import ru.vvdev.yamap.suggest.RNYandexSuggestModule
 import ru.vvdev.yamap.view.ClusteredYamapViewManager
 import ru.vvdev.yamap.view.MarkerViewManager
+import ru.vvdev.yamap.view.YamapViewManager
 
 class RNYamapPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
