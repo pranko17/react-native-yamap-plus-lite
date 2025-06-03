@@ -6,15 +6,16 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapPolylineManagerDelegate
 import com.facebook.react.viewmanagers.YamapPolylineManagerInterface
 import ru.vvdev.yamap.view.PolylineView
+import ru.vvdev.yamap.view.PolylineViewManagerImpl
 
-class YamapPolylineManager : ViewGroupManager<PolylineView>(), YamapPolylineManagerInterface<PolylineView> {
+class PolylineViewManager : ViewGroupManager<PolylineView>(), YamapPolylineManagerInterface<PolylineView> {
 
-    private val implementation = YamapPolylineImpl()
+    private val implementation = PolylineViewManagerImpl()
     private val delegate = YamapPolylineManagerDelegate(this)
 
     override fun getDelegate() = delegate
 
-    override fun getName() = YamapPolylineImpl.NAME
+    override fun getName() = PolylineViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()

@@ -24,7 +24,7 @@ class RNYamapPackage : ReactPackage {
             YamapViewManager(),
             ClusteredYamapViewManager(),
             PolygonViewManager(),
-            YamapPolylineManager(),
+            PolylineViewManager(),
             MarkerViewManager(),
             CircleViewManager()
         )

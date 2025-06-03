@@ -1,11 +1,10 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import com.facebook.react.bridge.ReadableArray
 import ru.vvdev.yamap.events.YamapPolylinePressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.PolylineView
 
-class YamapPolylineImpl() {
+class PolylineViewManagerImpl() {
 
     fun getExportedCustomDirectEventTypeConstants() = mapOf(
         YamapPolylinePressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")

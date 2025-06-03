@@ -5,13 +5,14 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.view.PolylineView
+import ru.vvdev.yamap.view.PolylineViewManagerImpl
 
 
-class YamapPolylineManager : ViewGroupManager<PolylineView>() {
+class PolylineViewManager : ViewGroupManager<PolylineView>() {
 
-    private val implementation = YamapPolylineImpl()
+    private val implementation = PolylineViewManagerImpl()
 
-    override fun getName() = YamapPolylineImpl.NAME
+    override fun getName() = PolylineViewManagerImpl.NAME
 
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
