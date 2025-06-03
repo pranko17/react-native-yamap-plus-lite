@@ -7,4 +7,4 @@ interface Spec extends TurboModule {
   resetLocale(): Promise<void>
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('yamap');
+export default TurboModuleRegistry.getEnforcing<Spec>('RTNYamapModule');

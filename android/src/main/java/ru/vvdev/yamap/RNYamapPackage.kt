@@ -10,7 +10,7 @@ import ru.vvdev.yamap.suggest.RNYandexSuggestModule
 class RNYamapPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
         return listOf(
-            RNYamapModule(reactContext),
+            YamapModule(reactContext),
             RNYandexSuggestModule(reactContext),
             RNYandexSearchModule(reactContext)
         )

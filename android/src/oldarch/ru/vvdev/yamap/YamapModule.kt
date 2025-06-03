@@ -5,11 +5,11 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 
-class RNYamapModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+class YamapModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
-    private val implementation = RNYamapImpl(reactContext)
+    private val implementation = YamapModuleImpl(reactContext)
 
-    override fun getName() = RNYamapImpl.NAME
+    override fun getName() = YamapModuleImpl.NAME
 
     @ReactMethod
     fun init(apiKey: String?, promise: Promise) {

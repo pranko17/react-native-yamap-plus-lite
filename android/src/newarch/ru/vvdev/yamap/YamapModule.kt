@@ -3,11 +3,11 @@ package ru.vvdev.yamap
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 
-class RNYamapModule(reactContext: ReactApplicationContext) : NativeYamapModuleSpec(reactContext) {
+class YamapModule(reactContext: ReactApplicationContext) : NativeYamapModuleSpec(reactContext) {
 
-    private val implementation = RNYamapImpl(reactContext)
+    private val implementation = YamapModuleImpl(reactContext)
 
-    override fun getName() = RNYamapImpl.NAME
+    override fun getName() = YamapModuleImpl.NAME
 
     override fun init(apiKey: String?, promise: Promise) {
         implementation.init(apiKey, promise)

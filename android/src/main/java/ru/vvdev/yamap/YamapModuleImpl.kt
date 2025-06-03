@@ -6,7 +6,7 @@ import com.facebook.react.bridge.UiThreadUtil
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.runtime.i18n.I18nManagerFactory
 
-class RNYamapImpl(reactContext: ReactApplicationContext) {
+class YamapModuleImpl(reactContext: ReactApplicationContext) {
 
     private val reactApplicationContext = reactContext
 
@@ -70,6 +70,6 @@ class RNYamapImpl(reactContext: ReactApplicationContext) {
     }
 
     companion object {
-        const val NAME = "yamap"
+        const val NAME = "RTNYamapModule"
     }
 }
