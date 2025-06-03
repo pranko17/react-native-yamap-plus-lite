@@ -1,7 +1,7 @@
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import {DirectEventHandler, Double, Float} from 'react-native/Libraries/Types/CodegenTypes';
 import {ViewProps} from 'react-native';
+import {MarkerNativeCommands} from './commands/marker';
 
 interface Point {
   lat: Double;
@@ -25,24 +25,8 @@ export interface MarkerNativeProps extends ViewProps {
   zI?: Float;
 }
 
-type MarkerComponentType = NativeComponentType<MarkerNativeProps> & Readonly<MarkerNativeCommands>;
+export type MarkerComponentType = NativeComponentType<MarkerNativeProps> & Readonly<MarkerNativeCommands>;
 
-export interface MarkerNativeCommands {
-  animatedMoveTo: (
-    viewRef: React.ElementRef<MarkerComponentType>,
-    args: Array<Readonly<{coords: Point, duration: Double}>>
-  ) => void;
-  animatedRotateTo: (
-    viewRef: React.ElementRef<MarkerComponentType>,
-    args: Array<Readonly<{angle: Float, duration: Double}>>
-  ) => void;
-}
-
-export const Commands = codegenNativeCommands<MarkerNativeCommands>({
-  supportedCommands: [
-    'animatedMoveTo',
-    'animatedRotateTo',
-  ],
-});
+require('./commands/marker');
 
 export default codegenNativeComponent<MarkerNativeProps>('YamapMarker');

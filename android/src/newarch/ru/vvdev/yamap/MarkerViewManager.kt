@@ -70,12 +70,4 @@ class MarkerViewManager : ViewGroupManager<MarkerView>(), YamapMarkerManagerInte
     override fun receiveCommand(view: MarkerView, commandType: String, argsArr: ReadableArray?) {
         implementation.receiveCommand(view, commandType, argsArr)
     }
-
-    override fun animatedMoveTo(view: MarkerView, args: ReadableArray?) {
-        implementation.receiveCommand(view, "animatedMoveTo", args)
-    }
-
-    override fun animatedRotateTo(view: MarkerView, args: ReadableArray?) {
-        implementation.receiveCommand(view, "animatedRotateTo", args)
-    }
 }

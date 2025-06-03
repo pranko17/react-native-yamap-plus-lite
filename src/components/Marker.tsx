@@ -1,10 +1,8 @@
 import React, {forwardRef, useImperativeHandle, useMemo, useRef} from 'react';
 import {ImageSourcePropType} from 'react-native';
 import {getImageUri, OmitEx} from '../utils';
-import MarkerNativeComponent, {
-  Commands,
-  MarkerNativeProps,
-} from '../spec/MarkerNativeComponent';
+import MarkerNativeComponent, {MarkerNativeProps} from '../spec/MarkerNativeComponent';
+import {Commands} from '../spec/commands/marker';
 import {Point} from '../interfaces';
 
 export type MarkerProps = OmitEx<MarkerNativeProps, 'source'> &  {
