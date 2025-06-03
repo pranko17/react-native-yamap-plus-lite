@@ -1,4 +1,4 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import android.view.View
 import com.facebook.react.bridge.ReadableArray
@@ -8,33 +8,19 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.events.YamapMarkerPressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.MarkerView
-import javax.annotation.Nonnull
 
-class YamapMarkerManager internal constructor() : ViewGroupManager<MarkerView>() {
-    override fun getName(): String {
-        return REACT_CLASS
-    }
+class MarkerViewManager : ViewGroupManager<MarkerView>() {
+    override fun getName() = REACT_CLASS
 
-    override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> {
-        return mapOf(
-            YamapMarkerPressEvent.EVENT_NAME to
-                    mapOf("registrationName" to "onPress")
-        )
-    }
-
-    override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
-        return mutableMapOf()
-    }
+    override fun getExportedCustomDirectEventTypeConstants() = mapOf(
+        YamapMarkerPressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
+    )
 
     private fun castToMarkerView(view: View): MarkerView {
         return view as MarkerView
     }
 
-    @Nonnull
-    public override fun createViewInstance(@Nonnull context: ThemedReactContext): MarkerView {
-        return MarkerView(context)
-    }
+    public override fun createViewInstance(context: ThemedReactContext) = MarkerView(context)
 
     // PROPS
     @ReactProp(name = "point")
@@ -127,6 +113,6 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<MarkerView>()
     }
 
     companion object {
-        const val REACT_CLASS: String = "YamapMarker"
+        const val REACT_CLASS = "YamapMarker"
     }
 }

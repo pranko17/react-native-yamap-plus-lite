@@ -7,6 +7,7 @@ import com.facebook.react.uimanager.ViewManager
 import ru.vvdev.yamap.search.RNYandexSearchModule
 import ru.vvdev.yamap.suggest.RNYandexSuggestModule
 import ru.vvdev.yamap.view.ClusteredYamapViewManager
+import ru.vvdev.yamap.view.MarkerViewManager
 
 class RNYamapPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
@@ -23,7 +24,7 @@ class RNYamapPackage : ReactPackage {
             ClusteredYamapViewManager(),
             YamapPolygonManager(),
             YamapPolylineManager(),
-            YamapMarkerManager(),
+            MarkerViewManager(),
             CircleViewManager()
         )
     }
