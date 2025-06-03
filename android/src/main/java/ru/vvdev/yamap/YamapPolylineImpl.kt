@@ -3,7 +3,7 @@ package ru.vvdev.yamap
 import com.facebook.react.bridge.ReadableArray
 import ru.vvdev.yamap.events.YamapPolylinePressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.YamapPolyline
+import ru.vvdev.yamap.view.PolylineView
 
 class YamapPolylineImpl() {
 
@@ -12,44 +12,44 @@ class YamapPolylineImpl() {
     )
 
     // PROPS
-    fun setPoints(view: YamapPolyline, jsPoints: ReadableArray?) {
+    fun setPoints(view: PolylineView, jsPoints: ReadableArray?) {
         val points = jsPoints?.let { PointUtil.jsPointsToPoints(it) }
         view.setPolygonPoints(points)
     }
 
-    fun setStrokeWidth(view: YamapPolyline, width: Float) {
+    fun setStrokeWidth(view: PolylineView, width: Float) {
         view.setStrokeWidth(width)
     }
 
-    fun setStrokeColor(view: YamapPolyline, color: Int) {
+    fun setStrokeColor(view: PolylineView, color: Int) {
         view.setStrokeColor(color)
     }
 
-    fun setZI(view: YamapPolyline, zIndex: Float) {
+    fun setZI(view: PolylineView, zIndex: Float) {
         view.setZIndex(zIndex)
     }
 
-    fun setDashLength(view: YamapPolyline, length: Float) {
+    fun setDashLength(view: PolylineView, length: Float) {
         view.setDashLength(length)
     }
 
-    fun setDashOffset(view: YamapPolyline, offset: Float) {
+    fun setDashOffset(view: PolylineView, offset: Float) {
         view.setDashOffset(offset)
     }
 
-    fun setGapLength(view: YamapPolyline, length: Float) {
+    fun setGapLength(view: PolylineView, length: Float) {
         view.setGapLength(length)
     }
 
-    fun setOutlineWidth(view: YamapPolyline, width: Float) {
+    fun setOutlineWidth(view: PolylineView, width: Float) {
         view.setOutlineWidth(width)
     }
 
-    fun setOutlineColor(view: YamapPolyline, color: Int) {
+    fun setOutlineColor(view: PolylineView, color: Int) {
         view.setOutlineColor(color)
     }
 
-    fun setHandled(view: YamapPolyline, handled: Boolean) {
+    fun setHandled(view: PolylineView, handled: Boolean) {
         view.setHandled(handled)
     }
 

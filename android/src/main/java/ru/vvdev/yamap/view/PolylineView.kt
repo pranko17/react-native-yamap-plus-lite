@@ -14,7 +14,7 @@ import com.yandex.mapkit.map.PolylineMapObject
 import ru.vvdev.yamap.events.YamapPolylinePressEvent
 import ru.vvdev.yamap.models.ReactMapObject
 
-class YamapPolyline(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
+class PolylineView(context: Context?) : ViewGroup(context), MapObjectTapListener, ReactMapObject {
     @JvmField
     var polyline: Polyline
     private var _points: ArrayList<Point> = ArrayList()

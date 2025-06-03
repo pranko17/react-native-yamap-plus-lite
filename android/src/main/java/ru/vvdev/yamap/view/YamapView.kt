@@ -735,7 +735,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         if (child is PolygonView) {
             val obj = mapWindow.map.mapObjects.addPolygon(child.polygon)
             child.setPolygonMapObject(obj)
-        } else if (child is YamapPolyline) {
+        } else if (child is PolylineView) {
             val obj = mapWindow.map.mapObjects.addPolyline(child.polyline)
             child.setPolylineMapObject(obj)
         } else if (child is MarkerView) {

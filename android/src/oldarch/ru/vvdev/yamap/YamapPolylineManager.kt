@@ -4,10 +4,10 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import ru.vvdev.yamap.view.YamapPolyline
+import ru.vvdev.yamap.view.PolylineView
 
 
-class YamapPolylineManager : ViewGroupManager<YamapPolyline>() {
+class YamapPolylineManager : ViewGroupManager<PolylineView>() {
 
     private val implementation = YamapPolylineImpl()
 
@@ -16,56 +16,56 @@ class YamapPolylineManager : ViewGroupManager<YamapPolyline>() {
     override fun getExportedCustomDirectEventTypeConstants() =
         implementation.getExportedCustomDirectEventTypeConstants()
 
-    override fun createViewInstance(context: ThemedReactContext) = YamapPolyline(context)
+    override fun createViewInstance(context: ThemedReactContext) = PolylineView(context)
 
     // PROPS
     @ReactProp(name = "points")
-    fun setPoints(view: YamapPolyline, jsPoints: ReadableArray?) {
+    fun setPoints(view: PolylineView, jsPoints: ReadableArray?) {
         implementation.setPoints(view, jsPoints)
     }
 
     @ReactProp(name = "strokeWidth")
-    fun setStrokeWidth(view: YamapPolyline, width: Float) {
+    fun setStrokeWidth(view: PolylineView, width: Float) {
         implementation.setStrokeWidth(view, width)
     }
 
     @ReactProp(name = "strokeColor")
-    fun setStrokeColor(view: YamapPolyline, color: Int) {
+    fun setStrokeColor(view: PolylineView, color: Int) {
         implementation.setStrokeColor(view, color)
     }
 
     @ReactProp(name = "zI")
-    fun setZI(view: YamapPolyline, zIndex: Float) {
+    fun setZI(view: PolylineView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
     @ReactProp(name = "dashLength")
-    fun setDashLength(view: YamapPolyline, length: Float) {
+    fun setDashLength(view: PolylineView, length: Float) {
         implementation.setDashLength(view, length)
     }
 
     @ReactProp(name = "dashOffset")
-    fun setDashOffset(view: YamapPolyline, offset: Float) {
+    fun setDashOffset(view: PolylineView, offset: Float) {
         implementation.setDashOffset(view, offset)
     }
 
     @ReactProp(name = "gapLength")
-    fun setGapLength(view: YamapPolyline, length: Float) {
+    fun setGapLength(view: PolylineView, length: Float) {
         implementation.setGapLength(view, length)
     }
 
     @ReactProp(name = "outlineWidth")
-    override fun setOutlineWidth(view: YamapPolyline, width: Float) {
+    override fun setOutlineWidth(view: PolylineView, width: Float) {
         implementation.setOutlineWidth(view, width)
     }
 
     @ReactProp(name = "outlineColor")
-    fun setOutlineColor(view: YamapPolyline, color: Int) {
+    fun setOutlineColor(view: PolylineView, color: Int) {
         implementation.setOutlineColor(view, color)
     }
 
     @ReactProp(name = "handled")
-    fun setHandled(view: YamapPolyline, handled: Boolean) {
+    fun setHandled(view: PolylineView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 }
