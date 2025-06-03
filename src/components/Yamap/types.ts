@@ -15,9 +15,14 @@ import {
 import {OmitEx} from '../../utils';
 import {YamapNativeProps} from '../../spec/YamapNativeComponent';
 
-export type YamapProps = OmitEx<YamapNativeProps, 'userLocationIcon'> & {
-  userLocationIcon?: ImageSourcePropType;
-}
+export type YamapProps = OmitEx<YamapNativeProps,
+  'userLocationIcon' |
+  'onRouteFound' |
+  'onCameraPositionReceived' |
+  'onVisibleRegionReceived' |
+  'onWorldToScreenPointsReceived' |
+  'onScreenToWorldPointsReceived'
+> & {userLocationIcon?: ImageSourcePropType}
 
 export type YamapRef = {
   setCenter: (

@@ -17,6 +17,6 @@ class GetCameraPositionEvent(surfaceId: Int, viewId: Int, private val eventData:
     override fun getEventData(): WritableMap? = eventData
 
     companion object {
-        const val EVENT_NAME = "topGetCameraPosition"
+        const val EVENT_NAME = "topCameraPositionReceived"
     }
 }

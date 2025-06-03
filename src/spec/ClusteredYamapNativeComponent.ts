@@ -79,6 +79,12 @@ export interface ClusteredYamapNativeProps extends ViewProps {
   logoPadding?: YandexLogoPadding;
   userLocationIcon: string | undefined;
 
+  onRouteFound: DirectEventHandler<undefined>;
+  onCameraPositionReceived: DirectEventHandler<undefined>;
+  onVisibleRegionReceived: DirectEventHandler<undefined>;
+  onWorldToScreenPointsReceived: DirectEventHandler<undefined>;
+  onScreenToWorldPointsReceived: DirectEventHandler<undefined>;
+
   clusteredMarkers: Point[];
   clusterColor?: Int32;
 }

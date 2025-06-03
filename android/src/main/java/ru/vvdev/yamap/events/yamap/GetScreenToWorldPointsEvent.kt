@@ -17,6 +17,6 @@ class GetScreenToWorldPointsEvent(surfaceId: Int, viewId: Int, private val event
     override fun getEventData(): WritableMap? = eventData
 
     companion object {
-        const val EVENT_NAME = "topGetScreenToWorldPoints"
+        const val EVENT_NAME = "topScreenToWorldPointsReceived"
     }
 }

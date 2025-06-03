@@ -77,6 +77,12 @@ export interface YamapNativeProps extends ViewProps {
   logoPosition?: YandexLogoPosition;
   logoPadding?: YandexLogoPadding;
   userLocationIcon: string | undefined;
+
+  onRouteFound: DirectEventHandler<undefined>;
+  onCameraPositionReceived: DirectEventHandler<undefined>;
+  onVisibleRegionReceived: DirectEventHandler<undefined>;
+  onWorldToScreenPointsReceived: DirectEventHandler<undefined>;
+  onScreenToWorldPointsReceived: DirectEventHandler<undefined>;
 }
 
 export type YamapNativeRef = Component<YamapNativeProps, {}, any> & Readonly<NativeMethods>
