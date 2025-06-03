@@ -31,6 +31,6 @@ class GetVisibleRegionEvent(surfaceId: Int, viewId: Int, private val region: Vis
     }
 
     companion object {
-        const val EVENT_NAME = "topGetVisibleRegion"
+        const val EVENT_NAME = "topVisibleRegionReceived"
     }
 }

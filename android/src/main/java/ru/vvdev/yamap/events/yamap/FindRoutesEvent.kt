@@ -17,6 +17,6 @@ class FindRoutesEvent(surfaceId: Int, viewId: Int, private val eventData: Writab
     override fun getEventData(): WritableMap? = eventData
 
     companion object {
-        const val EVENT_NAME = "topFindRoutes"
+        const val EVENT_NAME = "topRouteFound"
     }
 }
