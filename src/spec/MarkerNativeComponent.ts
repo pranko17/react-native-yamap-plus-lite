@@ -14,7 +14,7 @@ type Anchor = {
 }
 
 export interface MarkerNativeProps extends ViewProps {
-  scale?: Double;
+  scale?: Float;
   rotated?: boolean;
   onPress?: DirectEventHandler<undefined>;
   point: Point;
@@ -30,11 +30,11 @@ type MarkerComponentType = NativeComponentType<MarkerNativeProps> & Readonly<Mar
 export interface MarkerNativeCommands {
   animatedMoveTo: (
     viewRef: React.ElementRef<MarkerComponentType>,
-    args: Array<Readonly<{coords: Point, duration: Float}>>
+    args: Array<Readonly<{coords: Point, duration: Double}>>
   ) => void;
   animatedRotateTo: (
     viewRef: React.ElementRef<MarkerComponentType>,
-    args: Array<Readonly<{angle: Float, duration: Float}>>
+    args: Array<Readonly<{angle: Float, duration: Double}>>
   ) => void;
 }
 
