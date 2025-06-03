@@ -57,7 +57,7 @@ export interface CameraPosition {
 }
 
 export interface ClusteredYamapNativeProps extends ViewProps {
-  userLocationIconScale?: Double;
+  userLocationIconScale?: Float;
   showUserPosition?: boolean;
   nightMode?: boolean;
   mapStyle?: string;

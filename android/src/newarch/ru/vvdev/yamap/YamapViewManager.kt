@@ -20,9 +20,9 @@ class YamapViewManager : ViewGroupManager<YamapView>(), YamapViewManagerInterfac
     override fun getName() = YamapViewManagerImpl.NAME
 
     override fun getExportedCustomBubblingEventTypeConstants() =
-        implementation.getExportedCustomBubblingEventTypeConstants()
+        YamapViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
-    override fun getCommandsMap() = implementation.getCommandsMap()
+    override fun getCommandsMap() = YamapViewManagerImpl.commandsMap
 
     override fun receiveCommand(view: YamapView, commandType: String, argsArr: ReadableArray?) {
         implementation.receiveCommand(view, commandType, argsArr)

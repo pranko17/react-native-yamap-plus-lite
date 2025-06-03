@@ -19,42 +19,6 @@ import ru.vvdev.yamap.utils.PointUtil
 
 class YamapViewManagerImpl() {
 
-    fun getExportedCustomBubblingEventTypeConstants() = mutableMapOf(
-        FindRoutesEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onRouteFound")),
-        GetCameraPositionEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionReceived")),
-        CameraPositionChangeEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChange")),
-        CameraPositionChangeEndEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChangeEnd")),
-        GetVisibleRegionEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onVisibleRegionReceived")),
-        YamapPressEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapPress")),
-        YamapLongPressEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLongPress")),
-        MapLoadedEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLoaded")),
-        GetScreenToWorldPointsEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onScreenToWorldPointsReceived")),
-        GetWorldToScreenPointsEvent.EVENT_NAME to
-                mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onWorldToScreenPointsReceived")),
-    )
-
-    fun getCommandsMap() = mapOf(
-        "setCenter" to SET_CENTER,
-        "fitAllMarkers" to FIT_ALL_MARKERS,
-        "findRoutes" to FIND_ROUTES,
-        "setZoom" to SET_ZOOM,
-        "getCameraPosition" to GET_CAMERA_POSITION,
-        "getVisibleRegion" to GET_VISIBLE_REGION,
-        "setTrafficVisible" to SET_TRAFFIC_VISIBLE,
-        "fitMarkers" to FIT_MARKERS,
-        "getScreenPoints" to GET_SCREEN_POINTS,
-        "getWorldPoints" to GET_WORLD_POINTS,
-    )
-
     fun receiveCommand(view: YamapView, commandType: String, argsArr: ReadableArray?) {
         val args = argsArr?.getArray(0)?.getMap(0) ?: return
 
@@ -132,8 +96,8 @@ class YamapViewManagerImpl() {
     }
 
     private fun fitMarkers(view: YamapView, jsPoints: ReadableArray?) {
-        if (jsPoints != null) {
-            val points = PointUtil.jsPointsToPoints(jsPoints)
+        jsPoints?.let {
+            val points = PointUtil.jsPointsToPoints(it)
             view.fitMarkers(points)
         }
     }
@@ -161,8 +125,8 @@ class YamapViewManagerImpl() {
 
     // PROPS
     fun setUserLocationIcon(view: YamapView, icon: String?) {
-        if (icon != null) {
-            view.setUserLocationIcon(icon)
+        icon?.let {
+            view.setUserLocationIcon(it)
         }
     }
 
@@ -211,20 +175,20 @@ class YamapViewManagerImpl() {
     }
 
     fun setMapStyle(view: YamapView, style: String?) {
-        if (style != null) {
-            view.setMapStyle(style)
+        style?.let {
+            view.setMapStyle(it)
         }
     }
 
     fun setMapType(view: YamapView, type: String?) {
-        if (type != null) {
-            view.setMapType(type)
+        type?.let {
+            view.setMapType(it)
         }
     }
 
     fun setInitialRegion(view: YamapView, params: ReadableMap?) {
-        if (params != null) {
-            view.setInitialRegion(params)
+        params?.let {
+            view.setInitialRegion(it)
         }
     }
 
@@ -233,14 +197,14 @@ class YamapViewManagerImpl() {
     }
 
     fun setLogoPosition(view: YamapView, params: ReadableMap?) {
-        if (params != null) {
-            view.setLogoPosition(params)
+        params?.let {
+            view.setLogoPosition(it)
         }
     }
 
     fun setLogoPadding(view: YamapView, params: ReadableMap?) {
-        if (params != null) {
-            view.setLogoPadding(params)
+        params?.let {
+            view.setLogoPadding(it)
         }
     }
 
@@ -250,16 +214,40 @@ class YamapViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapView"
+        val exportedCustomBubblingEventTypeConstants = mutableMapOf(
+            FindRoutesEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onRouteFound")),
+            GetCameraPositionEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionReceived")),
+            CameraPositionChangeEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChange")),
+            CameraPositionChangeEndEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChangeEnd")),
+            GetVisibleRegionEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onVisibleRegionReceived")),
+            YamapPressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapPress")),
+            YamapLongPressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLongPress")),
+            MapLoadedEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLoaded")),
+            GetScreenToWorldPointsEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onScreenToWorldPointsReceived")),
+            GetWorldToScreenPointsEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onWorldToScreenPointsReceived")),
+        )
 
-        private const val SET_CENTER = 1
-        private const val FIT_ALL_MARKERS = 2
-        private const val FIND_ROUTES = 3
-        private const val SET_ZOOM = 4
-        private const val GET_CAMERA_POSITION = 5
-        private const val GET_VISIBLE_REGION = 6
-        private const val SET_TRAFFIC_VISIBLE = 7
-        private const val FIT_MARKERS = 8
-        private const val GET_SCREEN_POINTS = 9
-        private const val GET_WORLD_POINTS = 10
+        val commandsMap = mapOf(
+            "setCenter" to 1,
+            "fitAllMarkers" to 2,
+            "findRoutes" to 3,
+            "setZoom" to 4,
+            "getCameraPosition" to 5,
+            "getVisibleRegion" to 6,
+            "setTrafficVisible" to 7,
+            "fitMarkers" to 8,
+            "getScreenPoints" to 9,
+            "getWorldPoints" to 10,
+        )
     }
 }
