@@ -39,7 +39,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
             placemarksMap["" + placemark.geometry.latitude + placemark.geometry.longitude] =
                 placemark
             val child: Any? = getChildAt(i)
-            if (child != null && child is YamapMarker) {
+            if (child != null && child is MarkerView) {
                 child.setMarkerMapObject(placemark)
             }
         }
@@ -63,7 +63,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
             placemarksMap["" + placemark.geometry.latitude + placemark.geometry.longitude] =
                 placemark
             val child: Any? = getChildAt(i)
-            if (child != null && child is YamapMarker) {
+            if (child != null && child is MarkerView) {
                 child.setMarkerMapObject(placemark)
             }
         }
@@ -71,7 +71,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     }
 
     override fun addFeature(child: View?, index: Int) {
-        val marker = child as YamapMarker?
+        val marker = child as MarkerView?
         val placemark = placemarksMap["" + marker!!.point!!.latitude + marker.point!!.longitude]
         if (placemark != null) {
             marker.setMarkerMapObject(placemark)
@@ -80,7 +80,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
 
     override fun removeChild(index: Int) {
         val child = getChildAt(index)
-        if (child is YamapMarker) {
+        if (child is MarkerView) {
             val mapObject = child.rnMapObject
             if (mapObject == null || !mapObject.isValid) return
             clusterCollection.remove(mapObject)

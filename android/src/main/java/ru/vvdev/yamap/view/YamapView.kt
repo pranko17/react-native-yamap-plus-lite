@@ -335,7 +335,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val points = ArrayList<Point>()
         for (i in 0 until childCount) {
             val obj: Any = getChildAt(i)
-            if (obj is YamapMarker) {
+            if (obj is MarkerView) {
                 obj.point?.let { points.add(it) }
             }
         }
@@ -738,7 +738,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         } else if (child is YamapPolyline) {
             val obj = mapWindow.map.mapObjects.addPolyline(child.polyline)
             child.setPolylineMapObject(obj)
-        } else if (child is YamapMarker) {
+        } else if (child is MarkerView) {
             val obj = mapWindow.map.mapObjects.addPlacemark()
             obj.setIcon(ImageProvider.fromBitmap(createBitmap(1, 1)))
             obj.geometry = child.point!!

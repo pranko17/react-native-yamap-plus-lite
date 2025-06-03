@@ -24,7 +24,7 @@ import com.facebook.react.uimanager.UIManagerHelper.getSurfaceId
 import ru.vvdev.yamap.events.YamapMarkerPressEvent
 import ru.vvdev.yamap.utils.ImageCacheManager
 
-class YamapMarker(context: Context?) : ReactViewGroup(context), MapObjectTapListener,
+class MarkerView(context: Context?) : ReactViewGroup(context), MapObjectTapListener,
     ReactMapObject {
     @JvmField
     var point: Point? = null

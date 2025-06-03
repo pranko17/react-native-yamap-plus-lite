@@ -8,10 +8,10 @@ import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
 import ru.vvdev.yamap.events.YamapMarkerPressEvent
 import ru.vvdev.yamap.utils.PointUtil
-import ru.vvdev.yamap.view.YamapMarker
+import ru.vvdev.yamap.view.MarkerView
 import javax.annotation.Nonnull
 
-class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>() {
+class YamapMarkerManager internal constructor() : ViewGroupManager<MarkerView>() {
     override fun getName(): String {
         return REACT_CLASS
     }
@@ -27,13 +27,13 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
         return mutableMapOf()
     }
 
-    private fun castToMarkerView(view: View): YamapMarker {
-        return view as YamapMarker
+    private fun castToMarkerView(view: View): MarkerView {
+        return view as MarkerView
     }
 
     @Nonnull
-    public override fun createViewInstance(@Nonnull context: ThemedReactContext): YamapMarker {
-        return YamapMarker(context)
+    public override fun createViewInstance(@Nonnull context: ThemedReactContext): MarkerView {
+        return MarkerView(context)
     }
 
     // PROPS
@@ -83,18 +83,18 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
         castToMarkerView(view).setAnchor(pointF)
     }
 
-    override fun addView(parent: YamapMarker, child: View, index: Int) {
+    override fun addView(parent: MarkerView, child: View, index: Int) {
         parent.addChildView(child, index)
         super.addView(parent, child, index)
     }
 
-    override fun removeViewAt(parent: YamapMarker, index: Int) {
+    override fun removeViewAt(parent: MarkerView, index: Int) {
         parent.removeChildView(index)
         super.removeViewAt(parent, index)
     }
 
     override fun receiveCommand(
-        view: YamapMarker,
+        view: MarkerView,
         commandType: String,
         argsArr: ReadableArray?
     ) {
