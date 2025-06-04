@@ -1,4 +1,4 @@
-package ru.vvdev.yamap.search
+package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -15,17 +15,19 @@ import com.yandex.mapkit.geometry.Polyline
 import com.yandex.mapkit.search.SearchOptions
 import com.yandex.mapkit.search.SearchType
 import com.yandex.mapkit.search.Snippet
+import ru.vvdev.yamap.search.MapSearchClient
+import ru.vvdev.yamap.search.MapSearchItem
+import ru.vvdev.yamap.search.YandexMapSearchClient
+import ru.vvdev.yamap.search.YandexSearchRNArgsHelper
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.PointUtil
 
-class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
+class SearchModule(reactContext: ReactApplicationContext?) :
     ReactContextBaseJavaModule(reactContext) {
     private var searchClient: MapSearchClient? = null
     private val searchArgsHelper = YandexSearchRNArgsHelper()
 
-    override fun getName(): String {
-        return "YamapSearch"
-    }
+    override fun getName() = NAME
 
     private fun getGeometry(figure: ReadableMap?): Geometry {
         if (figure?.getMap("value")!=null && figure.getString("type") !=null) {
@@ -246,6 +248,8 @@ class RNYandexSearchModule(reactContext: ReactApplicationContext?) :
     }
 
     companion object {
+        const val NAME = "RTNSearchModule"
+
         private const val ERR_NO_REQUEST_ARG = "YANDEX_SEARCH_ERR_NO_REQUEST_ARG"
         private const val ERR_SEARCH_FAILED = "YANDEX_SEARCH_ERR_SEARCH_FAILED"
     }

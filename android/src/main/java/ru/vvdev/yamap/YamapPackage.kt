@@ -3,7 +3,7 @@ package ru.vvdev.yamap
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
-import ru.vvdev.yamap.search.RNYandexSearchModule
+import ru.vvdev.yamap.module.SearchModule
 import ru.vvdev.yamap.suggest.RNYandexSuggestModule
 import ru.vvdev.yamap.view.YamapViewManager
 import ru.vvdev.yamap.view.ClusteredYamapViewManager
@@ -17,7 +17,7 @@ class YamapPackage : ReactPackage {
     override fun createNativeModules(reactContext: ReactApplicationContext) = listOf(
         YamapModule(reactContext),
         RNYandexSuggestModule(reactContext),
-        RNYandexSearchModule(reactContext)
+        SearchModule(reactContext)
     )
 
     override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {

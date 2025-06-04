@@ -64,4 +64,4 @@ interface Spec extends TurboModule {
   searchByURI(query: string, options?: SearchOptions): Promise<Array<YamapSearch>>
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('YamapSearch');
+export default TurboModuleRegistry.getEnforcing<Spec>('RTNSearchModule');
