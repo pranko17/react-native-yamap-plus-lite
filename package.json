@@ -32,9 +32,9 @@
   "devDependencies": {
     "@types/react": "*",
     "@types/react-native": "*",
-    "del-cli": "5.1.0",
+    "del-cli": "6.0.0",
     "react-native-builder-bob": "0.40.11",
-    "release-it": "19.0.2",
+    "release-it": "19.0.3",
     "typescript": "5.8.3"
   },
   "peerDependencies": {
