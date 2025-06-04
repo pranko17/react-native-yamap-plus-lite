@@ -1,9 +1,6 @@
 package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.UiThreadUtil
 import ru.vvdev.yamap.suggest.MapSuggestClient
@@ -12,14 +9,11 @@ import ru.vvdev.yamap.suggest.YandexMapSuggestClient
 import ru.vvdev.yamap.suggest.YandexSuggestRNArgsHelper
 import ru.vvdev.yamap.utils.Callback
 
-class SuggestsModule(reactContext: ReactApplicationContext?) :
-    ReactContextBaseJavaModule(reactContext) {
+class SuggestsModuleImpl {
+
     private var _suggestClient: MapSuggestClient? = null
     private val _argsHelper = YandexSuggestRNArgsHelper()
 
-    override fun getName() = NAME
-
-    @ReactMethod
     fun suggest(text: String?, promise: Promise) {
         if (text == null) {
             promise.reject(ERR_NO_REQUEST_ARG, "suggest request: text arg is not provided")
@@ -42,7 +36,6 @@ class SuggestsModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun suggestWithOptions(text: String?, options: ReadableMap?, promise: Promise) {
         if (text == null) {
             promise.reject(ERR_NO_REQUEST_ARG, "suggest request: text arg is not provided")
@@ -65,9 +58,11 @@ class SuggestsModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
-    fun reset() {
-        UiThreadUtil.runOnUiThread { getSuggestClient().resetSuggest() }
+    fun reset(promise: Promise) {
+        UiThreadUtil.runOnUiThread {
+            getSuggestClient().resetSuggest()
+            promise.resolve("OK")
+        }
     }
 
     private fun getSuggestClient(): MapSuggestClient {

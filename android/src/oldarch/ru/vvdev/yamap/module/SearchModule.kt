@@ -8,7 +8,7 @@ import com.facebook.react.bridge.ReadableMap
 
 class SearchModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
-    private val implementation = SearchModuleImpl(reactContext)
+    private val implementation = SearchModuleImpl()
 
     override fun getName() = SearchModuleImpl.NAME
 

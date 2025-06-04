@@ -1,7 +1,6 @@
 package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.UiThreadUtil
 import com.yandex.mapkit.geometry.BoundingBox
@@ -20,7 +19,7 @@ import ru.vvdev.yamap.search.YandexSearchRNArgsHelper
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.PointUtil
 
-class SearchModuleImpl(reactContext: ReactApplicationContext) {
+class SearchModuleImpl {
     private var searchClient: MapSearchClient? = null
     private val searchArgsHelper = YandexSearchRNArgsHelper()
 

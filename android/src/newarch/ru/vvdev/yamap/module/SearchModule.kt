@@ -7,7 +7,7 @@ import ru.vvdev.yamap.NativeSearchModuleSpec
 
 class SearchModule(reactContext: ReactApplicationContext) : NativeSearchModuleSpec(reactContext) {
 
-    private val implementation = SearchModuleImpl(reactContext)
+    private val implementation = SearchModuleImpl()
 
     override fun getName() = SearchModuleImpl.NAME
 
