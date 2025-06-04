@@ -1,9 +1,10 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import ru.vvdev.yamap.YamapModuleImpl
 
 class YamapModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 

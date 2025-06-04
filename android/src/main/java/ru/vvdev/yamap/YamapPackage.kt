@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 import ru.vvdev.yamap.module.SearchModule
 import ru.vvdev.yamap.module.SuggestsModule
+import ru.vvdev.yamap.module.YamapModule
 import ru.vvdev.yamap.view.YamapViewManager
 import ru.vvdev.yamap.view.ClusteredYamapViewManager
 import ru.vvdev.yamap.view.PolygonViewManager

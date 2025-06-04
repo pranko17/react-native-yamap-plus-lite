@@ -2,8 +2,6 @@ package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.UiThreadUtil
 import com.yandex.mapkit.geometry.BoundingBox
@@ -22,12 +20,9 @@ import ru.vvdev.yamap.search.YandexSearchRNArgsHelper
 import ru.vvdev.yamap.utils.Callback
 import ru.vvdev.yamap.utils.PointUtil
 
-class SearchModule(reactContext: ReactApplicationContext?) :
-    ReactContextBaseJavaModule(reactContext) {
+class SearchModuleImpl(reactContext: ReactApplicationContext) {
     private var searchClient: MapSearchClient? = null
     private val searchArgsHelper = YandexSearchRNArgsHelper()
-
-    override fun getName() = NAME
 
     private fun getGeometry(figure: ReadableMap?): Geometry {
         if (figure?.getMap("value")!=null && figure.getString("type") !=null) {
@@ -95,7 +90,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun searchByAddress(searchQuery: String?, figure: ReadableMap?, options: ReadableMap?, promise: Promise) {
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
@@ -119,7 +113,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun resolveURI(searchQuery: String?, options: ReadableMap?, promise: Promise) {
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
@@ -143,7 +136,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun searchByURI(searchQuery: String?, options: ReadableMap?, promise: Promise) {
         if (searchQuery != null) {
             val searchOptions = getSearchOptions(options)
@@ -167,7 +159,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun searchByPoint(jsPoint: ReadableMap?, zoom: Double?, options: ReadableMap?, promise: Promise) {
         if (jsPoint === null) {
             promise.reject(ERR_NO_REQUEST_ARG, "search request: text arg is not provided")
@@ -191,7 +182,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun geoToAddress(jsPoint: ReadableMap?, promise: Promise) {
         if (jsPoint === null) {
             promise.reject(ERR_NO_REQUEST_ARG, "search request: text arg is not provided")
@@ -215,7 +205,6 @@ class SearchModule(reactContext: ReactApplicationContext?) :
         }
     }
 
-    @ReactMethod
     fun addressToGeo(text: String?, promise: Promise) {
         if (text != null) {
             UiThreadUtil.runOnUiThread {

@@ -1,7 +1,9 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
+import ru.vvdev.yamap.NativeYamapModuleSpec
+import ru.vvdev.yamap.YamapModuleImpl
 
 class YamapModule(reactContext: ReactApplicationContext) : NativeYamapModuleSpec(reactContext) {
 
