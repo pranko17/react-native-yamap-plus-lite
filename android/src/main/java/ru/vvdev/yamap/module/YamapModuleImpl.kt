@@ -1,4 +1,4 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
