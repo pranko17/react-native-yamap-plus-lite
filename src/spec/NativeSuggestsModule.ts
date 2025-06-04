@@ -37,4 +37,4 @@ interface Spec extends TurboModule {
   reset(): Promise<void>
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('YamapSuggests');
+export default TurboModuleRegistry.getEnforcing<Spec>('RTNSuggestsModule');

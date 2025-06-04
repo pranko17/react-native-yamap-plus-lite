@@ -1,4 +1,4 @@
-package ru.vvdev.yamap.suggest
+package ru.vvdev.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -6,16 +6,18 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.UiThreadUtil
+import ru.vvdev.yamap.suggest.MapSuggestClient
+import ru.vvdev.yamap.suggest.MapSuggestItem
+import ru.vvdev.yamap.suggest.YandexMapSuggestClient
+import ru.vvdev.yamap.suggest.YandexSuggestRNArgsHelper
 import ru.vvdev.yamap.utils.Callback
 
-class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
+class SuggestsModule(reactContext: ReactApplicationContext?) :
     ReactContextBaseJavaModule(reactContext) {
     private var _suggestClient: MapSuggestClient? = null
     private val _argsHelper = YandexSuggestRNArgsHelper()
 
-    override fun getName(): String {
-        return "YamapSuggests"
-    }
+    override fun getName() = NAME
 
     @ReactMethod
     fun suggest(text: String?, promise: Promise) {
@@ -77,6 +79,8 @@ class RNYandexSuggestModule(reactContext: ReactApplicationContext?) :
     }
 
     companion object {
+        const val NAME = "RTNSuggestsModule"
+
         private const val ERR_NO_REQUEST_ARG = "YANDEX_SUGGEST_ERR_NO_REQUEST_ARG"
         private const val ERR_SUGGEST_FAILED = "YANDEX_SUGGEST_ERR_SUGGEST_FAILED"
     }

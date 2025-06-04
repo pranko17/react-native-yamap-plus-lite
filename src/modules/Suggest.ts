@@ -1,4 +1,4 @@
-import NativeSuggestModule, {SuggestOptions, YamapSuggest} from '../spec/NativeSuggestModule';
+import NativeSuggestModule, {SuggestOptions, YamapSuggest} from '../spec/NativeSuggestsModule';
 import {Point} from '../interfaces';
 
 const suggest = (query: string, options?: SuggestOptions) => {
