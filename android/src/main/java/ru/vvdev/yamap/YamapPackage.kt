@@ -5,6 +5,12 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 import ru.vvdev.yamap.search.RNYandexSearchModule
 import ru.vvdev.yamap.suggest.RNYandexSuggestModule
+import ru.vvdev.yamap.view.YamapViewManager
+import ru.vvdev.yamap.view.ClusteredYamapViewManager
+import ru.vvdev.yamap.view.PolygonViewManager
+import ru.vvdev.yamap.view.PolylineViewManager
+import ru.vvdev.yamap.view.MarkerViewManager
+import ru.vvdev.yamap.view.CircleViewManager
 
 class YamapPackage : ReactPackage {
 

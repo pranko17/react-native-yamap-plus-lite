@@ -1,4 +1,4 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import android.view.View
 import com.facebook.react.bridge.ReadableArray
@@ -7,8 +7,6 @@ import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.viewmanagers.YamapViewManagerDelegate
 import com.facebook.react.viewmanagers.YamapViewManagerInterface
-import ru.vvdev.yamap.view.YamapView
-import ru.vvdev.yamap.view.YamapViewManagerImpl
 
 class YamapViewManager : ViewGroupManager<YamapView>(), YamapViewManagerInterface<YamapView> {
 

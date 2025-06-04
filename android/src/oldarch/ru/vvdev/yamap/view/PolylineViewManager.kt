@@ -1,12 +1,9 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 import com.facebook.react.uimanager.annotations.ReactProp
-import ru.vvdev.yamap.view.PolylineView
-import ru.vvdev.yamap.view.PolylineViewManagerImpl
-
 
 class PolylineViewManager : ViewGroupManager<PolylineView>() {
 

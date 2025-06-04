@@ -1,21 +1,15 @@
-package ru.vvdev.yamap
+package ru.vvdev.yamap.view
 
 import android.view.View
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.YamapMarkerManagerDelegate
-import com.facebook.react.viewmanagers.YamapMarkerManagerInterface
-import ru.vvdev.yamap.view.MarkerView
-import ru.vvdev.yamap.view.MarkerViewManagerImpl
+import com.facebook.react.uimanager.annotations.ReactProp
 
-class MarkerViewManager : ViewGroupManager<MarkerView>(), YamapMarkerManagerInterface<MarkerView> {
+class MarkerViewManager : ViewGroupManager<MarkerView>() {
 
     private val implementation = MarkerViewManagerImpl()
-    private val delegate = YamapMarkerManagerDelegate(this)
-
-    override fun getDelegate() = delegate
 
     override fun getName() = MarkerViewManagerImpl.NAME
 
@@ -25,35 +19,43 @@ class MarkerViewManager : ViewGroupManager<MarkerView>(), YamapMarkerManagerInte
     public override fun createViewInstance(context: ThemedReactContext) = MarkerView(context)
 
     // PROPS
-    override fun setPoint(view: MarkerView, jsPoint: ReadableMap?) {
+    @ReactProp(name = "point")
+    fun setPoint(view: MarkerView, jsPoint: ReadableMap?) {
         implementation.setPoint(view, jsPoint)
     }
 
-    override fun setZI(view: MarkerView, zIndex: Float) {
+    @ReactProp(name = "zI")
+    fun setZI(view: MarkerView, zIndex: Float) {
         implementation.setZI(view, zIndex)
     }
 
-    override fun setScale(view: MarkerView, scale: Float) {
+    @ReactProp(name = "scale")
+    fun setScale(view: MarkerView, scale: Float) {
         implementation.setScale(view, scale)
     }
 
-    override fun setHandled(view: MarkerView, handled: Boolean) {
+    @ReactProp(name = "handled")
+    fun setHandled(view: MarkerView, handled: Boolean) {
         implementation.setHandled(view, handled)
     }
 
-    override fun setRotated(view: MarkerView, rotated: Boolean) {
+    @ReactProp(name = "rotated")
+    fun setRotated(view: MarkerView, rotated: Boolean) {
         implementation.setRotated(view, rotated)
     }
 
-    override fun setVisible(view: MarkerView, visible: Boolean) {
+    @ReactProp(name = "visible")
+    fun setVisible(view: MarkerView, visible: Boolean) {
         implementation.setVisible(view, visible)
     }
 
-    override fun setSource(view: MarkerView, source: String?) {
+    @ReactProp(name = "source")
+    fun setSource(view: MarkerView, source: String?) {
         implementation.setSource(view, source)
     }
 
-    override fun setAnchor(view: MarkerView, anchor: ReadableMap?) {
+    @ReactProp(name = "anchor")
+    fun setAnchor(view: MarkerView, anchor: ReadableMap?) {
         implementation.setAnchor(view, anchor)
     }
 
