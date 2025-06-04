@@ -28,7 +28,7 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
-  namespace = "ru.vvdev.yamap"
+  namespace = "ru.yamap"
 
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
 
@@ -83,6 +83,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "RNYamapPlus"
-    codegenJavaPackageName = "ru.vvdev.yamap"
+    codegenJavaPackageName = "ru.yamap"
   }
 }

@@ -26,7 +26,7 @@
     "yandexmaps",
     "geocoder"
   ],
-  "author": "Nikita Sirotkin",
+  "author": "Aleksey Pekhterev",
   "license": "MIT",
   "devDependencies": {
     "@types/react": "*",
@@ -88,7 +88,7 @@
     "type": "all",
     "jsSrcsDir": "./src/spec",
     "android": {
-      "javaPackageName": "ru.vvdev.yamap"
+      "javaPackageName": "ru.yamap"
     }
   },
   "packageManager": "yarn@4.9.1"
