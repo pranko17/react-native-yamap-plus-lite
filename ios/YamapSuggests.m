@@ -1,7 +1,7 @@
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventEmitter.h"
 
-@interface RCT_EXTERN_MODULE(YamapSuggests, RCTEventEmitter)
+@interface RCT_EXTERN_MODULE(RTNSuggestsModule, RCTEventEmitter)
 
 RCT_EXTERN_METHOD(suggest:(nonnull NSString*) searchQuery resolver:(RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject)
 

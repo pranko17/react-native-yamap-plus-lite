@@ -5,7 +5,7 @@
 #endif
 #import "YamapView.h"
 
-@interface yamap : NSObject <RCTBridgeModule>
+@interface RTNYamapModule : NSObject <RCTBridgeModule>
 
 @property YamapView *map;
 

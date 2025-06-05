@@ -1,6 +1,6 @@
 import YandexMapsMobile
 
-@objc(YamapSuggests)
+@objc(RTNSuggestsModule)
 class YamapSuggests: NSObject {
     var searchManager: YMKSearchManager?
     var suggestClient: YMKSearchSuggestSession?
@@ -164,6 +164,6 @@ class YamapSuggests: NSObject {
     }
 
     @objc static func moduleName() -> String {
-        return "YamapSuggests"
+        return "RTNSuggestsModule"
     }
 }

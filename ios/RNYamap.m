@@ -1,7 +1,7 @@
 #import "RNYamap.h"
 @import YandexMapsMobile;
 
-@implementation yamap
+@implementation RTNYamapModule
 
 static NSString * _pinIcon;
 static NSString * _arrowIcon;

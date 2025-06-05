@@ -1,7 +1,7 @@
 import YandexMapsMobile
 import UIKit
 
-@objc(YamapSearch)
+@objc(RTNSearchModule)
 class YamapSearch: NSObject {
     enum ArrayError: Error {
         case indexOutOfBounds
@@ -223,6 +223,6 @@ class YamapSearch: NSObject {
     }
 
     @objc static func moduleName() -> String {
-        return "YamapSearch"
+        return "RTNSearchModule"
     }
 }
