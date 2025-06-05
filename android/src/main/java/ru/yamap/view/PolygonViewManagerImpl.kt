@@ -7,10 +7,6 @@ import ru.yamap.utils.PointUtil
 
 class PolygonViewManagerImpl() {
 
-    fun getExportedCustomDirectEventTypeConstants() = mapOf(
-        YamapPolygonPressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
-    )
-
     // PROPS
     fun setPoints(view: PolygonView, jsPoints: ReadableArray?) {
         jsPoints?.let {
@@ -53,5 +49,10 @@ class PolygonViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapPolygon"
+
+        val exportedCustomBubblingEventTypeConstants = mapOf(
+            YamapPolygonPressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onPress"))
+        )
     }
 }

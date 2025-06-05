@@ -13,8 +13,8 @@ class MarkerViewManager : ViewGroupManager<MarkerView>() {
 
     override fun getName() = MarkerViewManagerImpl.NAME
 
-    override fun getExportedCustomDirectEventTypeConstants() =
-        implementation.getExportedCustomDirectEventTypeConstants()
+    override fun getExportedCustomBubblingEventTypeConstants() =
+        MarkerViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
     public override fun createViewInstance(context: ThemedReactContext) = MarkerView(context)
 

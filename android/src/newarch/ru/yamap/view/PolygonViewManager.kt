@@ -15,8 +15,8 @@ class PolygonViewManager : ViewGroupManager<PolygonView>(),  YamapPolygonManager
 
     override fun getName() = PolygonViewManagerImpl.NAME
 
-    override fun getExportedCustomDirectEventTypeConstants() =
-        implementation.getExportedCustomDirectEventTypeConstants()
+    override fun getExportedCustomBubblingEventTypeConstants() =
+        PolygonViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
     override fun createViewInstance(context: ThemedReactContext) = PolygonView(context)
 

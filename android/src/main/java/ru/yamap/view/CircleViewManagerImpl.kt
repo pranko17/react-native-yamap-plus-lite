@@ -6,10 +6,6 @@ import ru.yamap.utils.PointUtil
 
 class CircleViewManagerImpl() {
 
-    fun getExportedCustomDirectEventTypeConstants() = mapOf(
-        YamapCirclePressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
-    )
-
     // PROPS
     fun setCenter(view: CircleView, center: ReadableMap?) {
         center?.let {
@@ -44,5 +40,10 @@ class CircleViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapCircle"
+
+        val exportedCustomBubblingEventTypeConstants = mapOf(
+            YamapCirclePressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onPress"))
+        )
     }
 }

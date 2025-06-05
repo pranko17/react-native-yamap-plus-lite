@@ -1,5 +1,5 @@
 import codegenNativeComponent, {NativeComponentType} from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import {DirectEventHandler, Double, Float} from 'react-native/Libraries/Types/CodegenTypes';
+import {BubblingEventHandler, Double, Float} from 'react-native/Libraries/Types/CodegenTypes';
 import {ViewProps} from 'react-native';
 import {MarkerNativeCommands} from './commands/marker';
 
@@ -16,7 +16,7 @@ type Anchor = {
 export interface MarkerNativeProps extends ViewProps {
   scale?: Float;
   rotated?: boolean;
-  onPress?: DirectEventHandler<undefined>;
+  onPress?: BubblingEventHandler<undefined>;
   point: Point;
   anchor?: Anchor;
   visible?: boolean;

@@ -1,6 +1,6 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import {
-  DirectEventHandler,
+  BubblingEventHandler,
   Double,
   Float,
   Int32,
@@ -16,7 +16,7 @@ export interface CircleNativeProps extends ViewProps {
   fillColor?: Int32;
   strokeColor?: Int32;
   strokeWidth?: Float;
-  onPress?: DirectEventHandler<undefined>;
+  onPress?: BubblingEventHandler<undefined>;
   center: Point;
   radius: Float;
   handled?: boolean;

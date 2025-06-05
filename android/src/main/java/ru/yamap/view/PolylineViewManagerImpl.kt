@@ -6,10 +6,6 @@ import ru.yamap.utils.PointUtil
 
 class PolylineViewManagerImpl() {
 
-    fun getExportedCustomDirectEventTypeConstants() = mapOf(
-        YamapPolylinePressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
-    )
-
     // PROPS
     fun setPoints(view: PolylineView, jsPoints: ReadableArray?) {
         val points = jsPoints?.let { PointUtil.jsPointsToPoints(it) }
@@ -54,5 +50,10 @@ class PolylineViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapPolyline"
+
+        val exportedCustomBubblingEventTypeConstants = mapOf(
+            YamapPolylinePressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onPress"))
+        )
     }
 }

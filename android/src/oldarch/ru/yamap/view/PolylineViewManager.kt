@@ -11,8 +11,8 @@ class PolylineViewManager : ViewGroupManager<PolylineView>() {
 
     override fun getName() = PolylineViewManagerImpl.NAME
 
-    override fun getExportedCustomDirectEventTypeConstants() =
-        implementation.getExportedCustomDirectEventTypeConstants()
+    override fun getExportedCustomBubblingEventTypeConstants() =
+        PolylineViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
     override fun createViewInstance(context: ThemedReactContext) = PolylineView(context)
 

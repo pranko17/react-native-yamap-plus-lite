@@ -7,10 +7,6 @@ import ru.yamap.utils.PointUtil
 
 class MarkerViewManagerImpl() {
 
-    fun getExportedCustomDirectEventTypeConstants() = mapOf(
-        YamapMarkerPressEvent.EVENT_NAME to mapOf("registrationName" to "onPress")
-    )
-
     // PROPS
     fun setPoint(view: MarkerView, jsPoint: ReadableMap?) {
         jsPoint?.let {
@@ -79,5 +75,10 @@ class MarkerViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapMarker"
+
+        val exportedCustomBubblingEventTypeConstants = mapOf(
+            YamapMarkerPressEvent.EVENT_NAME to
+                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onPress"))
+        )
     }
 }

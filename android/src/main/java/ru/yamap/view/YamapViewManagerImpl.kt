@@ -214,27 +214,31 @@ class YamapViewManagerImpl() {
 
     companion object {
         const val NAME = "YamapView"
+
         val exportedCustomBubblingEventTypeConstants = mutableMapOf(
-            FindRoutesEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onRouteFound")),
-            GetCameraPositionEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionReceived")),
-            CameraPositionChangeEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChange")),
-            CameraPositionChangeEndEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onCameraPositionChangeEnd")),
-            GetVisibleRegionEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onVisibleRegionReceived")),
             YamapPressEvent.EVENT_NAME to
                     mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapPress")),
             YamapLongPressEvent.EVENT_NAME to
                     mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLongPress")),
+        )
+
+        val exportedCustomDirectEventTypeConstants = mutableMapOf(
+            FindRoutesEvent.EVENT_NAME to
+                    mapOf("registrationName" to "onRouteFound"),
+            GetCameraPositionEvent.EVENT_NAME to
+                    mapOf("registrationName" to "onCameraPositionReceived"),
+            CameraPositionChangeEvent.EVENT_NAME to
+                    mapOf("registrationName" to "onCameraPositionChange"),
+            CameraPositionChangeEndEvent.EVENT_NAME to
+                    mapOf("registrationName" to "onCameraPositionChangeEnd"),
+            GetVisibleRegionEvent.EVENT_NAME to
+                    mapOf("registrationName" to "onVisibleRegionReceived"),
             MapLoadedEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onMapLoaded")),
+                    mapOf("registrationName" to "onMapLoaded"),
             GetScreenToWorldPointsEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onScreenToWorldPointsReceived")),
+                    mapOf("registrationName" to "onScreenToWorldPointsReceived"),
             GetWorldToScreenPointsEvent.EVENT_NAME to
-                    mapOf("phasedRegistrationNames" to mapOf("bubbled" to "onWorldToScreenPointsReceived")),
+                    mapOf("registrationName" to "onWorldToScreenPointsReceived"),
         )
 
         val commandsMap = mapOf(

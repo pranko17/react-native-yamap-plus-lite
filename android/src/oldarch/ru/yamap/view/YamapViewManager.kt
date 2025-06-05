@@ -16,6 +16,9 @@ class YamapViewManager : ViewGroupManager<YamapView>() {
     override fun getExportedCustomBubblingEventTypeConstants() =
         YamapViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
+    override fun getExportedCustomDirectEventTypeConstants() =
+        YamapViewManagerImpl.exportedCustomDirectEventTypeConstants
+
     override fun getCommandsMap() = YamapViewManagerImpl.commandsMap
 
     override fun receiveCommand(view: YamapView, commandType: String, argsArr: ReadableArray?) =

@@ -11,8 +11,8 @@ class CircleViewManager : ViewGroupManager<CircleView>() {
 
     override fun getName() = CircleViewManagerImpl.NAME
 
-    override fun getExportedCustomDirectEventTypeConstants() =
-        implementation.getExportedCustomDirectEventTypeConstants()
+    override fun getExportedCustomBubblingEventTypeConstants() =
+        CircleViewManagerImpl.exportedCustomBubblingEventTypeConstants
 
     override fun createViewInstance(context: ThemedReactContext) = CircleView(context)
 
