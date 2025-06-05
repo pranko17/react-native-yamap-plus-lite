@@ -5,6 +5,7 @@ Pod::Spec.new do |s|
     s.name         = "RNYamap"
     s.version      = package["version"]
     s.summary      = package["description"]
+    s.homepage     = package["homepage"]
     s.license      = "MIT"
     s.author       = { package["author"]["name"] => package["author"]["email"] }
     s.platform     = :ios, "13.0"
