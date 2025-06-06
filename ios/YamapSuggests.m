@@ -1,4 +1,5 @@
 #import "YamapSuggests.h"
+#import "Converter/RCTConvert+Yamap.m"
 @import YandexMapsMobile;
 
 @implementation RTNSuggestsModule
@@ -95,19 +96,16 @@ RCT_EXPORT_METHOD(suggestWithOptions:(nonnull NSString*) searchQuery options:(NS
 
     id userPosition = [options valueForKey:@"userPosition"];
     if (userPosition != nil) {
-        YMKPoint *userPoint = [YMKPoint pointWithLatitude:[[userPosition valueForKey:@"lat"] doubleValue] longitude:[userPosition[@"lon"] doubleValue]];
-        opt.userPosition = userPoint;
+        opt.userPosition = [RCTConvert YMKPoint:userPosition];
     }
 
     YMKBoundingBox *boundingBox = _defaultBoundingBox;
     id boxDictionary = [options valueForKey:@"boundingBox"];
     if (userPosition != nil) {
         id southWest = [boxDictionary valueForKey:@"southWest"];
-        YMKPoint *southWestPoint = [YMKPoint pointWithLatitude:[[southWest valueForKey:@"lat"] doubleValue] longitude:[southWest[@"lon"] doubleValue]];
         id northEast = [boxDictionary valueForKey:@"northEast"];
-        YMKPoint *northEastPoint = [YMKPoint pointWithLatitude:[[northEast valueForKey:@"lat"] doubleValue] longitude:[northEast[@"lon"] doubleValue]];
-        
-        boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:southWestPoint northEast:northEastPoint];
+         
+        boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:[RCTConvert YMKPoint:southWest] northEast:[RCTConvert YMKPoint:northEast]];
     }
     
     [self suggestHandler:searchQuery options:opt boundingBox:boundingBox resolver:resolve rejecter:reject];
