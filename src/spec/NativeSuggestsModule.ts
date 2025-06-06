@@ -7,7 +7,7 @@ export type YamapSuggest = {
   uri?: string;
 }
 
-enum SuggestTypes {
+export enum SuggestType {
   YMKSuggestTypeUnspecified,
   YMKSuggestTypeGeo,
   YMKSuggestTypeBiz,
@@ -28,7 +28,7 @@ export interface SuggestOptions {
   userPosition?: Point;
   boundingBox?: BoundingBox;
   suggestWords?: boolean;
-  suggestTypes?: SuggestTypes[];
+  suggestTypes?: SuggestType[];
 }
 
 interface Spec extends TurboModule {
