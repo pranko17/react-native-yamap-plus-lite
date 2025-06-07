@@ -11,7 +11,14 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
+import ru.vvdev.yamap.events.yamap.FindRoutesEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
+import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
+import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
+import ru.vvdev.yamap.events.yamap.GetWorldToScreenPointsEvent
+import ru.vvdev.yamap.events.yamap.MapLoadedEvent
+import ru.vvdev.yamap.events.yamap.YamapLongPressEvent
+import ru.vvdev.yamap.events.yamap.YamapPressEvent
 import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.view.ClusteredYamapView
 import javax.annotation.Nonnull
@@ -27,7 +34,7 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
 
     override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
         return mutableMapOf(
-            "routes" to
+            FindRoutesEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onRouteFound")
@@ -47,32 +54,32 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onCameraPositionChangeEnd")
                     ),
-            "visibleRegion" to
+            GetVisibleRegionEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onVisibleRegionReceived")
                     ),
-            "onMapPress" to
+            YamapPressEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapPress")
                     ),
-            "onMapLongPress" to
+            YamapLongPressEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLongPress")
                     ),
-            "onMapLoaded" to
+            MapLoadedEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onMapLoaded")
                     ),
-            "screenToWorldPoints" to
+            GetScreenToWorldPointsEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onScreenToWorldPointsReceived")
                     ),
-            "worldToScreenPoints" to
+            GetWorldToScreenPointsEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
                                 mapOf("bubbled" to "onWorldToScreenPointsReceived")
