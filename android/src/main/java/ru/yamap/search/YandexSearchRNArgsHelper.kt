@@ -13,7 +13,7 @@ class YandexSearchRNArgsHelper {
             val components = Arguments.createArray()
             for (i in data.Components!!) {
                 val mappedItem = Arguments.createMap()
-                mappedItem.putString("kind", i.kind)
+                i.kind?.let { mappedItem.putInt("kind", it) }
                 mappedItem.putString("name", i.name)
                 components.pushMap(mappedItem);
             }

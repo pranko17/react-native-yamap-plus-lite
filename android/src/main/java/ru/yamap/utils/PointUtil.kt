@@ -18,8 +18,8 @@ class PointUtil {
 
         fun pointToJsPoint(point: Point?): WritableMap {
             val jsPoint = Arguments.createMap()
-            point?.latitude?.let { jsPoint.putDouble("lat", it) }
             point?.longitude?.let { jsPoint.putDouble("lon", it) }
+            point?.latitude?.let { jsPoint.putDouble("lat", it) }
             return jsPoint
         }
 

@@ -37,7 +37,7 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
     dispatch_async(dispatch_get_main_queue(), ^{
         [session suggestWithText:searchQuery window:boundingBox suggestOptions:options responseHandler:^(YMKSuggestResponse * _Nullable suggest, NSError * _Nullable error) {
             if (error) {
-                reject(ERR_SUGGEST_FAILED, @"suggest request: \(searchQuery)", error);
+                reject(ERR_SUGGEST_FAILED, @"suggest error:", error);
                 return;
             }
 

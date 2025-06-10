@@ -8,7 +8,7 @@ export enum SearchType {
   YMKSearchTypeBiz, // Mass transit routes
 }
 
-enum GeoFigureType {
+export enum GeoFigureType {
   POINT = 'POINT',
   BOUNDINGBOX = 'BOUNDINGBOX',
   POLYLINE = 'POLYLINE',
@@ -40,7 +40,7 @@ export interface PolygonParams {
   value: Point[]
 }
 
-type FigureParams = PointParams | BoundingBoxParams | PolylineParams | PolygonParams
+export type FigureParams = PointParams | BoundingBoxParams | PolylineParams | PolygonParams
 
 export interface SearchOptions {
   disableSpellingCorrection?: boolean;
@@ -49,19 +49,13 @@ export interface SearchOptions {
   searchTypes?: SearchType;
 }
 
-export interface YamapSearch {
-  title: string;
-  subtitle?: string;
-  uri?: string;
-}
-
 interface Spec extends TurboModule {
-  searchByAddress(query: string, figure?: FigureParams, options?: SearchOptions): Promise<Array<YamapSearch>>
+  searchByAddress(query: string, figure?: FigureParams, options?: SearchOptions): Promise<Address>
   searchByPoint(point: Point, zoom?: Double, options?: SearchOptions): Promise<Address>
   geoToAddress(point: Point): Promise<Address>
   addressToGeo(address: string): Promise<Point>
-  resolveURI(query: string, options?: SearchOptions): Promise<Array<YamapSearch>>
-  searchByURI(query: string, options?: SearchOptions): Promise<Array<YamapSearch>>
+  resolveURI(query: string, options?: SearchOptions): Promise<Address>
+  searchByURI(query: string, options?: SearchOptions): Promise<Address>
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('RTNSearchModule');

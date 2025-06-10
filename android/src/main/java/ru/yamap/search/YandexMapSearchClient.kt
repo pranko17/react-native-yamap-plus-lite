@@ -43,10 +43,10 @@ class YandexMapSearchClient : MapSearchClient {
                 name = i.obj?.name
                 if (options.searchTypes==2) {
                     kind = i.obj?.metadataContainer
-                        ?.getItem(BusinessObjectMetadata::class.java)?.address?.components?.lastOrNull()?.kinds?.firstOrNull()?.name
+                        ?.getItem(BusinessObjectMetadata::class.java)?.address?.components?.lastOrNull()?.kinds?.firstOrNull()?.ordinal
                 } else {
                     kind = i.obj?.metadataContainer
-                        ?.getItem(ToponymObjectMetadata::class.java)?.address?.components?.lastOrNull()?.kinds?.firstOrNull()?.name
+                        ?.getItem(ToponymObjectMetadata::class.java)?.address?.components?.lastOrNull()?.kinds?.firstOrNull()?.ordinal
                 }
             })
         }

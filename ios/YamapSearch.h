@@ -5,11 +5,11 @@
 #endif
 @import YandexMapsMobile;
 
-@interface RTNSuggestsModule : NSObject <RCTBridgeModule>
+@interface RTNSearchModule : NSObject <RCTBridgeModule>
 
 @property YMKSearchManager *searchManager;
-@property YMKSearchSuggestSession *suggestClient;
 @property YMKBoundingBox *defaultBoundingBox;
-@property YMKSuggestOptions *defaultSuggestOptions;
+@property YMKSearchSession *searchSession;
+@property YMKSearchOptions *searchOptions;
 
 @end

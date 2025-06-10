@@ -1,10 +1,16 @@
-import NativeSearchModule from '../spec/NativeSearchModule';
+import NativeSearchModule, {FigureParams, Point, SearchOptions} from '../spec/NativeSearchModule';
 
 export const Search = {
-  searchText: NativeSearchModule.searchByAddress,
-  searchPoint: NativeSearchModule.searchByPoint,
-  geocodePoint: NativeSearchModule.geoToAddress,
-  geocodeAddress: NativeSearchModule.addressToGeo,
-  resolveURI: NativeSearchModule.resolveURI,
-  searchByURI: NativeSearchModule.searchByURI,
+  searchText: (query: string, figure?: FigureParams, options?: SearchOptions) =>
+    NativeSearchModule.searchByAddress(query, figure, options),
+  searchPoint: (point: Point, zoom?: number, options?: SearchOptions) =>
+    NativeSearchModule.searchByPoint(point, zoom, options),
+  geocodePoint: (point: Point) =>
+    NativeSearchModule.geoToAddress(point),
+  geocodeAddress: (address: string) =>
+    NativeSearchModule.addressToGeo(address),
+  resolveURI: (query: string, options?: SearchOptions) =>
+    NativeSearchModule.resolveURI(query, options),
+  searchByURI: (query: string, options?: SearchOptions) =>
+    NativeSearchModule.searchByURI(query, options),
 };

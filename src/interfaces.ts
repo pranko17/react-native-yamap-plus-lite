@@ -90,14 +90,33 @@ export enum Animation {
   LINEAR
 }
 
-export interface Address {
-  country_code: string;
-  formatted: string;
-  postal_code: string;
-  Components: {kind: string, name: string}[];
+export enum AddressKind {
+  UNKNOWN,
+  COUNTRY,
+  REGION,
+  PROVINCE,
+  AREA,
+  LOCALITY,
+  DISTRICT,
+  STREET,
+  HOUSE,
+  ENTRANCE,
+  LEVEL,
+  APARTMENT,
+  ROUTE,
+  STATION,
+  METRO_STATION,
+  RAILWAY_STATION,
+  VEGETATION,
+  HYDRO,
+  AIRPORT,
+  OTHER,
 }
 
-export interface Anchor {
-  x: number;
-  y: number;
+export interface Address {
+  Components: Array<{name: string; kind: AddressKind}>
+  country_code: string
+  formatted: string
+  point: Point
+  uri: string
 }

@@ -4,7 +4,7 @@ import com.yandex.mapkit.geometry.Point
 
 class MapSearchItemComponent {
     @JvmField
-    var kind: String? = null
+    var kind: Int? = null
     @JvmField
     var name: String? = null
 }

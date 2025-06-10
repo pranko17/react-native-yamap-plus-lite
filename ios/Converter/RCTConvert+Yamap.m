@@ -69,4 +69,12 @@
     return [self float:json[@"tilt"]];
 }
 
++ (NSDictionary*)pointJsonWithPoint:(YMKPoint*)point {
+    NSMutableDictionary *pointJs = [[NSMutableDictionary alloc] init];
+    pointJs[@"lat"] = [point valueForKey:@"latitude"];
+    pointJs[@"lon"] = [point valueForKey:@"longitude"];
+
+    return pointJs;
+}
+
 @end
