@@ -1,9 +1,8 @@
 #import <React/RCTViewManager.h>
 #import <MapKit/MapKit.h>
 #import <math.h>
-#import "Converter/RCTConvert+Yamap.m"
+#import "Util/RCTConvert+Yamap.m"
 #import "YamapView.h"
-#import "RNYamap.h"
 #import "View/RNYMView.h"
 
 #ifndef MAX

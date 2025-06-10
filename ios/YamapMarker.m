@@ -2,12 +2,11 @@
 #import <MapKit/MapKit.h>
 #import <math.h>
 #import "YamapMarker.h"
-#import "RNYamap.h"
 
 #import "View/YamapMarkerView.h"
 #import "View/RNYMView.h"
 
-#import "Converter/RCTConvert+Yamap.m"
+#import "Util/RCTConvert+Yamap.m"
 
 #ifndef MAX
 #import <NSObjCRuntime.h>

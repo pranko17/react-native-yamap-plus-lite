@@ -6,7 +6,7 @@
 #endif
 
 #import <MapKit/MapKit.h>
-#import "../Converter/RCTConvert+Yamap.m"
+#import "../Util/RCTConvert+Yamap.m"
 @import YandexMapsMobile;
 
 #ifndef MAX

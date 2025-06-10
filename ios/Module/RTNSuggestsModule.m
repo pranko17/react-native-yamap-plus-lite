@@ -1,5 +1,5 @@
-#import "YamapSuggests.h"
-#import "Converter/RCTConvert+Yamap.m"
+#import "RTNSuggestsModule.h"
+#import "../Util/RCTConvert+Yamap.m"
 @import YandexMapsMobile;
 
 @implementation RTNSuggestsModule
@@ -18,17 +18,17 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
     if (_suggestClient) {
         return _suggestClient;
     }
-    
+
     if (_searchManager == nil) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             self->_searchManager = [[YMKSearchFactory instance] createSearchManagerWithSearchManagerType:YMKSearchManagerTypeOnline];
         });
     }
-    
+
     dispatch_sync(dispatch_get_main_queue(), ^{
         self->_suggestClient = [self->_searchManager createSuggestSession];
     });
-    
+
     return _suggestClient;
 }
 
@@ -104,10 +104,10 @@ RCT_EXPORT_METHOD(suggestWithOptions:(nonnull NSString*) searchQuery options:(NS
     if (userPosition != nil) {
         id southWest = [boxDictionary valueForKey:@"southWest"];
         id northEast = [boxDictionary valueForKey:@"northEast"];
-         
+
         boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:[RCTConvert YMKPoint:southWest] northEast:[RCTConvert YMKPoint:northEast]];
     }
-    
+
     [self suggestHandler:searchQuery options:opt boundingBox:boundingBox resolver:resolve rejecter:reject];
 }
 

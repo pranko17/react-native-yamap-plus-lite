@@ -1,7 +1,7 @@
 #import <objc/runtime.h>
 
-#import "YamapSearch.h"
-#import "Converter/RCTConvert+Yamap.m"
+#import "RTNSearchModule.h"
+#import "../Util/RCTConvert+Yamap.m"
 
 @import YandexMapsMobile;
 
@@ -101,7 +101,7 @@ RCT_EXPORT_METHOD(searchByAddress:(nonnull NSString*) searchQuery figure:(NSDict
     [self initSearchManager];
     [self initSearchOptions: options];
     YMKGeometry* geometry = [self getGeometry: figure];
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         self->_searchSession = [self->_searchManager submitWithText:searchQuery geometry:geometry searchOptions:self->_searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
             if (error) {
@@ -139,7 +139,7 @@ RCT_EXPORT_METHOD(addressToGeo:(nonnull NSString*) searchQuery resolver:(RCTProm
                 reject(ERR_SEARCH_FAILED,  @"addressToGeo error:", error);
                 return;
             }
-            
+
             NSArray<YMKGeoObjectCollectionItem *> *geoCollectionObjects = [[response collection] children];
             NSObject *item = (NSObject *)[[[geoCollectionObjects firstObject].obj metadataContainer] getItemOfClass:[YMKSearchToponymObjectMetadata class]];
             if (item != nil) {
@@ -148,7 +148,7 @@ RCT_EXPORT_METHOD(addressToGeo:(nonnull NSString*) searchQuery resolver:(RCTProm
             }
         }];
     });
-    
+
 }
 
 RCT_EXPORT_METHOD(geoToAddress:(nonnull NSDictionary*) point resolver:(RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject) {

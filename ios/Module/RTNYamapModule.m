@@ -1,4 +1,4 @@
-#import "RNYamap.h"
+#import "RTNYamapModule.h"
 @import YandexMapsMobile;
 
 @implementation RTNYamapModule
