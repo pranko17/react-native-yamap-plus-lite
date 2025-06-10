@@ -3,12 +3,7 @@
 #else
 #import <React/RCTBridgeModule.h>
 #endif
-#import "YamapView.h"
 
 @interface RTNYamapModule : NSObject <RCTBridgeModule>
-
-@property YamapView *map;
-
-- (void)initWithKey:(NSString*)apiKey;
 
 @end

@@ -30,10 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       launchOptions: launchOptions
     )
 
-    YMKMapKit.setLocale("ru_RU")
-    YMKMapKit.setApiKey("Insert your MapKit SDK API KEY")
-    YMKMapKit.sharedInstance()
-
     return true
   }
 }

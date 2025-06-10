@@ -9,57 +9,6 @@
 yarn add react-native-yamap-plus
 ```
 
-#### iOS
-
-
-
-**Обязательно** инициализировать MapKit
-- Swift: в файле AppDelegate.swift:
-
-```diff
-+ import YandexMapsMobile
-
-...
-
-  func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-  ) -> Bool {
-
-  ...
-
-+    YMKMapKit.setLocale("ru_RU")
-+    YMKMapKit.setApiKey("Insert your MapKit SDK API KEY")
-+    YMKMapKit.sharedInstance()
-
-  ...
-
-    return true
-  }
-}
-```
-
-- Objective-C: в файле AppDelegate.m/AppDelegate.mm:
-
-```diff
-+ #import <YandexMapsMobile/YMKMapKitFactory.h>
-
-...
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-  ...
-
-+  [YMKMapKit setLocale:@"ru_RU"];
-+  [YMKMapKit setApiKey:@"Insert your MapKit SDK API KEY"];
-+  [YMKMapKit sharedInstance];
-
-  return YES;
-}
-```
-
-## Использование карт
-
 ### Инициализировать карты
 
 Для этого лучше всего зайти в корневой файл приложения, например `App.js`, и добавить инициализацию:
