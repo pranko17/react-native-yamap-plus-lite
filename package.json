@@ -32,7 +32,7 @@
     "@types/react": "*",
     "@types/react-native": "*",
     "react-native-builder-bob": "0.40.11",
-    "release-it": "19.0.2",
+    "release-it": "19.0.3",
     "typescript": "5.8.3"
   },
   "peerDependencies": {
@@ -83,5 +83,5 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.2"
 }
