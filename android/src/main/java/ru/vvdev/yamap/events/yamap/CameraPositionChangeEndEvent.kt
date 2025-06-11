@@ -6,15 +6,11 @@ import com.facebook.react.uimanager.events.Event
 class CameraPositionChangeEndEvent(surfaceId: Int, viewId: Int, private val cameraPosition: WritableMap?)
     : Event<CameraPositionChangeEndEvent>(surfaceId, viewId) {
 
-    override fun getEventName(): String {
-        return EVENT_NAME
-    }
-    override fun getCoalescingKey(): Short {
-        // All events for a given view can be coalesced.
-        return 0
-    }
+    override fun getEventName() = EVENT_NAME
 
-    override fun getEventData(): WritableMap? = cameraPosition
+    override fun getCoalescingKey(): Short = 0
+
+    override fun getEventData() = cameraPosition
 
     companion object {
         const val EVENT_NAME = "topCameraPositionChangeEnd"
