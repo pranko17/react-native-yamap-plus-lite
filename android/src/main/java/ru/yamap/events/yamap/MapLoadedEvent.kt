@@ -6,13 +6,9 @@ import com.facebook.react.uimanager.events.Event
 import com.yandex.mapkit.map.MapLoadStatistics
 
 class MapLoadedEvent(surfaceId: Int, viewId: Int, private val statistics: MapLoadStatistics) : Event<MapLoadedEvent>(surfaceId, viewId) {
-    override fun getEventName(): String {
-        return EVENT_NAME
-    }
-    override fun getCoalescingKey(): Short {
-        // All events for a given view can be coalesced.
-        return 0
-    }
+    override fun getEventName() = EVENT_NAME
+
+    override fun getCoalescingKey(): Short = 0
 
     override fun getEventData(): WritableMap? {
         val data = Arguments.createMap()
