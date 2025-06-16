@@ -1,9 +1,13 @@
-#if __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
-#import <React/RCTBridgeModule.h>
-#endif
+#ifdef RCT_NEW_ARCH_ENABLED
 
+#import <RNYamapPlusSpec/RNYamapPlusSpec.h>
+@interface RTNYamapModule : NativeYamapModuleSpecBase <NativeYamapModuleSpec>
+
+#else
+
+#import <React/RCTBridgeModule.h>
 @interface RTNYamapModule : NSObject <RCTBridgeModule>
+
+#endif
 
 @end
