@@ -224,7 +224,7 @@ RCT_EXPORT_METHOD(setCenter:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsA
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
-        
+
         NSDictionary* args = argsArr.firstObject;
         [self setCenterForMap:view center:args[@"center"] zoom:[args[@"zoom"] floatValue] azimuth:[args[@"azimuth"] floatValue] tilt:[args[@"tilt"] floatValue] duration:[args[@"duration"] floatValue] animation:[args[@"animation"] intValue]];
     }];
