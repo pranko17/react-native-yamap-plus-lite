@@ -1,7 +1,7 @@
 #import <React/RCTViewManager.h>
 #import <MapKit/MapKit.h>
 #import <math.h>
-#import "Util/RCTConvert+Yamap.m"
+#import "Util/RCTConvert+Yamap.mm"
 #import "YamapView.h"
 #import "View/RNYMView.h"
 

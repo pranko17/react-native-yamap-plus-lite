@@ -1,7 +1,7 @@
 #import <objc/runtime.h>
 
 #import "RTNSearchModule.h"
-#import "../Util/RCTConvert+Yamap.m"
+#import "../Util/RCTConvert+Yamap.mm"
 
 @import YandexMapsMobile;
 

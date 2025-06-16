@@ -95,6 +95,19 @@ class YandexMapSuggestClient : MapSuggestClient {
         suggestHandler(text, _suggestOptions, _defaultGeometry, onSuccess, onError)
     }
 
+    private fun stringToSuggestType(str: String): SuggestType {
+        if (str == "GEO") {
+            return SuggestType.GEO
+        }
+        if (str == "BIZ") {
+            return SuggestType.BIZ
+        }
+        if (str == "TRANSIT") {
+            return SuggestType.TRANSIT
+        }
+        return SuggestType.UNSPECIFIED
+    }
+
     override fun suggest(
         text: String?,
         options: ReadableMap?,
@@ -163,12 +176,14 @@ class YandexMapSuggestClient : MapSuggestClient {
             suggestType = SuggestType.UNSPECIFIED.value
             val suggestTypesArray = options.getArray(suggestTypesKey)
             for (i in 0 until suggestTypesArray!!.size()) {
-                if (suggestTypesArray.getType(i) != ReadableType.Number) {
-                    onError!!.invoke(IllegalStateException("suggest error: one or more $suggestTypesKey is not an Number"))
+                if (suggestTypesArray.getType(i) != ReadableType.String) {
+                    onError!!.invoke(IllegalStateException("suggest error: one or more $suggestTypesKey is not an String"))
                     return
                 }
-                val value = suggestTypesArray.getInt(i)
-                suggestType = suggestType or value
+                if (suggestTypesArray.getString(i) != null) {
+                    val value = stringToSuggestType(suggestTypesArray.getString(i)!!)
+                    suggestType = suggestType or value.value
+                }
             }
         }
 

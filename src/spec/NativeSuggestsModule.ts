@@ -8,10 +8,10 @@ export type YamapSuggest = {
 }
 
 export enum SuggestType {
-  YMKSuggestTypeUnspecified,
-  YMKSuggestTypeGeo,
-  YMKSuggestTypeBiz,
-  YMKSuggestTypeTransit,
+  UNSPECIFIED = 'UNSPECIFIED',
+  GEO = 'GEO',
+  BIZ = 'BIZ',
+  TRANSIT = 'TRANSIT',
 }
 
 interface Point {

@@ -2,7 +2,7 @@
 #import <React/UIView+React.h>
 
 #import <MapKit/MapKit.h>
-#import "../Util/RCTConvert+Yamap.m"
+#import "../Util/RCTConvert+Yamap.mm"
 @import YandexMapsMobile;
 
 #ifndef MAX
