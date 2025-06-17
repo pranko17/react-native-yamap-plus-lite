@@ -63,7 +63,7 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
     });
 }
 
-- (YMKSuggestType) suggestTypeForString:(NSString*) str {
+- (YMKSuggestType) suggestTypeWithString:(NSString*) str {
     if ([str isEqual:@"GEO"]) {
         return YMKSuggestTypeGeo;
     }
@@ -103,11 +103,11 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
 }
 
 - (void)suggestWithOptions:(nonnull NSString *)query options:(JS::NativeSuggestsModule::SuggestOptions &)options resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
-    YMKSuggestOptions *opt = [[YMKSuggestOptions alloc] init];
+    YMKSuggestOptions *suggestOptions = [[YMKSuggestOptions alloc] init];
 
     std::optional<bool> suggestWords = options.suggestWords();
     if (suggestWords) {
-        opt.suggestWords = *suggestWords;
+        suggestOptions.suggestWords = *suggestWords;
     }
 
     std::optional<facebook::react::LazyVector<NSString *>> suggestTypes = options.suggestTypes();
@@ -115,14 +115,14 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
     if (suggestTypes) {
         FB::LazyVector<NSString *, id> values = suggestTypes.value();
         for (int i=0; i<values.size(); i++) {
-            opt.suggestTypes = opt.suggestTypes | [self suggestTypeForString:values.at(i)];
+            suggestOptions.suggestTypes = suggestOptions.suggestTypes | [self suggestTypeWithString:values.at(i)];
         }
     }
 
     std::optional<JS::NativeSuggestsModule::Point> userPosition = options.userPosition();
     if (userPosition) {
         JS::NativeSuggestsModule::Point value = userPosition.value();
-        opt.userPosition = [YMKPoint pointWithLatitude:value.lat() longitude:value.lon()];
+        suggestOptions.userPosition = [YMKPoint pointWithLatitude:value.lat() longitude:value.lon()];
     }
 
     YMKBoundingBox *boundingBox = _defaultBoundingBox;
@@ -134,7 +134,7 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
         boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:southWest northEast:northEast];
     }
 
-    [self suggestImpl:query options:opt boundingBox:boundingBox resolver:resolve rejecter:reject];
+    [self suggestImpl:query options:suggestOptions boundingBox:boundingBox resolver:resolve rejecter:reject];
 }
 
 - (void)reset:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
@@ -150,23 +150,23 @@ RCT_EXPORT_METHOD(suggest:(nonnull NSString*) query resolver:(RCTPromiseResolveB
 }
 
 RCT_EXPORT_METHOD(suggestWithOptions:(nonnull NSString*) query options:(NSDictionary *) options resolver:(RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject) {
-    YMKSuggestOptions *opt = [[YMKSuggestOptions alloc] init];
+    YMKSuggestOptions *suggestOptions = [[YMKSuggestOptions alloc] init];
 
     id suggestWords = [options valueForKey:@"suggestWords"];
     if (suggestWords != nil) {
-        opt.suggestWords = suggestWords;
+        suggestOptions.suggestWords = suggestWords;
     }
 
     id suggestTypes = [options valueForKey:@"suggestTypes"];
     if (suggestTypes != nil) {
-        for (NSNumber *suggestType in suggestTypes) {
-            opt.suggestTypes = opt.suggestTypes | [self suggestTypeForNum:suggestType];
+        for (NSString *suggestType in suggestTypes) {
+            suggestOptions.suggestTypes = suggestOptions.suggestTypes | [self suggestTypeWithString:suggestType];
         }
     }
 
     id userPosition = [options valueForKey:@"userPosition"];
     if (userPosition != nil) {
-        opt.userPosition = [RCTConvert YMKPoint:userPosition];
+        suggestOptions.userPosition = [RCTConvert YMKPoint:userPosition];
     }
 
     YMKBoundingBox *boundingBox = _defaultBoundingBox;
@@ -178,7 +178,7 @@ RCT_EXPORT_METHOD(suggestWithOptions:(nonnull NSString*) query options:(NSDictio
         boundingBox = [YMKBoundingBox boundingBoxWithSouthWest:[RCTConvert YMKPoint:southWest] northEast:[RCTConvert YMKPoint:northEast]];
     }
 
-    [self suggestImpl:query options:opt boundingBox:boundingBox resolver:resolve rejecter:reject];
+    [self suggestImpl:query options:suggestOptions boundingBox:boundingBox resolver:resolve rejecter:reject];
 }
 
 RCT_EXPORT_METHOD(reset: (RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject) {
