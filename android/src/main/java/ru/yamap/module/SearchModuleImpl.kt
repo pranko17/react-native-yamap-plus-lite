@@ -2,6 +2,7 @@ package ru.yamap.module
 
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.ReadableType
 import com.facebook.react.bridge.UiThreadUtil
 import com.yandex.mapkit.geometry.BoundingBox
 import com.yandex.mapkit.geometry.Geometry
@@ -12,6 +13,7 @@ import com.yandex.mapkit.geometry.Polyline
 import com.yandex.mapkit.search.SearchOptions
 import com.yandex.mapkit.search.SearchType
 import com.yandex.mapkit.search.Snippet
+import com.yandex.mapkit.search.SuggestType
 import ru.yamap.search.MapSearchClient
 import ru.yamap.search.MapSearchItem
 import ru.yamap.search.YandexMapSearchClient
@@ -76,11 +78,51 @@ class SearchModuleImpl {
         return Geometry.fromPoint(Point(0.0, 0.0))
     }
 
+    private fun stringToSearchType(str: String): SearchType {
+        if (str == "GEO") {
+            return SearchType.GEO
+        }
+        if (str == "BIZ") {
+            return SearchType.BIZ
+        }
+        return SearchType.NONE
+    }
+
+    private fun stringToSnippet(str: String): Snippet {
+        if (str == "PHOTOS") {
+            return Snippet.PHOTOS
+        }
+        if (str == "PANORAMAS") {
+            return Snippet.PANORAMAS
+        }
+        return Snippet.NONE
+    }
+
     private fun getSearchOptions(options: ReadableMap?): SearchOptions {
         return if (options!=null) {
             SearchOptions().apply {
-                searchTypes = if (options.hasKey("searchTypes")) options.getInt("searchTypes") else SearchType.NONE.value
-                snippets = if (options.hasKey("snippets")) options.getInt("snippets") else Snippet.NONE.value
+                searchTypes = SearchType.NONE.value
+                if (options.hasKey("searchTypes") && !options.isNull("searchTypes")) {
+                    val searchTypesArray = options.getArray("searchTypes")
+                    for (i in 0 until searchTypesArray!!.size()) {
+                        if (searchTypesArray.getString(i) != null) {
+                            val value = stringToSearchType(searchTypesArray.getString(i)!!)
+                            searchTypes = searchTypes or value.value
+                        }
+                    }
+                }
+
+                snippets = Snippet.NONE.value
+                if (options.hasKey("snippets") && !options.isNull("snippets")) {
+                    val snippetsArray = options.getArray("snippets")
+                    for (i in 0 until snippetsArray!!.size()) {
+                        if (snippetsArray.getString(i) != null) {
+                            val value = stringToSnippet(snippetsArray.getString(i)!!)
+                            snippets = snippets or value.value
+                        }
+                    }
+                }
+
                 geometry = if (options.hasKey("geometry")) options.getBoolean("geometry") else false
                 disableSpellingCorrection = if (options.hasKey("disableSpellingCorrection")) options.getBoolean("disableSpellingCorrection") else false
             }

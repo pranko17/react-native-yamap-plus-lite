@@ -2,10 +2,17 @@ import {Double} from 'react-native/Libraries/Types/CodegenTypes';
 import {TurboModule, TurboModuleRegistry} from 'react-native';
 import {Address, BoundingBox} from '../interfaces';
 
+export enum SearchSnippet {
+  NONE = 'NONE',
+  PANORAMAS = 'PANORAMAS',
+  PHOTOS = 'PHOTOS',
+  BUSINESSRATING1X = 'BUSINESSRATING1X', // ios only
+}
+
 export enum SearchType {
-  YMKSearchTypeUnspecified, // Toponyms
-  YMKSearchTypeGeo, // Companies
-  YMKSearchTypeBiz, // Mass transit routes
+  NONE = 'NONE',
+  GEO = 'GEO',
+  BIZ = 'BIZ',
 }
 
 export enum GeoFigureType {
@@ -45,8 +52,8 @@ export type FigureParams = PointParams | BoundingBoxParams | PolylineParams | Po
 export interface SearchOptions {
   disableSpellingCorrection?: boolean;
   geometry?: boolean;
-  snippets?: SearchType;
-  searchTypes?: SearchType;
+  snippets?: SearchSnippet[];
+  searchTypes?: SearchType[];
 }
 
 interface Spec extends TurboModule {
