@@ -1,10 +1,10 @@
 #ifndef RNCYMView_h
 #define RNCYMView_h
-#import <React/RCTComponent.h>
 
-#import <MapKit/MapKit.h>
 #import <RNYMView.h>
-@import YandexMapsMobile;
+
+#import <YandexMapsMobile/YMKClusterListener.h>
+#import <YandexMapsMobile/YMKClusterTapListener.h>
 
 @class RCTBridge;
 

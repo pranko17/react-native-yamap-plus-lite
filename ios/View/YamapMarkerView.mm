@@ -1,19 +1,10 @@
-#import <React/RCTComponent.h>
+#import "YamapMarkerView.h"
+
 #import <React/UIView+React.h>
 
-#import <MapKit/MapKit.h>
-@import YandexMapsMobile;
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
-
-#import "YamapMarkerView.h"
 #import "ImageCacheManager.h"
 
-#define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
-
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#import <YandexMapsMobile/YMKIconStyle.h>
 
 #define YAMAP_FRAMES_PER_SECOND 25
 

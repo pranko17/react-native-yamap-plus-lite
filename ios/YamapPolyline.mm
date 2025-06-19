@@ -1,16 +1,7 @@
-#import <React/RCTViewManager.h>
-#import <MapKit/MapKit.h>
-#import <math.h>
 #import "YamapPolyline.h"
 
 #import "View/YamapPolylineView.h"
-#import "View/RNYMView.h"
-
 #import "Util/RCTConvert+Yamap.mm"
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
 
 @implementation YamapPolyline
 

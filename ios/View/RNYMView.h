@@ -1,8 +1,14 @@
 #ifndef RNYMView_h
 #define RNYMView_h
+
 #import <React/RCTComponent.h>
-#import <MapKit/MapKit.h>
-@import YandexMapsMobile;
+
+#import <YandexMapsMobile/YMKMapView.h>
+#import <YandexMapsMobile/YMKUserLocation.h>
+#import <YandexMapsMobile/YMKRequestPoint.h>
+#import <YandexMapsMobile/YMKMapCameraListener.h>
+#import <YandexMapsMobile/YMKMapLoadedListener.h>
+#import <YandexMapsMobile/YMKTrafficListener.h>
 
 @class RCTBridge;
 

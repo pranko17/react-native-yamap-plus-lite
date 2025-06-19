@@ -1,16 +1,7 @@
-#import <React/RCTViewManager.h>
-#import <MapKit/MapKit.h>
-#import <math.h>
 #import "YamapPolygon.h"
 
 #import "View/YamapPolygonView.h"
-#import "View/RNYMView.h"
-
 #import "Util/RCTConvert+Yamap.mm"
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
 
 @implementation YamapPolygon
 

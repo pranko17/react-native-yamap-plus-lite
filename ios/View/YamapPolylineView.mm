@@ -1,13 +1,6 @@
-#import <React/RCTComponent.h>
-
-#import <MapKit/MapKit.h>
-@import YandexMapsMobile;
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
-
 #import "YamapPolylineView.h"
+
+#import <YandexMapsMobile/YMKLineStyle.h>
 
 @implementation YamapPolylineView {
     NSMutableArray<YMKPoint*> * _points;

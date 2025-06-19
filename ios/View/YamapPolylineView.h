@@ -1,7 +1,9 @@
 #ifndef YamapPolylineView_h
 #define YamapPolylineView_h
+
 #import <React/RCTComponent.h>
-@import YandexMapsMobile;
+
+#import <YandexMapsMobile/YMKPolyline.h>
 
 @interface YamapPolylineView: UIView<YMKMapObjectTapListener>
 

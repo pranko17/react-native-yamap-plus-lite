@@ -1,20 +1,17 @@
-#import <React/RCTComponent.h>
+#import "RNCYMView.h"
+
 #import <React/UIView+React.h>
 
-#import <MapKit/MapKit.h>
-#import "../Util/RCTConvert+Yamap.mm"
-@import YandexMapsMobile;
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
-
-#import "RNCYMView.h"
 #import <YamapMarkerView.h>
 
-#define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
-
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#import <YandexMapsMobile/YMKMap.h>
+#import <YandexMapsMobile/YMKMapObjectCollection.h>
+#import <YandexMapsMobile/YMKCluster.h>
+#import <YandexMapsMobile/YMKClusterizedPlacemarkCollection.h>
+#import <YandexMapsMobile/YMKIconStyle.h>
+#import <YandexMapsMobile/YMKDrivingRouter.h>
+#import <YandexMapsMobile/YMKMasstransitRouter.h>
+#import <YandexMapsMobile/YMKPedestrianRouter.h>
 
 @implementation RNCYMView {
     YMKMasstransitSession *masstransitSession;

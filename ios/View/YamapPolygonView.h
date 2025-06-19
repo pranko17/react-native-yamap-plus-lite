@@ -1,7 +1,9 @@
 #ifndef YamapPolygonView_h
 #define YamapPolygonView_h
+
 #import <React/RCTComponent.h>
-@import YandexMapsMobile;
+
+#import <YandexMapsMobile/YMKPolygon.h>
 
 @interface YamapPolygonView: UIView<YMKMapObjectTapListener>
 

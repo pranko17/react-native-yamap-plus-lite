@@ -1,25 +1,32 @@
-#import <React/RCTComponent.h>
+#import "RNYMView.h"
+
 #import <React/UIView+React.h>
 
 #if TARGET_OS_SIMULATOR
 #import <mach-o/arch.h>
 #endif
 
-#import <MapKit/MapKit.h>
-#import "../Util/RCTConvert+Yamap.mm"
-@import YandexMapsMobile;
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
-
+#import "YamapCircleView.h"
+#import "YamapMarkerView.h"
 #import "YamapPolygonView.h"
 #import "YamapPolylineView.h"
-#import "YamapMarkerView.h"
-#import "YamapCircleView.h"
-#import "RNYMView.h"
+#import "../Util/RCTConvert+Yamap.mm"
 
-#define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
+#import <YandexMapsMobile/YMKMap.h>
+#import <YandexMapsMobile/YMKMapKitFactory.h>
+#import <YandexMapsMobile/YMKMapObjectCollection.h>
+#import <YandexMapsMobile/YMKTransport.h>
+#import <YandexMapsMobile/YMKDirections.h>
+#import <YandexMapsMobile/YMKTransitOptions.h>
+#import <YandexMapsMobile/YMKMasstransitRoute.h>
+#import <YandexMapsMobile/YMKDrivingRoute.h>
+#import <YandexMapsMobile/YMKSubpolylineHelper.h>
+#import <YandexMapsMobile/YMKDrivingVehicleOptions.h>
+#import <YandexMapsMobile/YMKVisibleRegion.h>
+#import <YandexMapsMobile/YMKLogoAlignment.h>
+#import <YandexMapsMobile/YMKLogoPadding.h>
+#import <YandexMapsMobile/YMKIconStyle.h>
+#import <YandexMapsMobile/YMKMapLoadStatistics.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -440,7 +447,7 @@
 
 - (void)emitCameraPositionToJS:(NSString *)_id {
     YMKCameraPosition *position = self.mapWindow.map.cameraPosition;
-    NSDictionary *cameraPosition = [self cameraPositionToJSON:position reason:1 finished:YES];
+    NSDictionary *cameraPosition = [self cameraPositionToJSON:position reason:YMKCameraUpdateReasonApplication finished:YES];
     NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:cameraPosition];
     [response setValue:_id forKey:@"id"];
 
@@ -599,8 +606,8 @@
 }
 
 - (void)setLogoPosition:(NSDictionary *)logoPosition {
-    NSUInteger horizontalAlignment = YMKLogoHorizontalAlignmentRight;
-    NSUInteger verticalAlignment = YMKLogoVerticalAlignmentBottom;
+    YMKLogoHorizontalAlignment horizontalAlignment = YMKLogoHorizontalAlignmentRight;
+    YMKLogoVerticalAlignment verticalAlignment = YMKLogoVerticalAlignmentBottom;
 
     if ([[logoPosition valueForKey:@"horizontal"] isEqual:@"left"]) {
         horizontalAlignment = YMKLogoHorizontalAlignmentLeft;

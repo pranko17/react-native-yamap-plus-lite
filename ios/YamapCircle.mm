@@ -1,16 +1,7 @@
-#import <React/RCTViewManager.h>
-#import <MapKit/MapKit.h>
-#import <math.h>
 #import "YamapCircle.h"
 
 #import "View/YamapCircleView.h"
-#import "View/RNYMView.h"
-
 #import "Util/RCTConvert+Yamap.mm"
-
-#ifndef MAX
-#import <NSObjCRuntime.h>
-#endif
 
 @implementation YamapCircle
 
