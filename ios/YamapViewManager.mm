@@ -1,13 +1,16 @@
-#import "YamapView.h"
+#import <React/RCTUIManager.h>
 
 #import "View/RNYMView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
 #import <YandexMapsMobile/YMKMap.h>
 
-@implementation YamapView
+@interface YamapViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation YamapViewManager
+
+RCT_EXPORT_MODULE(YamapView)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[

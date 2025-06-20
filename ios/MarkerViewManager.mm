@@ -1,11 +1,14 @@
-#import "YamapMarker.h"
+#import <React/RCTUIManager.h>
 
 #import "View/YamapMarkerView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
-@implementation YamapMarker
+@interface MarkerViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation MarkerViewManager
+
+RCT_EXPORT_MODULE(YamapMarker)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];

@@ -1,11 +1,14 @@
-#import "YamapPolyline.h"
+#import <React/RCTViewManager.h>
 
 #import "View/YamapPolylineView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
-@implementation YamapPolyline
+@interface PolylineViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation PolylineViewManager
+
+RCT_EXPORT_MODULE(YamapPolyline)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];

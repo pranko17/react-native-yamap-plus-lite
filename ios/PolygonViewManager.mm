@@ -1,11 +1,14 @@
-#import "YamapPolygon.h"
+#import <React/RCTViewManager.h>
 
 #import "View/YamapPolygonView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
-@implementation YamapPolygon
+@interface PolygonViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation PolygonViewManager
+
+RCT_EXPORT_MODULE(YamapPolygon)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];

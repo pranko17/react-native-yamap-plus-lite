@@ -1,11 +1,14 @@
-#import "YamapCircle.h"
+#import <React/RCTViewManager.h>
 
 #import "View/YamapCircleView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
-@implementation YamapCircle
+@interface CircleViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation CircleViewManager
+
+RCT_EXPORT_MODULE(YamapCircle)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];

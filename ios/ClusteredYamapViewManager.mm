@@ -1,13 +1,16 @@
-#import "ClusteredYamapView.h"
+#import <React/RCTUIManager.h>
 
 #import "View/RNCYMView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
 #import <YandexMapsMobile/YMKMap.h>
 
-@implementation ClusteredYamapView
+@interface ClusteredYamapViewManager : RCTViewManager
+@end
 
-RCT_EXPORT_MODULE()
+@implementation ClusteredYamapViewManager
+
+RCT_EXPORT_MODULE(ClusteredYamapView)
 
 - (NSArray<NSString *> *)supportedEvents {
     return @[
