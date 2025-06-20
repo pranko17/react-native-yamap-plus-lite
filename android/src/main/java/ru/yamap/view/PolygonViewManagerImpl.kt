@@ -48,7 +48,7 @@ class PolygonViewManagerImpl() {
     }
 
     companion object {
-        const val NAME = "YamapPolygon"
+        const val NAME = "PolygonView"
 
         val exportedCustomBubblingEventTypeConstants = mapOf(
             YamapPolygonPressEvent.EVENT_NAME to

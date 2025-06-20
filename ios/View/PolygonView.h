@@ -1,11 +1,11 @@
-#ifndef YamapPolygonView_h
-#define YamapPolygonView_h
+#ifndef PolygonView_h
+#define PolygonView_h
 
 #import <React/RCTComponent.h>
 
 #import <YandexMapsMobile/YMKPolygon.h>
 
-@interface YamapPolygonView: UIView<YMKMapObjectTapListener>
+@interface PolygonView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
@@ -24,4 +24,4 @@
 
 @end
 
-#endif /* YamapPoligonView */
+#endif /* PolygonView_h */

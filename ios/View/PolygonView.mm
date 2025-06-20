@@ -1,6 +1,6 @@
-#import "YamapPolygonView.h"
+#import "PolygonView.h"
 
-@implementation YamapPolygonView {
+@implementation PolygonView {
     NSMutableArray<YMKPoint*>* _points;
     NSArray<NSArray<YMKPoint*>*>* innerRings;
     YMKPolygonMapObject* mapObject;

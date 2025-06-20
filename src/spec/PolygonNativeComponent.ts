@@ -23,4 +23,4 @@ export interface PolygonNativeProps extends ViewProps {
   zI?: Float;
 }
 
-export default codegenNativeComponent<PolygonNativeProps>('YamapPolygon');
+export default codegenNativeComponent<PolygonNativeProps>('PolygonView');

@@ -8,7 +8,7 @@
 
 #import "CircleView.h"
 #import "MarkerView.h"
-#import "YamapPolygonView.h"
+#import "PolygonView.h"
 #import "YamapPolylineView.h"
 #import "../Util/RCTConvert+Yamap.mm"
 
@@ -740,9 +740,9 @@
 }
 
 - (void)insertReactSubview:(UIView<RCTComponent> *)subview atIndex:(NSInteger)atIndex {
-    if ([subview isKindOfClass:[YamapPolygonView class]]) {
+    if ([subview isKindOfClass:[PolygonView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapPolygonView *polygon = (YamapPolygonView *) subview;
+        PolygonView *polygon = (PolygonView *) subview;
         YMKPolygonMapObject *obj = [objects addPolygonWithPolygon:[polygon getPolygon]];
         [polygon setMapObject:obj];
     } else if ([subview isKindOfClass:[YamapPolylineView class]]) {
@@ -784,9 +784,9 @@
 }
 
 - (void)removeReactSubview:(UIView<RCTComponent> *)subview {
-    if ([subview isKindOfClass:[YamapPolygonView class]]) {
+    if ([subview isKindOfClass:[PolygonView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapPolygonView *polygon = (YamapPolygonView *) subview;
+        PolygonView *polygon = (PolygonView *) subview;
         [objects removeWithMapObject:[polygon getMapObject]];
     } else if ([subview isKindOfClass:[YamapPolylineView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;

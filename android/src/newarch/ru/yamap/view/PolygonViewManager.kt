@@ -3,13 +3,13 @@ package ru.yamap.view
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.YamapPolygonManagerDelegate
-import com.facebook.react.viewmanagers.YamapPolygonManagerInterface
+import com.facebook.react.viewmanagers.PolygonViewManagerDelegate
+import com.facebook.react.viewmanagers.PolygonViewManagerInterface
 
-class PolygonViewManager : ViewGroupManager<PolygonView>(),  YamapPolygonManagerInterface<PolygonView> {
+class PolygonViewManager : ViewGroupManager<PolygonView>(),  PolygonViewManagerInterface<PolygonView> {
 
     private val implementation = PolygonViewManagerImpl()
-    private val delegate = YamapPolygonManagerDelegate(this)
+    private val delegate = PolygonViewManagerDelegate(this)
 
     override fun getDelegate() = delegate
 
