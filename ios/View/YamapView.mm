@@ -9,7 +9,7 @@
 #import "CircleView.h"
 #import "MarkerView.h"
 #import "PolygonView.h"
-#import "YamapPolylineView.h"
+#import "PolylineView.h"
 #import "../Util/RCTConvert+Yamap.mm"
 
 #import <YandexMapsMobile/YMKMap.h>
@@ -745,9 +745,9 @@
         PolygonView *polygon = (PolygonView *) subview;
         YMKPolygonMapObject *obj = [objects addPolygonWithPolygon:[polygon getPolygon]];
         [polygon setMapObject:obj];
-    } else if ([subview isKindOfClass:[YamapPolylineView class]]) {
+    } else if ([subview isKindOfClass:[PolylineView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapPolylineView *polyline = (YamapPolylineView*) subview;
+        PolylineView *polyline = (PolylineView*) subview;
         YMKPolylineMapObject *obj = [objects addPolylineWithPolyline:[polyline getPolyline]];
         [polyline setMapObject:obj];
     } else if ([subview isKindOfClass:[MarkerView class]]) {
@@ -788,9 +788,9 @@
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
         PolygonView *polygon = (PolygonView *) subview;
         [objects removeWithMapObject:[polygon getMapObject]];
-    } else if ([subview isKindOfClass:[YamapPolylineView class]]) {
+    } else if ([subview isKindOfClass:[PolylineView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapPolylineView *polyline = (YamapPolylineView *) subview;
+        PolylineView *polyline = (PolylineView *) subview;
         [objects removeWithMapObject:[polyline getMapObject]];
     } else if ([subview isKindOfClass:[MarkerView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;

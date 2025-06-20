@@ -26,4 +26,4 @@ export interface PolylineNativeProps extends ViewProps {
   zI?: Float;
 }
 
-export default codegenNativeComponent<PolylineNativeProps>('YamapPolyline');
+export default codegenNativeComponent<PolylineNativeProps>('PolylineView');

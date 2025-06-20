@@ -49,7 +49,7 @@ class PolylineViewManagerImpl() {
     }
 
     companion object {
-        const val NAME = "YamapPolyline"
+        const val NAME = "PolylineView"
 
         val exportedCustomBubblingEventTypeConstants = mapOf(
             YamapPolylinePressEvent.EVENT_NAME to

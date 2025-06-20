@@ -1,11 +1,11 @@
-#ifndef YamapPolylineView_h
-#define YamapPolylineView_h
+#ifndef PolylineView_h
+#define PolylineView_h
 
 #import <React/RCTComponent.h>
 
 #import <YandexMapsMobile/YMKPolyline.h>
 
-@interface YamapPolylineView: UIView<YMKMapObjectTapListener>
+@interface PolylineView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
@@ -27,4 +27,4 @@
 
 @end
 
-#endif /* YamapPolylineView */
+#endif /* PolylineView_h */

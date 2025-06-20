@@ -20,10 +20,6 @@ RCT_EXPORT_MODULE(PolygonView)
     return self;
 }
 
-+ (BOOL)requiresMainQueueSetup {
-    return YES;
-}
-
 - (UIView* _Nullable)view {
     return [[PolygonView alloc] init];
 }

@@ -3,13 +3,13 @@ package ru.yamap.view
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.YamapPolylineManagerDelegate
-import com.facebook.react.viewmanagers.YamapPolylineManagerInterface
+import com.facebook.react.viewmanagers.PolylineViewManagerDelegate
+import com.facebook.react.viewmanagers.PolylineViewManagerInterface
 
-class PolylineViewManager : ViewGroupManager<PolylineView>(), YamapPolylineManagerInterface<PolylineView> {
+class PolylineViewManager : ViewGroupManager<PolylineView>(), PolylineViewManagerInterface<PolylineView> {
 
     private val implementation = PolylineViewManagerImpl()
-    private val delegate = YamapPolylineManagerDelegate(this)
+    private val delegate = PolylineViewManagerDelegate(this)
 
     override fun getDelegate() = delegate
 

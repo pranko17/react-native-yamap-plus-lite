@@ -1,8 +1,8 @@
-#import "YamapPolylineView.h"
+#import "PolylineView.h"
 
 #import <YandexMapsMobile/YMKLineStyle.h>
 
-@implementation YamapPolylineView {
+@implementation PolylineView {
     NSMutableArray<YMKPoint*> * _points;
     YMKPolylineMapObject* mapObject;
     YMKPolyline* polyline;

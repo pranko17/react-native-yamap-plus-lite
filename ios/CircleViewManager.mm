@@ -20,10 +20,6 @@ RCT_EXPORT_MODULE(CircleView)
     return self;
 }
 
-+ (BOOL)requiresMainQueueSetup {
-    return YES;
-}
-
 - (UIView* _Nullable)view {
     return [[CircleView alloc] init];
 }
