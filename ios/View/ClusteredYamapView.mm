@@ -1,4 +1,4 @@
-#import "RNCYMView.h"
+#import "ClusteredYamapView.h"
 
 #import <React/UIView+React.h>
 
@@ -13,7 +13,7 @@
 #import <YandexMapsMobile/YMKMasstransitRouter.h>
 #import <YandexMapsMobile/YMKPedestrianRouter.h>
 
-@implementation RNCYMView {
+@implementation ClusteredYamapView {
     YMKMasstransitSession *masstransitSession;
     YMKMasstransitSession *walkSession;
     YMKMasstransitRouter *masstransitRouter;

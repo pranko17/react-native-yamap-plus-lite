@@ -1,6 +1,6 @@
 #import <React/RCTUIManager.h>
 
-#import "View/RNCYMView.h"
+#import "View/ClusteredYamapView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
 #import <YandexMapsMobile/YMKMap.h>
@@ -31,16 +31,13 @@ RCT_EXPORT_MODULE(ClusteredYamapView)
     self = [super init];
     return self;
 }
-+ (BOOL)requiresMainQueueSetup {
-    return YES;
-}
 
 - (UIView *_Nullable)view {
-    RNCYMView* map = [[RNCYMView alloc] init];
+    ClusteredYamapView *map = [[ClusteredYamapView alloc] init];
     return map;
 }
 
-- (void)setCenterForMap:(RNCYMView*)map center:(NSDictionary*)_center zoom:(float)zoom azimuth:(float)azimuth tilt:(float)tilt duration:(float)duration animation:(int)animation {
+- (void)setCenterForMap:(ClusteredYamapView*)map center:(NSDictionary*)_center zoom:(float)zoom azimuth:(float)azimuth tilt:(float)tilt duration:(float)duration animation:(int)animation {
     YMKPoint *center = [RCTConvert YMKPoint:_center];
     YMKCameraPosition *pos = [YMKCameraPosition cameraPositionWithTarget:center zoom:zoom azimuth:azimuth tilt:tilt];
     [map setCenter:pos withDuration:duration withAnimation:animation];
@@ -63,110 +60,110 @@ RCT_CUSTOM_VIEW_PROPERTY(initialRegion, NSDictionary, RNYMView) {
         [view setInitialRegion:json];
     }
 }
-RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyFillColor, NSNumber, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyFillColor, NSNumber, ClusteredYamapView) {
     [view setUserLocationAccuracyFillColor:[RCTConvert UIColor:json]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(clusterColor, NSNumber, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(clusterColor, NSNumber, ClusteredYamapView) {
     [view setClusterColor:[RCTConvert UIColor:json]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(clusteredMarkers, NSArray<YMKRequestPoint*>*_Nonnull, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(clusteredMarkers, NSArray<YMKRequestPoint*>*_Nonnull, ClusteredYamapView) {
     [view setClusteredMarkers:[RCTConvert NSArray:json]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeColor, NSNumber, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeColor, NSNumber, ClusteredYamapView) {
     [view setUserLocationAccuracyStrokeColor:[RCTConvert UIColor:json]];
 }
 
 
-RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeWidth, NSNumber, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyStrokeWidth, NSNumber, ClusteredYamapView) {
     [view setUserLocationAccuracyStrokeWidth:[json floatValue]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(userLocationIcon, NSString, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(userLocationIcon, NSString, ClusteredYamapView) {
     if (json && view) {
         [view setUserLocationIcon:json];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(userLocationIconScale, NSNumber, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(userLocationIconScale, NSNumber, ClusteredYamapView) {
     if (json && view) {
         [view setUserLocationIconScale:json];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(showUserPosition, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(showUserPosition, BOOL, ClusteredYamapView) {
     if (view) {
         [view setListenUserLocation: json ? [json boolValue] : NO];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(followUser, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(followUser, BOOL, ClusteredYamapView) {
     [view setFollowUser: json ? [json boolValue] : NO];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(nightMode, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(nightMode, BOOL, ClusteredYamapView) {
     if (view) {
         [view setNightMode: json ? [json boolValue]: NO];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(mapStyle, NSString, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(mapStyle, NSString, ClusteredYamapView) {
     if (json && view) {
         [view.mapWindow.map setMapStyleWithStyle:json];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zoomGesturesEnabled, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(zoomGesturesEnabled, BOOL, ClusteredYamapView) {
     if (view) {
         view.mapWindow.map.zoomGesturesEnabled = json ? [json boolValue] : YES;
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(scrollGesturesEnabled, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(scrollGesturesEnabled, BOOL, ClusteredYamapView) {
     if (view) {
         view.mapWindow.map.scrollGesturesEnabled = json ? [json boolValue] : YES;
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(tiltGesturesEnabled, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(tiltGesturesEnabled, BOOL, ClusteredYamapView) {
     if (view) {
         view.mapWindow.map.tiltGesturesEnabled = json ? [json boolValue] : YES;
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(rotateGesturesEnabled, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(rotateGesturesEnabled, BOOL, ClusteredYamapView) {
     if (view) {
         view.mapWindow.map.rotateGesturesEnabled = json ? [json boolValue] : YES;
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(fastTapEnabled, BOOL, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(fastTapEnabled, BOOL, ClusteredYamapView) {
     if (view) {
         view.mapWindow.map.fastTapEnabled = json ? [json boolValue] : YES;
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(mapType, NSString, RNCYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(mapType, NSString, ClusteredYamapView) {
     if (view) {
         [view setMapType:json];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(interactive, BOOL, RNYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(interactive, BOOL, ClusteredYamapView) {
     if (json && view) {
         [view setInteractive:[json boolValue]];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(logoPosition, BOOL, RNYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(logoPosition, BOOL, ClusteredYamapView) {
     if (json && view) {
         [view setLogoPosition:json];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, ClusteredYamapView) {
     if (json && view) {
         [view setLogoPadding:json];
     }
@@ -175,8 +172,8 @@ RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
 // ref
 RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -201,8 +198,8 @@ RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag argsArr:(NSArray*)args
 
 RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -221,8 +218,8 @@ RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag argsArr:(NSArray*)args
 
 RCT_EXPORT_METHOD(setCenter:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -234,8 +231,8 @@ RCT_EXPORT_METHOD(setCenter:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsA
 
 RCT_EXPORT_METHOD(setZoom:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -247,8 +244,8 @@ RCT_EXPORT_METHOD(setZoom:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr
 
 RCT_EXPORT_METHOD(getCameraPosition:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -260,8 +257,8 @@ RCT_EXPORT_METHOD(getCameraPosition:(nonnull NSNumber*) reactTag argsArr:(NSArra
 
 RCT_EXPORT_METHOD(getVisibleRegion:(nonnull NSNumber*) reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
-        RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
-        if (!view || ![view isKindOfClass:[RNCYMView class]]) {
+        ClusteredYamapView *view = (ClusteredYamapView*) viewRegistry[reactTag];
+        if (!view || ![view isKindOfClass:[ClusteredYamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }

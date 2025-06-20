@@ -1,5 +1,5 @@
-#ifndef RNCYMView_h
-#define RNCYMView_h
+#ifndef ClusteredYamapView_h
+#define ClusteredYamapView_h
 
 #import <RNYMView.h>
 
@@ -8,7 +8,7 @@
 
 @class RCTBridge;
 
-@interface RNCYMView: RNYMView<YMKClusterListener, YMKClusterTapListener>
+@interface ClusteredYamapView: RNYMView<YMKClusterListener, YMKClusterTapListener>
 
 - (void)setClusterColor:(UIColor*_Nullable)color;
 - (void)setClusteredMarkers:(NSArray<YMKRequestPoint*>*_Nonnull)points;
