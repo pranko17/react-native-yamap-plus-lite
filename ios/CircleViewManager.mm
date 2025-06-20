@@ -1,6 +1,6 @@
 #import <React/RCTViewManager.h>
 
-#import "View/YamapCircleView.h"
+#import "View/CircleView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
 @interface CircleViewManager : RCTViewManager
@@ -8,7 +8,7 @@
 
 @implementation CircleViewManager
 
-RCT_EXPORT_MODULE(YamapCircle)
+RCT_EXPORT_MODULE(CircleView)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];
@@ -25,40 +25,40 @@ RCT_EXPORT_MODULE(YamapCircle)
 }
 
 - (UIView* _Nullable)view {
-    return [[YamapCircleView alloc] init];
+    return [[CircleView alloc] init];
 }
 
 // PROPS
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY (center, YMKPoint, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY (center, YMKPoint, CircleView) {
    if (json != nil) {
        YMKPoint* point = [RCTConvert YMKPoint:json];
        [view setCircleCenter: point];
    }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY (radius, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY (radius, NSNumber, CircleView) {
    [view setRadius: [json floatValue]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(fillColor, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(fillColor, NSNumber, CircleView) {
     [view setFillColor: [RCTConvert UIColor:json]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(strokeColor, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(strokeColor, NSNumber, CircleView) {
     [view setStrokeColor: [RCTConvert UIColor:json]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, CircleView) {
     [view setStrokeWidth: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, CircleView) {
     [view setZIndex: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(handled, NSNumber, YamapCircleView) {
+RCT_CUSTOM_VIEW_PROPERTY(handled, NSNumber, CircleView) {
     if (json == nil || [json boolValue]) {
         [view setHandled: YES];
     } else {

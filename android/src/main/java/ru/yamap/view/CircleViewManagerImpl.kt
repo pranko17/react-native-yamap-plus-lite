@@ -39,7 +39,7 @@ class CircleViewManagerImpl() {
     }
 
     companion object {
-        const val NAME = "YamapCircle"
+        const val NAME = "CircleView"
 
         val exportedCustomBubblingEventTypeConstants = mapOf(
             YamapCirclePressEvent.EVENT_NAME to

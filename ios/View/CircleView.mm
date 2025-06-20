@@ -1,6 +1,6 @@
-#import "YamapCircleView.h"
+#import "CircleView.h"
 
-@implementation YamapCircleView {
+@implementation CircleView {
     YMKPoint* center;
     float radius;
     YMKCircleMapObject* mapObject;

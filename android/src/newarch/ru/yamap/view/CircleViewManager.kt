@@ -3,13 +3,13 @@ package ru.yamap.view
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.YamapCircleManagerDelegate
-import com.facebook.react.viewmanagers.YamapCircleManagerInterface
+import com.facebook.react.viewmanagers.CircleViewManagerDelegate
+import com.facebook.react.viewmanagers.CircleViewManagerInterface
 
-class CircleViewManager : ViewGroupManager<CircleView>(), YamapCircleManagerInterface<CircleView> {
+class CircleViewManager : ViewGroupManager<CircleView>(), CircleViewManagerInterface<CircleView> {
 
     private val implementation = CircleViewManagerImpl()
-    private val delegate = YamapCircleManagerDelegate(this)
+    private val delegate = CircleViewManagerDelegate(this)
 
     override fun getDelegate() = delegate
 

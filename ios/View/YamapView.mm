@@ -6,7 +6,7 @@
 #import <mach-o/arch.h>
 #endif
 
-#import "YamapCircleView.h"
+#import "CircleView.h"
 #import "YamapMarkerView.h"
 #import "YamapPolygonView.h"
 #import "YamapPolylineView.h"
@@ -757,9 +757,9 @@
         [obj setIconWithImage:[[UIImage alloc] init]];
         [obj setGeometry:[marker getPoint]];
         [marker setMapObject:obj];
-    } else if ([subview isKindOfClass:[YamapCircleView class]]) {
+    } else if ([subview isKindOfClass:[CircleView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapCircleView *circle = (YamapCircleView*) subview;
+        CircleView *circle = (CircleView*) subview;
         YMKCircleMapObject *obj = [objects addCircleWithCircle:[circle getCircle]];
         [circle setMapObject:obj];
     } else {
@@ -796,9 +796,9 @@
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
         YamapMarkerView *marker = (YamapMarkerView *) subview;
         [objects removeWithMapObject:[marker getMapObject]];
-    } else if ([subview isKindOfClass:[YamapCircleView class]]) {
+    } else if ([subview isKindOfClass:[CircleView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapCircleView *circle = (YamapCircleView *) subview;
+        CircleView *circle = (CircleView *) subview;
         [objects removeWithMapObject:[circle getMapObject]];
     } else {
         NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];

@@ -1,12 +1,12 @@
-#ifndef YamapCircleView_h
-#define YamapCircleView_h
+#ifndef CircleView_h
+#define CircleView_h
 
 #import <React/RCTComponent.h>
 
 #import <YandexMapsMobile/YMKCircle.h>
 #import <YandexMapsMobile/YMKPolygon.h>
 
-@interface YamapCircleView: UIView<YMKMapObjectTapListener>
+@interface CircleView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
@@ -24,4 +24,4 @@
 
 @end
 
-#endif /* YamapCircleView */
+#endif /* CircleView_h */

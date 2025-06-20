@@ -23,4 +23,4 @@ export interface CircleNativeProps extends ViewProps {
   zI?: Float;
 }
 
-export default codegenNativeComponent<CircleNativeProps>('YamapCircle');
+export default codegenNativeComponent<CircleNativeProps>('CircleView');
