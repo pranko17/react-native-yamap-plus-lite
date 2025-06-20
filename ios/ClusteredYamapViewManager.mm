@@ -55,11 +55,12 @@ RCT_EXPORT_VIEW_PROPERTY(onMapLoaded, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onWorldToScreenPointsReceived, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onScreenToWorldPointsReceived, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY(initialRegion, NSDictionary, RNYMView) {
+RCT_CUSTOM_VIEW_PROPERTY(initialRegion, NSDictionary, YamapView) {
     if (json && view) {
         [view setInitialRegion:json];
     }
 }
+
 RCT_CUSTOM_VIEW_PROPERTY(userLocationAccuracyFillColor, NSNumber, ClusteredYamapView) {
     [view setUserLocationAccuracyFillColor:[RCTConvert UIColor:json]];
 }
@@ -183,9 +184,9 @@ RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag argsArr:(NSArray*)a
 
 RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView*> *viewRegistry) {
-        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+        YamapView *view = (YamapView *)viewRegistry[reactTag];
 
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+        if (!view || ![view isKindOfClass:[YamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -270,9 +271,9 @@ RCT_EXPORT_METHOD(getVisibleRegion:(nonnull NSNumber*) reactTag argsArr:(NSArray
 
 RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+        YamapView *view = (YamapView *)viewRegistry[reactTag];
 
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+        if (!view || ![view isKindOfClass:[YamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -285,9 +286,9 @@ RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*
 
 RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+        YamapView *view = (YamapView *)viewRegistry[reactTag];
 
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+        if (!view || ![view isKindOfClass:[YamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }
@@ -300,9 +301,9 @@ RCT_EXPORT_METHOD(getWorldPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*)
 
 RCT_EXPORT_METHOD(setTrafficVisible:(nonnull NSNumber *)reactTag argsArr:(NSArray*)argsArr) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
+        YamapView *view = (YamapView *)viewRegistry[reactTag];
 
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
+        if (!view || ![view isKindOfClass:[YamapView class]]) {
             RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
             return;
         }

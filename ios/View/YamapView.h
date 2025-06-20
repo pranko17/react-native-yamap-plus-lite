@@ -1,5 +1,5 @@
-#ifndef RNYMView_h
-#define RNYMView_h
+#ifndef YamapView_h
+#define YamapView_h
 
 #import <React/RCTComponent.h>
 
@@ -12,7 +12,7 @@
 
 @class RCTBridge;
 
-@interface RNYMView: YMKMapView<YMKUserLocationObjectListener, YMKMapCameraListener, RCTComponent, YMKMapLoadedListener, YMKTrafficDelegate>
+@interface YamapView: YMKMapView<YMKUserLocationObjectListener, YMKMapCameraListener, RCTComponent, YMKMapLoadedListener, YMKTrafficDelegate>
 
 @property (nonatomic, copy) RCTBubblingEventBlock _Nullable onRouteFound;
 @property (nonatomic, copy) RCTBubblingEventBlock _Nullable onCameraPositionReceived;
@@ -57,4 +57,4 @@
 
 @end
 
-#endif /* RNYMView_h */
+#endif /* YamapView_h */

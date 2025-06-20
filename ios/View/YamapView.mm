@@ -1,4 +1,4 @@
-#import "RNYMView.h"
+#import "YamapView.h"
 
 #import <React/UIView+React.h>
 
@@ -30,7 +30,7 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@implementation RNYMView {
+@implementation YamapView {
     YMKMasstransitSession *masstransitSession;
     YMKMasstransitSession *walkSession;
     YMKMasstransitRouter *masstransitRouter;
@@ -189,12 +189,12 @@
                     color = UIColorFromRGB([transport.line.style.color integerValue]);
                 } else {
                     if ([vehicleColors valueForKey:type] != nil) {
-                        color = [RNYMView colorFromHexString:vehicleColors[type]];
+                        color = [YamapView colorFromHexString:vehicleColors[type]];
                     } else {
                         color = UIColor.blackColor;
                     }
                 }
-                [routeMetadata setObject:[RNYMView hexStringFromColor:color] forKey:@"sectionColor"];
+                [routeMetadata setObject:[YamapView hexStringFromColor:color] forKey:@"sectionColor"];
             }
         }
     } else {
@@ -230,7 +230,7 @@
 }
 
 - (void)findRoutes:(NSArray<YMKRequestPoint *> *)_points vehicles:(NSArray<NSString *> *)vehicles withId:(NSString *)_id {
-    __weak RNYMView *weakSelf = self;
+    __weak YamapView *weakSelf = self;
 
     if ([vehicles count] == 1 && [[vehicles objectAtIndex:0] isEqualToString:@"car"]) {
         YMKDrivingOptions *drivingOptions = [[YMKDrivingOptions alloc] init];
@@ -238,7 +238,7 @@
 
         drivingSession = [drivingRouter requestRoutesWithPoints:_points drivingOptions:drivingOptions
                                                  vehicleOptions:vehicleOptions routeHandler:^(NSArray<YMKDrivingRoute *> *routes, NSError *error) {
-            RNYMView *strongSelf = weakSelf;
+            YamapView *strongSelf = weakSelf;
 
             if (error != nil) {
                 [strongSelf onReceiveNativeEvent: @{@"id": _id, @"status": @"error"}];
@@ -272,7 +272,7 @@
     }
 
     YMKMasstransitSessionRouteHandler _routeHandler = ^(NSArray<YMKMasstransitRoute *> *routes, NSError *error) {
-        RNYMView *strongSelf = weakSelf;
+        YamapView *strongSelf = weakSelf;
         if (error != nil) {
             [strongSelf onReceiveNativeEvent: @{@"id": _id, @"status": @"error"}];
             return;
