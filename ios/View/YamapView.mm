@@ -7,7 +7,7 @@
 #endif
 
 #import "CircleView.h"
-#import "YamapMarkerView.h"
+#import "MarkerView.h"
 #import "YamapPolygonView.h"
 #import "YamapPolylineView.h"
 #import "../Util/RCTConvert+Yamap.mm"
@@ -555,8 +555,8 @@
     for (int i = 0; i < [_reactSubviews count]; ++i) {
         UIView *view = [_reactSubviews objectAtIndex:i];
 
-        if ([view isKindOfClass:[YamapMarkerView class]]) {
-            YamapMarkerView *marker = (YamapMarkerView *)view;
+        if ([view isKindOfClass:[MarkerView class]]) {
+            MarkerView *marker = (MarkerView *)view;
             [lastKnownMarkers addObject:[marker getPoint]];
         }
     }
@@ -750,9 +750,9 @@
         YamapPolylineView *polyline = (YamapPolylineView*) subview;
         YMKPolylineMapObject *obj = [objects addPolylineWithPolyline:[polyline getPolyline]];
         [polyline setMapObject:obj];
-    } else if ([subview isKindOfClass:[YamapMarkerView class]]) {
+    } else if ([subview isKindOfClass:[MarkerView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapMarkerView *marker = (YamapMarkerView *) subview;
+        MarkerView *marker = (MarkerView *) subview;
         YMKPlacemarkMapObject *obj = [objects addPlacemark];
         [obj setIconWithImage:[[UIImage alloc] init]];
         [obj setGeometry:[marker getPoint]];
@@ -792,9 +792,9 @@
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
         YamapPolylineView *polyline = (YamapPolylineView *) subview;
         [objects removeWithMapObject:[polyline getMapObject]];
-    } else if ([subview isKindOfClass:[YamapMarkerView class]]) {
+    } else if ([subview isKindOfClass:[MarkerView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;
-        YamapMarkerView *marker = (YamapMarkerView *) subview;
+        MarkerView *marker = (MarkerView *) subview;
         [objects removeWithMapObject:[marker getMapObject]];
     } else if ([subview isKindOfClass:[CircleView class]]) {
         YMKMapObjectCollection *objects = self.mapWindow.map.mapObjects;

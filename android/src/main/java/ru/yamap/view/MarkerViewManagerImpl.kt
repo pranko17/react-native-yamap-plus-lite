@@ -74,7 +74,7 @@ class MarkerViewManagerImpl() {
     }
 
     companion object {
-        const val NAME = "YamapMarker"
+        const val NAME = "MarkerView"
 
         val exportedCustomBubblingEventTypeConstants = mapOf(
             YamapMarkerPressEvent.EVENT_NAME to

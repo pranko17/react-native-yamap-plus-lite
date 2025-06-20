@@ -1,6 +1,6 @@
 #import <React/RCTUIManager.h>
 
-#import "View/YamapMarkerView.h"
+#import "View/MarkerView.h"
 #import "Util/RCTConvert+Yamap.mm"
 
 @interface MarkerViewManager : RCTViewManager
@@ -8,7 +8,7 @@
 
 @implementation MarkerViewManager
 
-RCT_EXPORT_MODULE(YamapMarker)
+RCT_EXPORT_MODULE(MarkerView)
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[@"onPress"];
@@ -20,36 +20,32 @@ RCT_EXPORT_MODULE(YamapMarker)
     return self;
 }
 
-+ (BOOL)requiresMainQueueSetup {
-    return YES;
-}
-
 - (UIView* _Nullable)view {
-    return [[YamapMarkerView alloc] init];
+    return [[MarkerView alloc] init];
 }
 
 // PROPS
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY (point, YMKPoint, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY (point, YMKPoint, MarkerView) {
     if (json != nil) {
         [view setPoint: [RCTConvert YMKPoint:json]];
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(scale, NSNumber, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(scale, NSNumber, MarkerView) {
     [view setScale: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(rotated, NSNumber, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(rotated, NSNumber, MarkerView) {
     [view setRotated: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(visible, NSNumber, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(visible, NSNumber, MarkerView) {
     [view setVisible: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(handled, BOOL, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(handled, BOOL, MarkerView) {
     if (json == nil || [json boolValue]) {
         [view setHandled: YES];
     } else {
@@ -57,7 +53,7 @@ RCT_CUSTOM_VIEW_PROPERTY(handled, BOOL, YamapMarkerView) {
     }
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(anchor, NSDictionary, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(anchor, NSDictionary, MarkerView) {
     CGPoint point;
 
     if (json) {
@@ -71,11 +67,11 @@ RCT_CUSTOM_VIEW_PROPERTY(anchor, NSDictionary, YamapMarkerView) {
     [view setAnchor: [NSValue valueWithCGPoint:point]];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, MarkerView) {
     [view setZIndex: json];
 }
 
-RCT_CUSTOM_VIEW_PROPERTY(source, NSString, YamapMarkerView) {
+RCT_CUSTOM_VIEW_PROPERTY(source, NSString, MarkerView) {
     [view setSource: json];
 }
 
@@ -83,9 +79,9 @@ RCT_CUSTOM_VIEW_PROPERTY(source, NSString, YamapMarkerView) {
 RCT_EXPORT_METHOD(animatedMoveTo:(nonnull NSNumber*)reactTag argsArr:(NSArray*)argsArr) {
     @try  {
         [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber*, UIView*> *viewRegistry) {
-            YamapMarkerView* view = (YamapMarkerView*)viewRegistry[reactTag];
+            MarkerView* view = (MarkerView*)viewRegistry[reactTag];
 
-            if (!view || ![view isKindOfClass:[YamapMarkerView class]]) {
+            if (!view || ![view isKindOfClass:[MarkerView class]]) {
                 RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
                 return;
             }
@@ -102,9 +98,9 @@ RCT_EXPORT_METHOD(animatedMoveTo:(nonnull NSNumber*)reactTag argsArr:(NSArray*)a
 RCT_EXPORT_METHOD(animatedRotateTo:(nonnull NSNumber*)reactTag argsArr:(NSArray*)argsArr) {
     @try  {
         [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber*, UIView*> *viewRegistry) {
-            YamapMarkerView* view = (YamapMarkerView*)viewRegistry[reactTag];
+            MarkerView* view = (MarkerView*)viewRegistry[reactTag];
 
-            if (!view || ![view isKindOfClass:[YamapMarkerView class]]) {
+            if (!view || ![view isKindOfClass:[MarkerView class]]) {
                 RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
                 return;
             }

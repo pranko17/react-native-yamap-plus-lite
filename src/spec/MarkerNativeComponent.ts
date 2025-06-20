@@ -29,4 +29,4 @@ export type MarkerComponentType = NativeComponentType<MarkerNativeProps> & Reado
 
 require('./commands/marker');
 
-export default codegenNativeComponent<MarkerNativeProps>('YamapMarker');
+export default codegenNativeComponent<MarkerNativeProps>('MarkerView');

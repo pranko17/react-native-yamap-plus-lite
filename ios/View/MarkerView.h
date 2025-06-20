@@ -1,11 +1,11 @@
-#ifndef YamapMarkerView_h
-#define YamapMarkerView_h
+#ifndef MarkerView_h
+#define MarkerView_h
 
 #import <React/RCTComponent.h>
 
 #import <YandexMapsMobile/YMKPlacemark.h>
 
-@interface YamapMarkerView: UIView<YMKMapObjectTapListener, RCTComponent>
+@interface MarkerView: UIView<YMKMapObjectTapListener, RCTComponent>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
 
@@ -29,4 +29,4 @@
 
 @end
 
-#endif /* YamapMarkerView_h */
+#endif /* MarkerView_h */

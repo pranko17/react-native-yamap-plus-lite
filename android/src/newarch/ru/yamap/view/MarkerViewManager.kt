@@ -5,13 +5,13 @@ import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
-import com.facebook.react.viewmanagers.YamapMarkerManagerDelegate
-import com.facebook.react.viewmanagers.YamapMarkerManagerInterface
+import com.facebook.react.viewmanagers.MarkerViewManagerDelegate
+import com.facebook.react.viewmanagers.MarkerViewManagerInterface
 
-class MarkerViewManager : ViewGroupManager<MarkerView>(), YamapMarkerManagerInterface<MarkerView> {
+class MarkerViewManager : ViewGroupManager<MarkerView>(), MarkerViewManagerInterface<MarkerView> {
 
     private val implementation = MarkerViewManagerImpl()
-    private val delegate = YamapMarkerManagerDelegate(this)
+    private val delegate = MarkerViewManagerDelegate(this)
 
     override fun getDelegate() = delegate
 

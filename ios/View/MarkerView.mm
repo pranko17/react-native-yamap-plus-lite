@@ -1,4 +1,4 @@
-#import "YamapMarkerView.h"
+#import "MarkerView.h"
 
 #import <React/UIView+React.h>
 
@@ -8,7 +8,7 @@
 
 #define YAMAP_FRAMES_PER_SECOND 25
 
-@implementation YamapMarkerView {
+@implementation MarkerView {
     YMKPoint* _point;
     YMKPlacemarkMapObject* mapObject;
     NSNumber* zIndex;

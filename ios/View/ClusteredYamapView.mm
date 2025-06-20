@@ -2,7 +2,7 @@
 
 #import <React/UIView+React.h>
 
-#import <YamapMarkerView.h>
+#import <MarkerView.h>
 
 #import <YandexMapsMobile/YMKMap.h>
 #import <YandexMapsMobile/YMKMapObjectCollection.h>
@@ -66,8 +66,8 @@
     for (int i=0; i<[placemarks count]; i++) {
         if (i<[_reactSubviews count]) {
             UIView *subview = [_reactSubviews objectAtIndex:i];
-            if ([subview isKindOfClass:[YamapMarkerView class]]) {
-                YamapMarkerView* marker = (YamapMarkerView*) subview;
+            if ([subview isKindOfClass:[MarkerView class]]) {
+                MarkerView *marker = (MarkerView*) subview;
                 [marker setClusterMapObject:[placemarks objectAtIndex:i]];
             }
         }
@@ -139,8 +139,8 @@
 }
 
 - (void)insertReactSubview:(UIView<RCTComponent>*) subview atIndex:(NSInteger) atIndex {
-     if ([subview isKindOfClass:[YamapMarkerView class]]) {
-        YamapMarkerView* marker = (YamapMarkerView*) subview;
+     if ([subview isKindOfClass:[MarkerView class]]) {
+         MarkerView *marker = (MarkerView*) subview;
          if (atIndex<[placemarks count]) {
              [marker setClusterMapObject:[placemarks objectAtIndex:atIndex]];
          }
@@ -150,8 +150,8 @@
 }
 
 - (void)removeReactSubview:(UIView<RCTComponent>*) subview {
-     if ([subview isKindOfClass:[YamapMarkerView class]]) {
-        YamapMarkerView* marker = (YamapMarkerView*) subview;
+     if ([subview isKindOfClass:[MarkerView class]]) {
+         MarkerView *marker = (MarkerView*) subview;
         [clusterCollection removeWithMapObject:[marker getMapObject]];
     } else {
         NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];
