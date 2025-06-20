@@ -10,7 +10,7 @@
 #import <YandexMapsMobile/YMKMapLoadedListener.h>
 #import <YandexMapsMobile/YMKTrafficListener.h>
 
-@class RCTBridge;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface YamapView: YMKMapView<YMKUserLocationObjectListener, YMKMapCameraListener, RCTComponent, YMKMapLoadedListener, YMKTrafficDelegate>
 
@@ -56,5 +56,7 @@
 - (void)setLogoPadding:(NSDictionary *_Nullable)logoPadding;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* YamapView_h */

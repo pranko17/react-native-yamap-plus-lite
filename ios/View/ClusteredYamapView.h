@@ -6,7 +6,7 @@
 #import <YandexMapsMobile/YMKClusterListener.h>
 #import <YandexMapsMobile/YMKClusterTapListener.h>
 
-@class RCTBridge;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ClusteredYamapView: YamapView<YMKClusterListener, YMKClusterTapListener>
 
@@ -14,5 +14,7 @@
 - (void)setClusteredMarkers:(NSArray<YMKRequestPoint*>*_Nonnull)points;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* ClusteredYamapView_h */

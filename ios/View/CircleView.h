@@ -6,6 +6,8 @@
 #import <YandexMapsMobile/YMKCircle.h>
 #import <YandexMapsMobile/YMKPolygon.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CircleView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
@@ -23,5 +25,7 @@
 - (void)setHandled:(BOOL)_handled;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* CircleView_h */

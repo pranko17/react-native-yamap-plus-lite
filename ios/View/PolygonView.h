@@ -5,6 +5,8 @@
 
 #import <YandexMapsMobile/YMKPolygon.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PolygonView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
@@ -23,5 +25,7 @@
 - (void)setHandled:(BOOL)_handled;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PolygonView_h */

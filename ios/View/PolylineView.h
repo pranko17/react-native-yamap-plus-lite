@@ -5,6 +5,8 @@
 
 #import <YandexMapsMobile/YMKPolyline.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PolylineView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
@@ -26,5 +28,7 @@
 - (void)setHandled:(BOOL)_handled;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PolylineView_h */

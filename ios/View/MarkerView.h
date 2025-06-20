@@ -5,6 +5,8 @@
 
 #import <YandexMapsMobile/YMKPlacemark.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MarkerView: UIView<YMKMapObjectTapListener, RCTComponent>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
@@ -28,5 +30,7 @@
 - (void)setClusterMapObject:(YMKPlacemarkMapObject*)mapObject;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* MarkerView_h */
