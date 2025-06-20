@@ -5,34 +5,32 @@
 
 @implementation RTNYamapModule
 
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
+}
+
 - (void)initImpl:(NSString *) apiKey resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject {
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        @try {
-            [YMKMapKit setApiKey: apiKey];
-            [[YMKMapKit sharedInstance] onStart];
-            resolve(nil);
-        } @catch (NSException *exception) {
-            NSError *error = nil;
-            if (exception.userInfo.count > 0) {
-                error = [NSError errorWithDomain:NSCocoaErrorDomain code:0 userInfo:exception.userInfo];
-            }
-            reject(exception.name, exception.reason ?: @"Error initiating YMKMapKit", error);
+    @try {
+        [YMKMapKit setApiKey: apiKey];
+        [[YMKMapKit sharedInstance] onStart];
+        resolve(nil);
+    } @catch (NSException *exception) {
+        NSError *error = nil;
+        if (exception.userInfo.count > 0) {
+            error = [NSError errorWithDomain:NSCocoaErrorDomain code:0 userInfo:exception.userInfo];
         }
-    });
+        reject(exception.name, exception.reason ?: @"Error initiating YMKMapKit", error);
+    }
 }
 
 - (void)setLocaleImpl:(NSString *) locale resolver:(RCTPromiseResolveBlock)resolve {
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [YRTI18nManagerFactory setLocaleWithLocale:locale];
-        resolve(nil);
-    });
+    [YRTI18nManagerFactory setLocaleWithLocale:locale];
+    resolve(nil);
 }
 
 - (void)getLocaleImpl:(nonnull RCTPromiseResolveBlock)resolve {
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        NSString *locale = [YRTI18nManagerFactory getLocale];
-        resolve(locale);
-    });
+    NSString *locale = [YRTI18nManagerFactory getLocale];
+    resolve(locale);
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED

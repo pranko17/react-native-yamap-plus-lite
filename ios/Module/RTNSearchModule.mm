@@ -11,6 +11,10 @@
 NSString *ERR_NO_REQUEST_ARG = @"ERR_NO_REQUEST_ARG";
 NSString *ERR_SEARCH_FAILED = @"ERR_SEARCH_FAILED";
 
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
+}
+
 - (instancetype)init
 {
     YMKPoint *southWestPoint = [YMKPoint pointWithLatitude:-90.0 longitude:-180.0];
@@ -21,9 +25,7 @@ NSString *ERR_SEARCH_FAILED = @"ERR_SEARCH_FAILED";
 
 - (void) initSearchManager {
     if (_searchManager == nil) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            self->_searchManager = [[YMKSearchFactory instance] createSearchManagerWithSearchManagerType:YMKSearchManagerTypeOnline];
-        });
+        self->_searchManager = [[YMKSearchFactory instance] createSearchManagerWithSearchManagerType:YMKSearchManagerTypeOnline];
     }
 }
 
@@ -121,96 +123,87 @@ NSString *ERR_SEARCH_FAILED = @"ERR_SEARCH_FAILED";
 
     YMKGeometry* geometry = [self getGeometry: figure];
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager submitWithText:searchQuery geometry:geometry searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"searchByAddress error:", error);
-                return;
-            }
+    _searchSession = [self->_searchManager submitWithText:searchQuery geometry:geometry searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"searchByAddress error:", error);
+            return;
+        }
 
-            resolve([self convertSearchResponse:response]);
-        }];
-    });
+        resolve([self convertSearchResponse:response]);
+    }];
 }
 
 - (void)searchByPointImpl:(nonnull YMKPoint*) point zoom:(nonnull NSNumber*) zoom searchOptions:(YMKSearchOptions*) searchOptions resolver:(RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject {
     [self initSearchManager];
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager submitWithPoint:point zoom:zoom searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"searchByPoint error:", error);
-                return;
-            }
+    _searchSession = [self->_searchManager submitWithPoint:point zoom:zoom searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"searchByPoint error:", error);
+            return;
+        }
 
-            resolve([self convertSearchResponse:response]);
-        }];
-    });
+        resolve([self convertSearchResponse:response]);
+    }];
 }
 
 - (void)addressToGeoImpl:(nonnull NSString *)address resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
     [self initSearchManager];
 
     YMKSearchOptions *searchOptions = [[YMKSearchOptions alloc] init];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager submitWithText:address geometry:[YMKGeometry geometryWithBoundingBox:self->_defaultBoundingBox] searchOptions:searchOptions responseHandler: ^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"addressToGeo error:", error);
-                return;
-            }
 
-            NSArray<YMKGeoObjectCollectionItem *> *geoCollectionObjects = [[response collection] children];
-            NSObject *item = (NSObject *)[[[geoCollectionObjects firstObject].obj metadataContainer] getItemOfClass:[YMKSearchToponymObjectMetadata class]];
-            if (item != nil) {
-                YMKPoint *point = [item valueForKey:@"balloonPoint"];
-                resolve([RCTConvert pointJsonWithPoint:point]);
-            }
-        }];
-    });
+    _searchSession = [_searchManager submitWithText:address geometry:[YMKGeometry geometryWithBoundingBox:_defaultBoundingBox] searchOptions:searchOptions responseHandler: ^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"addressToGeo error:", error);
+            return;
+        }
+
+        NSArray<YMKGeoObjectCollectionItem *> *geoCollectionObjects = [[response collection] children];
+        NSObject *item = (NSObject *)[[[geoCollectionObjects firstObject].obj metadataContainer] getItemOfClass:[YMKSearchToponymObjectMetadata class]];
+        if (item != nil) {
+            YMKPoint *point = [item valueForKey:@"balloonPoint"];
+            resolve([RCTConvert pointJsonWithPoint:point]);
+        }
+    }];
 }
 
 - (void)geoToAddressImpl:(YMKPoint *)point resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
     [self initSearchManager];
     YMKSearchOptions *searchOptions = [[YMKSearchOptions alloc] init];
 
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager submitWithPoint:point zoom:@10 searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"geoToAddress error:", error);
-                return;
-            }
+    _searchSession = [_searchManager submitWithPoint:point zoom:@10 searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"geoToAddress error:", error);
+            return;
+        }
 
-            resolve([self convertSearchResponse:response]);
-        }];
-    });
+        resolve([self convertSearchResponse:response]);
+    }];
 }
 
 - (void)searchByURIImpl:(nonnull NSString *)query searchOptions:(YMKSearchOptions*)searchOptions resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
     [self initSearchManager];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager searchByURIWithUri:query searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"searchByURI error:", error);
-                return;
-            }
 
-            resolve([self convertSearchResponse:response]);
-        }];
-    });
+    _searchSession = [_searchManager searchByURIWithUri:query searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"searchByURI error:", error);
+            return;
+        }
+
+        resolve([self convertSearchResponse:response]);
+    }];
 }
 
 - (void)resolveURIImpl:(nonnull NSString *)query searchOptions:(YMKSearchOptions*)searchOptions resolve:(nonnull RCTPromiseResolveBlock)resolve reject:(nonnull RCTPromiseRejectBlock)reject {
     [self initSearchManager];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self->_searchSession = [self->_searchManager resolveURIWithUri:query searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SEARCH_FAILED,  @"resolveURI error:", error);
-                return;
-            }
 
-            resolve([self convertSearchResponse:response]);
-        }];
-    });
+    _searchSession = [self->_searchManager resolveURIWithUri:query searchOptions:searchOptions responseHandler:^(YMKSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SEARCH_FAILED,  @"resolveURI error:", error);
+            return;
+        }
+
+        resolve([self convertSearchResponse:response]);
+    }];
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED

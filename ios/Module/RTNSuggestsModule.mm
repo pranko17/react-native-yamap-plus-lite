@@ -9,6 +9,10 @@
 
 NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
 
+- (dispatch_queue_t)methodQueue {
+    return dispatch_get_main_queue();
+}
+
 - (instancetype) init {
     YMKPoint *southWestPoint = [YMKPoint pointWithLatitude:-90.0 longitude:-180.0];
     YMKPoint *northEastPoint = [YMKPoint pointWithLatitude:90.0 longitude:180.0];
@@ -23,44 +27,39 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
     }
 
     if (_searchManager == nil) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            self->_searchManager = [[YMKSearchFactory instance] createSearchManagerWithSearchManagerType:YMKSearchManagerTypeOnline];
-        });
+        _searchManager = [[YMKSearchFactory instance] createSearchManagerWithSearchManagerType:YMKSearchManagerTypeOnline];
     }
 
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        self->_suggestClient = [self->_searchManager createSuggestSession];
-    });
+    _suggestClient = [self->_searchManager createSuggestSession];
 
     return _suggestClient;
 }
 
 - (void) suggestImpl:(nonnull NSString*) searchQuery options:(YMKSuggestOptions*) options boundingBox:(YMKBoundingBox*) boundingBox resolver:(RCTPromiseResolveBlock) resolve rejecter:(RCTPromiseRejectBlock) reject {
     YMKSearchSuggestSession *session = [self getSuggestClient];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [session suggestWithText:searchQuery window:boundingBox suggestOptions:options responseHandler:^(YMKSuggestResponse * _Nullable suggest, NSError * _Nullable error) {
-            if (error) {
-                reject(ERR_SUGGEST_FAILED, @"suggest error:", error);
-                return;
-            }
 
-            NSMutableArray *suggestsToPass = [NSMutableArray new];
+    [session suggestWithText:searchQuery window:boundingBox suggestOptions:options responseHandler:^(YMKSuggestResponse * _Nullable suggest, NSError * _Nullable error) {
+        if (error) {
+            reject(ERR_SUGGEST_FAILED, @"suggest error:", error);
+            return;
+        }
 
-            if (suggest) {
-                for (YMKSuggestItem *suggestItem in suggest.items) {
-                    NSMutableDictionary *suggestToPass = [NSMutableDictionary new];
-                    [suggestToPass setObject:suggestItem.title.text forKey:@"title"];
-                    if (suggestItem.subtitle) {
-                        [suggestToPass setObject:suggestItem.subtitle.text forKey:@"subtitle"];
-                    }
-                    [suggestToPass setObject:suggestItem.uri forKey:@"uri"];
-                    [suggestsToPass addObject:suggestToPass];
+        NSMutableArray *suggestsToPass = [NSMutableArray new];
+
+        if (suggest) {
+            for (YMKSuggestItem *suggestItem in suggest.items) {
+                NSMutableDictionary *suggestToPass = [NSMutableDictionary new];
+                [suggestToPass setObject:suggestItem.title.text forKey:@"title"];
+                if (suggestItem.subtitle) {
+                    [suggestToPass setObject:suggestItem.subtitle.text forKey:@"subtitle"];
                 }
+                [suggestToPass setObject:suggestItem.uri forKey:@"uri"];
+                [suggestsToPass addObject:suggestToPass];
             }
+        }
 
-            resolve(suggestsToPass);
-        }];
-    });
+        resolve(suggestsToPass);
+    }];
 }
 
 - (YMKSuggestType) suggestTypeWithString:(NSString*) str {
@@ -80,12 +79,10 @@ NSString *ERR_SUGGEST_FAILED = @"ERR_SUGGEST_FAILED";
 }
 
 - (void)resetImpl:(RCTPromiseResolveBlock) resolve  {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self->_suggestClient) {
-            [self->_suggestClient reset];
-            self->_suggestClient = nil;
-        }
-    });
+    if (_suggestClient) {
+        [_suggestClient reset];
+        _suggestClient = nil;
+    }
 
     resolve(@[]);
 }
