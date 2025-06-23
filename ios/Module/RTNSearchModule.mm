@@ -71,11 +71,11 @@ NSString *ERR_SEARCH_FAILED = @"ERR_SEARCH_FAILED";
         return [YMKGeometry geometryWithBoundingBox:[YMKBoundingBox boundingBoxWithSouthWest:southWest northEast:northEast]];
     }
     if ([figure[@"type"] isEqual:@"POLYLINE"]) {
-        NSMutableArray<YMKPoint*> *points = [RCTConvert Points:figure[@"value"]];
+        NSArray<YMKPoint*> *points = [RCTConvert YMKPointArray:figure[@"value"]];
         return [YMKGeometry geometryWithPolyline:[YMKPolyline polylineWithPoints:points]];
     }
     if ([figure[@"type"] isEqual:@"POLYGON"]) {
-        NSMutableArray<YMKPoint*> *points = [RCTConvert Points:figure[@"value"]];
+        NSArray<YMKPoint*> *points = [RCTConvert YMKPointArray:figure[@"value"]];
         return [YMKGeometry geometryWithPolygon:[YMKPolygon polygonWithOuterRing:[YMKLinearRing linearRingWithPoints:points] innerRings:@[]]];
     }
     return [YMKGeometry geometryWithBoundingBox:_defaultBoundingBox];

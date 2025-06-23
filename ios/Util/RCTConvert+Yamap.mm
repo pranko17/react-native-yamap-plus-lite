@@ -27,7 +27,7 @@
     return [self NSArray:json];
 }
 
-+ (NSMutableArray<YMKPoint*>*)Points:(id)json {
++ (NSArray<YMKPoint*>*)YMKPointArray:(id)json {
     NSArray* parsedArray = [self NSArray:json];
     NSMutableArray* result = [[NSMutableArray alloc] init];
 
@@ -41,7 +41,7 @@
     return result;
 }
 
-+ (NSMutableArray<YMKScreenPoint*>*)ScreenPoints:(id)json {
++ (NSArray<YMKScreenPoint*>*)ScreenPoints:(id)json {
     NSArray* parsedArray = [self NSArray:json];
     NSMutableArray* result = [[NSMutableArray alloc] init];
 

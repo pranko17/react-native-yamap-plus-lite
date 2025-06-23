@@ -192,7 +192,7 @@ RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag argsArr:(NSArray*)args
         }
 
         NSDictionary* args = argsArr.firstObject;
-        NSArray<YMKPoint *> *points = [RCTConvert Points:args[@"points"]];
+        NSArray<YMKPoint *> *points = [RCTConvert YMKPointArray:args[@"points"]];
         [view fitMarkers: points];
     }];
 }
@@ -206,7 +206,7 @@ RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber*) reactTag argsArr:(NSArray*)args
         }
 
         NSDictionary* args = argsArr.firstObject;
-        NSArray<YMKPoint*>* points = [RCTConvert Points:args[@"points"]];
+        NSArray<YMKPoint*>* points = [RCTConvert YMKPointArray:args[@"points"]];
         NSMutableArray<YMKRequestPoint*>* requestPoints = [[NSMutableArray alloc] init];
         for (int i = 0; i < [points count]; ++i) {
             YMKRequestPoint * requestPoint = [YMKRequestPoint requestPointWithPoint:[points objectAtIndex:i] type:YMKRequestPointTypeWaypoint pointContext:nil drivingArrivalPointId:nil indoorLevelId:nil];
@@ -279,7 +279,7 @@ RCT_EXPORT_METHOD(getScreenPoints:(nonnull NSNumber *)reactTag argsArr:(NSArray*
         }
 
         NSDictionary* args = argsArr.firstObject;
-        NSArray<YMKPoint *> *mapPoints = [RCTConvert Points:args[@"points"]];
+        NSArray<YMKPoint *> *mapPoints = [RCTConvert YMKPointArray:args[@"points"]];
         [view emitWorldToScreenPoint:mapPoints withId:args[@"id"]];
     }];
 }

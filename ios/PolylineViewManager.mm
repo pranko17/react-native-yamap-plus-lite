@@ -29,7 +29,7 @@ RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY (points, NSArray<YMKPoint>, PolylineView) {
     if (json != nil) {
-        [view setPolylinePoints: [RCTConvert Points:json]];
+        [view setPolylinePoints: [RCTConvert YMKPointArray:json]];
     }
 }
 

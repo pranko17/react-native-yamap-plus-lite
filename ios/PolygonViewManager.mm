@@ -29,7 +29,7 @@ RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY (points, NSArray<YMKPoint>, PolygonView) {
     if (json != nil) {
-        [view setPolygonPoints: [RCTConvert Points:json]];
+        [view setPolygonPoints: [RCTConvert YMKPointArray:json]];
     }
 }
 
@@ -38,7 +38,7 @@ RCT_CUSTOM_VIEW_PROPERTY (innerRings, NSArray<NSArray<YMKPoint>>, PolygonView) {
 
     if (json != nil) {
         for (int i = 0; i < [(NSArray *)json count]; ++i) {
-            [innerRings addObject:[RCTConvert Points:[json objectAtIndex:i]]];
+            [innerRings addObject:[RCTConvert YMKPointArray:[json objectAtIndex:i]]];
         }
     }
 
