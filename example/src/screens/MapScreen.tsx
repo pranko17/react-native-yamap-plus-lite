@@ -99,6 +99,13 @@ export const MapScreen = () => {
           console.log('polygon press');
         }}
         zI={5}
+        innerRings={[
+          [
+            {lat: 55.735, lon: 37.58},
+            {lat: 55.71, lon: 37.61},
+            {lat: 55.72, lon: 37.63},
+          ],
+      ]}
       />
       <Polygon
         points={[
