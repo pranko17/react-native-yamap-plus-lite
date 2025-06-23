@@ -28,10 +28,9 @@
 }
 
 + (NSArray<YMKPoint*>*)YMKPointArray:(id)json {
-    NSArray* parsedArray = [self NSArray:json];
     NSMutableArray* result = [[NSMutableArray alloc] init];
 
-    for (NSDictionary* jsonMarker in parsedArray) {
+    for (NSDictionary* jsonMarker in json) {
         double lat = [[jsonMarker valueForKey:@"lat"] doubleValue];
         double lon = [[jsonMarker valueForKey:@"lon"] doubleValue];
         YMKPoint *point = [YMKPoint pointWithLatitude:lat longitude:lon];
@@ -41,11 +40,20 @@
     return result;
 }
 
-+ (NSArray<YMKScreenPoint*>*)ScreenPoints:(id)json {
-    NSArray* parsedArray = [self NSArray:json];
++ (NSArray<NSArray<YMKPoint*>*>*)YMKPointArrayArray:(id)json {
     NSMutableArray* result = [[NSMutableArray alloc] init];
 
-    for (NSDictionary* jsonMarker in parsedArray) {
+    for (int i = 0; i < [(NSArray *)json count]; ++i) {
+        [result addObject:[RCTConvert YMKPointArray:[json objectAtIndex:i]]];
+    }
+
+    return result;
+}
+
++ (NSArray<YMKScreenPoint*>*)ScreenPoints:(id)json {
+    NSMutableArray* result = [[NSMutableArray alloc] init];
+
+    for (NSDictionary* jsonMarker in json) {
         float x = [[jsonMarker valueForKey:@"x"] floatValue];
         float y = [[jsonMarker valueForKey:@"y"] floatValue];
         YMKScreenPoint *point = [YMKScreenPoint screenPointWithX:x y:y];
@@ -76,6 +84,10 @@
     pointJs[@"lon"] = [point valueForKey:@"longitude"];
 
     return pointJs;
+}
+
++ (NSValue*)NSValue:(CGPoint)json {
+    return [NSValue valueWithCGPoint:json];
 }
 
 @end

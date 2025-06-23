@@ -86,12 +86,12 @@
     [self updatePolyline];
 }
 
-- (void)setZIndex:(NSNumber*)_zIndex {
+- (void)setZI:(NSNumber*)_zIndex {
     zIndex = _zIndex;
     [self updatePolyline];
 }
 
-- (void)setPolylinePoints:(NSMutableArray<YMKPoint*>*)points {
+- (void)setPoints:(NSMutableArray<YMKPoint*>*)points {
     _points = points;
     polyline = [YMKPolyline polylineWithPoints:points];
     [self updatePolyline];

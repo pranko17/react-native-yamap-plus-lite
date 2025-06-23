@@ -93,7 +93,8 @@ export const MapScreen = () => {
           {lat: 55.77, lon: 37.64},
         ]}
         fillColor={'green'}
-        strokeWidth={0}
+        strokeColor={'blue'}
+        strokeWidth={3}
         handled={false}
         onPress={() => {
           console.log('polygon press');
@@ -129,7 +130,7 @@ export const MapScreen = () => {
           {lat: 55.79, lon: 37.6},
         ]}
         strokeWidth={4}
-        strokeColor={'black'}
+        strokeColor={'rgb(10,10,10)'}
         outlineColor={'orange'}
         outlineWidth={2}
         gapLength={5}

@@ -518,8 +518,7 @@
     [self.mapWindow.map setNightModeEnabled:nightMode];
 }
 
-
-- (void)setListenUserLocation:(BOOL) listen {
+- (void)setShowUserPosition:(BOOL)listen {
     YMKMapKit *inst = [YMKMapKit sharedInstance];
 
     if (userLayer == nil) {

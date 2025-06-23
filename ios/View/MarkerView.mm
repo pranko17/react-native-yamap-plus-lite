@@ -99,7 +99,7 @@
     [self updateMarker];
 }
 
-- (void)setZIndex:(NSNumber*)_zIndex {
+- (void)setZI:(NSNumber*)_zIndex {
     zIndex = _zIndex;
     [self updateMarker];
 }

@@ -51,7 +51,7 @@
     [self updatePolygon];
 }
 
-- (void)setZIndex:(NSNumber*)_zIndex {
+- (void)setZI:(NSNumber*)_zIndex {
     zIndex = _zIndex;
     [self updatePolygon];
 }
@@ -67,7 +67,7 @@
     polygon = [YMKPolygon polygonWithOuterRing:ring innerRings:_innerRings];
 }
 
-- (void)setPolygonPoints:(NSMutableArray<YMKPoint*>*)points {
+- (void)setPoints:(NSMutableArray<YMKPoint*>*)points {
     _points = points;
     [self updatePolygonGeometry];
     [self updatePolygon];

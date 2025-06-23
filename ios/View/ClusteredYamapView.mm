@@ -54,14 +54,10 @@
     return self;
 }
 
-- (void)setClusteredMarkers:(NSArray*) markers {
+- (void)setClusteredMarkers:(NSArray<YMKPoint*>*) markers {
     [placemarks removeAllObjects];
     [clusterCollection clear];
-    NSMutableArray<YMKPoint*> *newMarkers = [NSMutableArray new];
-    for (NSDictionary *mark in markers) {
-        [newMarkers addObject:[YMKPoint pointWithLatitude:[[mark objectForKey:@"lat"] doubleValue] longitude:[[mark objectForKey:@"lon"] doubleValue]]];
-    }
-    NSArray<YMKPlacemarkMapObject *>* newPlacemarks = [clusterCollection addPlacemarksWithPoints:newMarkers image:[self clusterImage:[NSNumber numberWithFloat:[newMarkers count]]] style:[YMKIconStyle new]];
+    NSArray<YMKPlacemarkMapObject *>* newPlacemarks = [clusterCollection addPlacemarksWithPoints:markers image:[self clusterImage:[NSNumber numberWithFloat:[markers count]]] style:[YMKIconStyle new]];
     [placemarks addObjectsFromArray:newPlacemarks];
     for (int i=0; i<[placemarks count]; i++) {
         if (i<[_reactSubviews count]) {

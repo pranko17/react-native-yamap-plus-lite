@@ -14,63 +14,22 @@ RCT_EXPORT_MODULE(PolylineView)
     return @[@"onPress"];
 }
 
-- (instancetype)init {
-    self = [super init];
-
-    return self;
-}
-
-- (UIView *_Nullable)view {
+- (UIView *)view {
     return [[PolylineView alloc] init];
 }
 
 // PROPS
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY (points, NSArray<YMKPoint>, PolylineView) {
-    if (json != nil) {
-        [view setPolylinePoints: [RCTConvert YMKPointArray:json]];
-    }
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(outlineColor, NSNumber, PolylineView) {
-    [view setOutlineColor: [RCTConvert UIColor:json]];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(strokeColor, NSNumber, PolylineView) {
-    [view setStrokeColor: [RCTConvert UIColor:json]];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, PolylineView) {
-    [view setStrokeWidth: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(dashLength, NSNumber, PolylineView) {
-    [view setDashLength: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(gapLength, NSNumber, PolylineView) {
-    [view setGapLength: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(dashOffset, NSNumber, PolylineView) {
-    [view setDashOffset: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(outlineWidth, NSNumber, PolylineView) {
-    [view setOutlineWidth: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, PolylineView) {
-    [view setZIndex: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(handled, NSNumber, PolylineView) {
-    if (json == nil || [json boolValue]) {
-        [view setHandled: YES];
-    } else {
-        [view setHandled: NO];
-    }
-}
+RCT_EXPORT_VIEW_PROPERTY(points, NSArray<YMKPoint>)
+RCT_EXPORT_VIEW_PROPERTY(outlineColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(strokeWidth, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(dashLength, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(gapLength, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(dashOffset, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(outlineWidth, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(zI, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(handled, BOOL)
 
 @end

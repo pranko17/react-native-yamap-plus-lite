@@ -14,52 +14,22 @@ RCT_EXPORT_MODULE(CircleView)
     return @[@"onPress"];
 }
 
-- (instancetype)init {
-    self = [super init];
-
-    return self;
-}
-
-- (UIView* _Nullable)view {
+- (UIView *)view {
     return [[CircleView alloc] init];
 }
 
 // PROPS
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
-RCT_CUSTOM_VIEW_PROPERTY (center, YMKPoint, CircleView) {
-   if (json != nil) {
-       YMKPoint* point = [RCTConvert YMKPoint:json];
-       [view setCircleCenter: point];
-   }
-}
+RCT_EXPORT_VIEW_PROPERTY(radius, float)
+RCT_EXPORT_VIEW_PROPERTY(fillColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(strokeWidth, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(zI, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(handled, BOOL)
 
-RCT_CUSTOM_VIEW_PROPERTY (radius, NSNumber, CircleView) {
-   [view setRadius: [json floatValue]];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(fillColor, NSNumber, CircleView) {
-    [view setFillColor: [RCTConvert UIColor:json]];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(strokeColor, NSNumber, CircleView) {
-    [view setStrokeColor: [RCTConvert UIColor:json]];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(strokeWidth, NSNumber, CircleView) {
-    [view setStrokeWidth: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(zI, NSNumber, CircleView) {
-    [view setZIndex: json];
-}
-
-RCT_CUSTOM_VIEW_PROPERTY(handled, NSNumber, CircleView) {
-    if (json == nil || [json boolValue]) {
-        [view setHandled: YES];
-    } else {
-        [view setHandled: NO];
-    }
+RCT_CUSTOM_VIEW_PROPERTY(center, YMKPoint, CircleView) {
+    [view setCircleCenter: [RCTConvert YMKPoint:json]];
 }
 
 @end
