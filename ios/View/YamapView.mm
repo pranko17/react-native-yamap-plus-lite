@@ -536,7 +536,7 @@
 
 - (void)setFollowUser:(BOOL)follow {
     if (userLayer == nil) {
-        [self setListenUserLocation: follow];
+        [self setShowUserPosition: follow];
     }
 
     if (follow) {
