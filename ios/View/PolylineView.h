@@ -3,13 +3,27 @@
 
 #import <React/RCTComponent.h>
 
+#ifdef RCT_NEW_ARCH_ENABLED
+
+#import <React/RCTViewComponentView.h>
+
+#endif
+
 #import <YandexMapsMobile/YMKPolyline.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+#ifdef RCT_NEW_ARCH_ENABLED
+
+@interface PolylineView: RCTViewComponentView
+
+#else
+
 @interface PolylineView: UIView<YMKMapObjectTapListener>
 
 @property (nonatomic, copy) RCTBubblingEventBlock onPress;
+
+#endif
 
 - (YMKPolyline*)getPolyline;
 - (YMKPolylineMapObject*)getMapObject;

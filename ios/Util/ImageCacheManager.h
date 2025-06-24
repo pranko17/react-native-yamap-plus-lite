@@ -1,7 +1,7 @@
 #ifndef ImageCacheManager_h
 #define ImageCacheManager_h
 
-@interface ImageCacheManager : NSObject ;
+@interface ImageCacheManager : NSObject;
 
 + (id _Nonnull) instance;
 

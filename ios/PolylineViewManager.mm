@@ -10,9 +10,7 @@
 
 RCT_EXPORT_MODULE(PolylineView)
 
-- (NSArray<NSString*>*)supportedEvents {
-    return @[@"onPress"];
-}
+#ifndef RCT_NEW_ARCH_ENABLED
 
 - (UIView *)view {
     return [[PolylineView alloc] init];
@@ -22,8 +20,8 @@ RCT_EXPORT_MODULE(PolylineView)
 RCT_EXPORT_VIEW_PROPERTY(onPress, RCTBubblingEventBlock)
 
 RCT_EXPORT_VIEW_PROPERTY(points, NSArray<YMKPoint>)
-RCT_EXPORT_VIEW_PROPERTY(outlineColor, UIColor)
-RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
+RCT_EXPORT_VIEW_PROPERTY(outlineColor, NSNumber)
+RCT_EXPORT_VIEW_PROPERTY(strokeColor, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(strokeWidth, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(dashLength, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(gapLength, NSNumber)
@@ -31,5 +29,7 @@ RCT_EXPORT_VIEW_PROPERTY(dashOffset, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(outlineWidth, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(zI, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(handled, BOOL)
+
+#endif
 
 @end

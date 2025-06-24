@@ -135,6 +135,7 @@ export const MapScreen = () => {
         outlineWidth={2}
         gapLength={5}
         dashLength={20}
+        handled={true}
         onPress={() => {
           console.log('polyline press');
         }}
