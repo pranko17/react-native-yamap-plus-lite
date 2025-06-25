@@ -81,7 +81,6 @@ import ru.vvdev.yamap.utils.PointUtil
 import ru.vvdev.yamap.utils.RouteManager
 import javax.annotation.Nonnull
 
-
 open class YamapView(context: Context?) : MapView(context), UserLocationObjectListener,
     CameraListener, InputListener, TrafficListener, MapLoadedListener {
     private var mViewParent: ViewParent? = null
@@ -434,10 +433,10 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
 
     fun setMapType(type: String?) {
         if (type != null) {
-            when (type) {
-                "none" -> mapWindow.map.mapType = MapType.NONE
-                "raster" -> mapWindow.map.mapType = MapType.MAP
-                else -> mapWindow.map.mapType = MapType.VECTOR_MAP
+            mapWindow.map.mapType = when (type) {
+                "none" -> MapType.NONE
+                "raster" -> MapType.MAP
+                else -> MapType.VECTOR_MAP
             }
         }
     }
@@ -589,7 +588,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val routeMetadata = Arguments.createMap()
         val routeWeightData = Arguments.createMap()
         val sectionWeightData = Arguments.createMap()
-        val transports: MutableMap<String, ArrayList<String?>?> = HashMap()
+        val transports = HashMap<String, ArrayList<String?>?>()
         routeWeightData.putString("time", routeWeight.time.text)
         routeWeightData.putInt("transferCount", routeWeight.transfersCount)
         routeWeightData.putDouble("walkingDistance", routeWeight.walkingDistance.value)
@@ -648,7 +647,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val wTransports = Arguments.createMap()
 
         for ((key, value) in transports) {
-            wTransports.putArray(key, Arguments.fromList(value))
+            value?.let { wTransports.putArray(key, Arguments.fromArray(it)) }
         }
 
         routeMetadata.putMap("transports", wTransports)
