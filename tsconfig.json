@@ -10,6 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "esnext",
+    "outDir": "lib",
     "rootDir": "./src",
     "sourceMap": true,
     "skipLibCheck": true
