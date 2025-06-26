@@ -84,7 +84,7 @@
 }
 
 - (void)setClusterColor: (UIColor*) color {
-    clusterColor = color;
+    clusterColor = [RCTConvert UIColor:color];
 }
 
 - (void)onObjectRemovedWithView:(nonnull YMKUserLocationView *) view {

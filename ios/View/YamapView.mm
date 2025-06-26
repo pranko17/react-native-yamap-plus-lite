@@ -640,13 +640,13 @@
     [self updateUserIcon];
 }
 
-- (void)setUserLocationAccuracyFillColor:(UIColor *)color {
-    userLocationAccuracyFillColor = color;
+- (void)setUserLocationAccuracyFillColor:(NSNumber *)color {
+    userLocationAccuracyFillColor = [RCTConvert UIColor:color];
     [self updateUserIcon];
 }
 
-- (void)setUserLocationAccuracyStrokeColor:(UIColor *)color {
-    userLocationAccuracyStrokeColor = color;
+- (void)setUserLocationAccuracyStrokeColor:(NSNumber *)color {
+    userLocationAccuracyStrokeColor = [RCTConvert UIColor:color];
     [self updateUserIcon];
 }
 

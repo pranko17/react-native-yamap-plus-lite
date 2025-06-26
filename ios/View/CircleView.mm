@@ -1,5 +1,7 @@
 #import "CircleView.h"
 
+#import "../Util/RCTConvert+Yamap.mm"
+
 @implementation CircleView {
     YMKPoint* center;
     float radius;
@@ -36,13 +38,13 @@
     }
 }
 
-- (void)setFillColor:(UIColor*)color {
-    fillColor = color;
+- (void)setFillColor:(NSNumber*)color {
+    fillColor = [RCTConvert UIColor:color];
     [self updateCircle];
 }
 
-- (void)setStrokeColor:(UIColor*)color {
-    strokeColor = color;
+- (void)setStrokeColor:(NSNumber*)color {
+    strokeColor = [RCTConvert UIColor:color];
     [self updateCircle];
 }
 

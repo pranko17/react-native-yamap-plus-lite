@@ -1,5 +1,7 @@
 #import "PolygonView.h"
 
+#import "../Util/RCTConvert+Yamap.mm"
+
 @implementation PolygonView {
     NSMutableArray<YMKPoint*>* _points;
     NSArray<NSArray<YMKPoint*>*>* innerRings;
@@ -36,13 +38,13 @@
     }
 }
 
-- (void)setFillColor:(UIColor*)color {
-    fillColor = color;
+- (void)setFillColor:(NSNumber*)color {
+    fillColor = [RCTConvert UIColor:color];
     [self updatePolygon];
 }
 
-- (void)setStrokeColor:(UIColor*)color {
-    strokeColor = color;
+- (void)setStrokeColor:(NSNumber*)color {
+    strokeColor = [RCTConvert UIColor:color];
     [self updatePolygon];
 }
 
