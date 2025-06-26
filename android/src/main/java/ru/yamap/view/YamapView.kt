@@ -587,7 +587,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val routeMetadata = Arguments.createMap()
         val routeWeightData = Arguments.createMap()
         val sectionWeightData = Arguments.createMap()
-        val transports = HashMap<String, ArrayList<String?>?>()
+        val transports = HashMap<String, MutableList<String?>>()
         routeWeightData.putString("time", routeWeight.time.text)
         routeWeightData.putInt("transferCount", routeWeight.transfersCount)
         routeWeightData.putDouble("walkingDistance", routeWeight.walkingDistance.value)
@@ -646,7 +646,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         val wTransports = Arguments.createMap()
 
         for ((key, value) in transports) {
-            value?.let { wTransports.putArray(key, Arguments.fromArray(it)) }
+            wTransports.putArray(key, Arguments.fromList(value))
         }
 
         routeMetadata.putMap("transports", wTransports)
