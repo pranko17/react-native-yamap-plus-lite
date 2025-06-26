@@ -1,6 +1,7 @@
 package ru.vvdev.yamap
 
 import android.view.View
+import android.graphics.PointF
 import com.facebook.react.bridge.ReadableArray
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.uimanager.ThemedReactContext
@@ -79,8 +80,12 @@ class YamapMarkerManager internal constructor() : ViewGroupManager<YamapMarker>(
 
     @ReactProp(name = "anchor")
     fun setAnchor(view: View, anchor: ReadableMap?) {
-        val pointF = PointUtil.jsPointToPointF(anchor)
-        castToMarkerView(view).setAnchor(pointF)
+        castToMarkerView(view).setAnchor(
+            if (anchor != null) PointF(
+                anchor.getDouble("x").toFloat(),
+                anchor.getDouble("y").toFloat()
+            ) else null
+        )
     }
 
     override fun addView(parent: YamapMarker, child: View, index: Int) {
