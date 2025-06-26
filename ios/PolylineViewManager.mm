@@ -1,7 +1,8 @@
+#ifndef RCT_NEW_ARCH_ENABLED
+
 #import <React/RCTViewManager.h>
 
 #import "View/PolylineView.h"
-#import "Util/RCTConvert+Yamap.mm"
 
 @interface PolylineViewManager : RCTViewManager
 @end
@@ -9,8 +10,6 @@
 @implementation PolylineViewManager
 
 RCT_EXPORT_MODULE(PolylineView)
-
-#ifndef RCT_NEW_ARCH_ENABLED
 
 - (UIView *)view {
     return [[PolylineView alloc] init];
@@ -30,6 +29,6 @@ RCT_EXPORT_VIEW_PROPERTY(outlineWidth, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(zI, NSNumber)
 RCT_EXPORT_VIEW_PROPERTY(handled, BOOL)
 
-#endif
-
 @end
+
+#endif

@@ -63,6 +63,11 @@
     "jsSrcsDir": "./src/spec",
     "android": {
       "javaPackageName": "ru.yamap"
+    },
+    "ios": {
+      "componentProvider": {
+        "PolylineView": "PolylineView"
+      }
     }
   },
   "packageManager": "yarn@4.9.2"
