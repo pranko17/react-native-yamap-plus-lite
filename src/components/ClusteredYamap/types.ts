@@ -1,10 +1,16 @@
 import React from 'react';
-import {ListRenderItemInfo} from 'react-native';
+import {ImageSourcePropType} from 'react-native';
 import {YamapProps} from '../Yamap';
-import {Point} from '../../interfaces';
+import {Point, YandexClusterSizes} from '../../interfaces';
 
 export interface ClusteredYamapProps<T = any> extends YamapProps {
   clusterColor?: string;
   clusteredMarkers: ReadonlyArray<{point: Point, data: T}>
-  renderMarker: (info: {point: Point, data: ListRenderItemInfo<T>}, index: number) => React.ReactElement
+  clusterIcon?: ImageSourcePropType;
+  clusterSize?: YandexClusterSizes;
+  clusterTextSize?: number;
+  clusterTextYOffset?: number;
+  clusterTextXOffset?: number;
+  clusterTextColor?: string;
+  renderMarker: (info: {point: Point, data: T}, index: number) => React.ReactElement
 }

@@ -4,8 +4,9 @@ import {ClusteredYamapProps} from './types';
 import {OmitEx} from '../../utils';
 import {Point} from '../../interfaces';
 
-type ClusteredYamapNativeComponentProps = OmitEx<ClusteredYamapProps, 'userLocationIcon' | 'clusteredMarkers'> & {
+type ClusteredYamapNativeComponentProps = OmitEx<ClusteredYamapProps, 'userLocationIcon' | 'clusteredMarkers' | 'clusterIcon'> & {
   userLocationIcon: string | undefined;
+  clusterIcon: string | undefined;
   clusteredMarkers: Point[];
 };
 
