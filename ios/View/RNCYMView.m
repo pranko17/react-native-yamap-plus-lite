@@ -39,6 +39,13 @@
     float userLocationAccuracyStrokeWidth;
     YMKClusterizedPlacemarkCollection *clusterCollection;
     UIColor* clusterColor;
+    UIImage* clusImage;
+    CGFloat clusterWidth;
+    CGFloat clusterHeight;
+    UIColor* clusterTextColor;
+    double clusterTextSize;
+    double clusterTextYOffset;
+    double clusterTextXOffset;
     NSMutableArray<YMKPlacemarkMapObject *>* placemarks;
     BOOL userClusters;
     BOOL mapLoaded;
@@ -54,7 +61,57 @@
     clusterCollection = [self.mapWindow.map.mapObjects addClusterizedPlacemarkCollectionWithClusterListener:self];
     initializedRegion = NO;
     mapLoaded = NO;
+    clusterWidth = 32;
+    clusterHeight = 32;
+    clusterTextColor = UIColor.whiteColor;
+    clusterTextSize = 45;
+    clusterTextYOffset = 0;
+    clusterTextXOffset = 0;
     return self;
+}
+
+- (UIImage*)resolveUIImage:(NSString*)uri {
+    UIImage *icon;
+    if([uri rangeOfString:@"data:image"].location != NSNotFound){
+        NSURL *url = [NSURL URLWithString:uri];
+        NSData *imageData = [NSData dataWithContentsOfURL:url];
+        icon = [UIImage imageWithData:imageData];
+    } else if ([uri rangeOfString:@"http://"].location == NSNotFound && [uri rangeOfString:@"https://"].location == NSNotFound) {
+        if ([uri rangeOfString:@"file://"].location != NSNotFound){
+            NSString *file = [uri substringFromIndex:8];
+            icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:file]]];
+        } else {
+            icon = [UIImage imageNamed:uri];
+        }
+    } else {
+        icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:uri]]];
+    }
+    return icon;
+}
+
+- (void)setClusterIcon:(NSString *)iconSource {
+    clusImage = [self resolveUIImage:iconSource];
+}
+
+- (void)setClusterSize:(NSDictionary *)sizes {
+    clusterWidth = [sizes valueForKey:@"width"] != nil ? [RCTConvert NSUInteger:sizes[@"width"]] : 0;
+    clusterHeight = [sizes valueForKey:@"height"] != nil ? [RCTConvert NSUInteger:sizes[@"height"]] : 0;
+}
+
+- (void)setClusterTextColor:(NSString *)color {
+    clusterTextColor = [RNCYMView colorFromHexString:color];
+}
+
+- (void)setClusterTextSize:(double)size {
+    clusterTextSize = size;
+}
+
+- (void)setClusterTextYOffset:(double)offset {
+    clusterTextYOffset = offset;
+}
+
+- (void)setClusterTextXOffset:(double)offset {
+    clusterTextXOffset = offset;
 }
 
 - (void)setClusteredMarkers:(NSArray*) markers {
@@ -142,18 +199,18 @@
 }
 
 - (void)insertReactSubview:(UIView<RCTComponent>*) subview atIndex:(NSInteger) atIndex {
-     if ([subview isKindOfClass:[YamapMarkerView class]]) {
+    if ([subview isKindOfClass:[YamapMarkerView class]]) {
         YamapMarkerView* marker = (YamapMarkerView*) subview;
-         if (atIndex<[placemarks count]) {
-             [marker setClusterMapObject:[placemarks objectAtIndex:atIndex]];
-         }
+        if (atIndex<[placemarks count]) {
+            [marker setClusterMapObject:[placemarks objectAtIndex:atIndex]];
+        }
     }
     [_reactSubviews insertObject:subview atIndex:atIndex];
     [super insertMarkerReactSubview:subview atIndex:atIndex];
 }
 
 - (void)removeReactSubview:(UIView<RCTComponent>*) subview {
-     if ([subview isKindOfClass:[YamapMarkerView class]]) {
+    if ([subview isKindOfClass:[YamapMarkerView class]]) {
         YamapMarkerView* marker = (YamapMarkerView*) subview;
         [clusterCollection removeWithMapObject:[marker getMapObject]];
     } else {
@@ -167,31 +224,41 @@
 }
 
 -(UIImage*)clusterImage:(NSNumber*) clusterSize {
-    float FONT_SIZE = 45;
-    float MARGIN_SIZE = 9;
-    float STROKE_SIZE = 9;
     NSString *text = [clusterSize stringValue];
-    UIFont *font = [UIFont systemFontOfSize:FONT_SIZE];
+    UIFont *font = [UIFont systemFontOfSize:clusterTextSize weight:500];
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:font}];
-    float textRadius = sqrt(size.height * size.height + size.width * size.width) / 2;
-    float internalRadius = textRadius + MARGIN_SIZE;
-    float externalRadius = internalRadius + STROKE_SIZE;
+    
     // This function returns a newImage, based on image, that has been:
     // - scaled to fit in (CGRect) rect
     // - and cropped within a circle of radius: rectWidth/2
-
+    
     //Create the bitmap graphics context
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(externalRadius*2, externalRadius*2), NO, 1.0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(context, [clusterColor CGColor]);
-    CGContextFillEllipseInRect(context, CGRectMake(0, 0, externalRadius*2, externalRadius*2));
-    CGContextSetFillColorWithColor(context, [UIColor.whiteColor CGColor]);
-    CGContextFillEllipseInRect(context, CGRectMake(STROKE_SIZE, STROKE_SIZE, internalRadius*2, internalRadius*2));
-    [text drawInRect:CGRectMake(externalRadius - size.width/2, externalRadius - size.height/2, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor }];
-       UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-       UIGraphicsEndImageContext();
-
-       return newImage;
+    if(clusImage && clusterWidth != 0 && clusterHeight != 0) {
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(clusterWidth, clusterHeight), NO, 1.0);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [clusImage drawInRect:CGRectMake(0, 0, clusterWidth, clusterHeight)];
+        [text drawInRect:CGRectMake(clusterWidth / 2  - size.width/2 + clusterTextXOffset, clusterHeight / 2 - size.height/2 + clusterTextYOffset, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor }];
+    } else {
+        float MARGIN_SIZE = 9;
+        float STROKE_SIZE = 9;
+        
+        float textRadius = sqrt(size.height * size.height + size.width * size.width) / 2;
+        
+        float internalRadius = textRadius + MARGIN_SIZE;
+        float externalRadius = internalRadius + STROKE_SIZE;
+        
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(externalRadius*2, externalRadius*2), NO, 1.0);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetFillColorWithColor(context, [clusterColor CGColor]);
+        CGContextFillEllipseInRect(context, CGRectMake(0, 0, externalRadius*2, externalRadius*2));
+        CGContextSetFillColorWithColor(context, [UIColor.whiteColor CGColor]);
+        CGContextFillEllipseInRect(context, CGRectMake(STROKE_SIZE, STROKE_SIZE, internalRadius*2, internalRadius*2));
+        [text drawInRect:CGRectMake(externalRadius - size.width/2, externalRadius - size.height/2, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor }];
+    }
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)onClusterAddedWithCluster:(nonnull YMKCluster *)cluster {

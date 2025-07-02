@@ -174,6 +174,35 @@ RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
     }
 }
 
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterIcon, NSString, RNCYMView) {
+  if (json && view) {
+        [view setClusterIcon:json];
+    }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterSize, BOOL, RNCYMView) {
+    if (json && view) {
+        [view setClusterSize:json];
+    }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterTextColor, NSNumber, RNCYMView) {
+    [view setClusterTextColor:[RCTConvert UIColor:json]];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterTextSize, NSNumber, RNCYMView) {
+    [view setClusterTextSize:json ? [json floatValue] : 0.0];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterTextXOffset, NSNumber, RNCYMView) {
+    [view setClusterTextXOffset:json ? [json floatValue] : 0.0];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(clusterTextYOffset, NSNumber, RNCYMView) {
+    [view setClusterTextYOffset:json ? [json floatValue] : 0.0];
+}
+
 // ref
 RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {

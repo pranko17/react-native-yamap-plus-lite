@@ -143,3 +143,8 @@ export interface Anchor {
   x: number;
   y: number;
 }
+
+export interface YandexClusterSizes {
+  width?: number;
+  height?: number;
+};
