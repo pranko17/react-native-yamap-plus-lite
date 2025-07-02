@@ -2,14 +2,11 @@ package ru.vvdev.yamap.view
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.Cluster
@@ -30,8 +27,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     private var clusterColor = 0
     private val placemarksMap = HashMap<String?, PlacemarkMapObject?>()
     private var pointsList = ArrayList<Point>()
-    private var clusterIcon = ""
-    private var clusterBitmap: Bitmap? = null
+    private var clusterIconSource = ""
     private var clusterWidth = 32
     private var clusterHeight = 32
     private var clusterTextSize = FONT_SIZE
@@ -78,19 +74,8 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
         clusterCollection.clusterPlacemarks(50.0, 12)
     }
 
-    fun setClusterIcon(iconSource: String) {
-        if (iconSource.startsWith("data:image")) {
-            val pureBase64Encoded = iconSource.substring(iconSource.indexOf(",") + 1)
-            val decodedString = Base64.decode(pureBase64Encoded, Base64.DEFAULT)
-            clusterBitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-        } else {
-            clusterIcon = iconSource;
-            ImageCacheManager.getImage(context, iconSource, fun(image: Bitmap?) {
-                if (iconSource.equals(clusterIcon)) {
-                    clusterBitmap = image
-                }
-            });
-        }
+    fun setClusterIcon(source: String) {
+        clusterIconSource = source
     }
 
     fun setClusterSize(params: ReadableMap?) {
@@ -173,13 +158,13 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
 
             val textMetrics = textPaint.fontMetrics
 
-
-            if (clusterBitmap != null && clusterWidth != 0 && clusterHeight != 0) {
+            if (clusterIconSource != "" && clusterWidth != 0 && clusterHeight != 0) {
+                val clusterBitmap = ImageCacheManager.getBitmapSync(context, clusterIconSource)
                 val bitmap = createBitmap(clusterWidth, clusterHeight);
                 val canvas = Canvas(bitmap);
 
                 canvas.drawBitmap(
-                    clusterBitmap!!,
+                    clusterBitmap,
                     null,
                     Rect(0, 0, clusterWidth, clusterHeight),
                     null
