@@ -34,7 +34,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
     private var clusterBitmap: Bitmap? = null
     private var clusterWidth = 32
     private var clusterHeight = 32
-    private var clusterTextSize = Companion.FONT_SIZE
+    private var clusterTextSize = FONT_SIZE
     private var clusterTextColor = Color.BLACK
     private var clusterTextXOffset = 0
     private var clusterTextYOffset = 0
