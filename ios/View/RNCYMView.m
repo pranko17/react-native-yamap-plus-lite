@@ -11,6 +11,7 @@
 
 #import "RNCYMView.h"
 #import <YamapMarkerView.h>
+#import "ImageCacheManager.h"
 
 #define ANDROID_COLOR(c) [UIColor colorWithRed:((c>>16)&0xFF)/255.0 green:((c>>8)&0xFF)/255.0 blue:((c)&0xFF)/255.0  alpha:((c>>24)&0xFF)/255.0]
 
@@ -70,27 +71,10 @@
     return self;
 }
 
-- (UIImage*)resolveUIImage:(NSString*)uri {
-    UIImage *icon;
-    if([uri rangeOfString:@"data:image"].location != NSNotFound){
-        NSURL *url = [NSURL URLWithString:uri];
-        NSData *imageData = [NSData dataWithContentsOfURL:url];
-        icon = [UIImage imageWithData:imageData];
-    } else if ([uri rangeOfString:@"http://"].location == NSNotFound && [uri rangeOfString:@"https://"].location == NSNotFound) {
-        if ([uri rangeOfString:@"file://"].location != NSNotFound){
-            NSString *file = [uri substringFromIndex:8];
-            icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL fileURLWithPath:file]]];
-        } else {
-            icon = [UIImage imageNamed:uri];
-        }
-    } else {
-        icon = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:uri]]];
-    }
-    return icon;
-}
-
-- (void)setClusterIcon:(NSString *)iconSource {
-    clusImage = [self resolveUIImage:iconSource];
+- (void)setClusterIcon:(NSString *)source {
+    [[ImageCacheManager instance] getWithSource:source completion:^(UIImage *image) {
+        self->clusImage = image;
+    }];
 }
 
 - (void)setClusterSize:(NSDictionary *)sizes {
