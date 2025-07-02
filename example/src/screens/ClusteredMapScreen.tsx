@@ -1,12 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {NativeSyntheticEvent, StyleSheet} from 'react-native';
-import {ClusteredYamap, MapLoaded, Marker, YamapRef} from '../../../';
+import {StyleSheet} from 'react-native';
+import {ClusteredYamap, MapLoaded, Marker, NativeSyntheticEventCallback, YamapRef} from '../../../';
 
 export const ClusteredMapScreen = () => {
   const clusteredMapRef = useRef<YamapRef | null>(null);
   const [markers, setMarkers] = useState([]);
 
-  const onMapLoaded = (event: NativeSyntheticEvent<MapLoaded>) => {
+  const onMapLoaded: NativeSyntheticEventCallback<MapLoaded> = (event) => {
     console.log('clustered onMapLoaded', event.nativeEvent);
 
     setMarkers([
