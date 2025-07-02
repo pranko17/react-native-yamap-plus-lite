@@ -63,7 +63,7 @@
     mapLoaded = NO;
     clusterWidth = 32;
     clusterHeight = 32;
-    clusterTextColor = UIColor.whiteColor;
+    clusterTextColor = UIColor.blackColor;
     clusterTextSize = 45;
     clusterTextYOffset = 0;
     clusterTextXOffset = 0;
@@ -98,8 +98,8 @@
     clusterHeight = [sizes valueForKey:@"height"] != nil ? [RCTConvert NSUInteger:sizes[@"height"]] : 0;
 }
 
-- (void)setClusterTextColor:(NSString *)color {
-    clusterTextColor = [RNCYMView colorFromHexString:color];
+- (void)setClusterTextColor:(UIColor *)color {
+    clusterTextColor = color;
 }
 
 - (void)setClusterTextSize:(double)size {
@@ -235,9 +235,8 @@
     //Create the bitmap graphics context
     if(clusImage && clusterWidth != 0 && clusterHeight != 0) {
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(clusterWidth, clusterHeight), NO, 1.0);
-        CGContextRef context = UIGraphicsGetCurrentContext();
         [clusImage drawInRect:CGRectMake(0, 0, clusterWidth, clusterHeight)];
-        [text drawInRect:CGRectMake(clusterWidth / 2  - size.width/2 + clusterTextXOffset, clusterHeight / 2 - size.height/2 + clusterTextYOffset, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor }];
+        [text drawInRect:CGRectMake(clusterWidth / 2  - size.width/2 + clusterTextXOffset, clusterHeight / 2 - size.height/2 + clusterTextYOffset, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: clusterTextColor }];
     } else {
         float MARGIN_SIZE = 9;
         float STROKE_SIZE = 9;
@@ -253,7 +252,7 @@
         CGContextFillEllipseInRect(context, CGRectMake(0, 0, externalRadius*2, externalRadius*2));
         CGContextSetFillColorWithColor(context, [UIColor.whiteColor CGColor]);
         CGContextFillEllipseInRect(context, CGRectMake(STROKE_SIZE, STROKE_SIZE, internalRadius*2, internalRadius*2));
-        [text drawInRect:CGRectMake(externalRadius - size.width/2, externalRadius - size.height/2, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor }];
+        [text drawInRect:CGRectMake(externalRadius - size.width/2, externalRadius - size.height/2, size.width, size.height) withAttributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName: clusterTextColor }];
     }
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
