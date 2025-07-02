@@ -225,7 +225,7 @@
 
 -(UIImage*)clusterImage:(NSNumber*) clusterSize {
     NSString *text = [clusterSize stringValue];
-    UIFont *font = [UIFont systemFontOfSize:clusterTextSize weight:500];
+    UIFont *font = [UIFont systemFontOfSize:clusterTextSize];
     CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:font}];
     
     // This function returns a newImage, based on image, that has been:
