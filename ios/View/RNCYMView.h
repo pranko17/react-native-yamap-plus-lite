@@ -12,6 +12,12 @@
 
 - (void)setClusterColor:(UIColor*_Nullable)color;
 - (void)setClusteredMarkers:(NSArray<YMKRequestPoint*>*_Nonnull)points;
+- (void)setClusterIcon:(NSString *_Nullable)iconSource;
+- (void)setClusterSize:(NSDictionary *_Nullable)sizes;
+- (void)setClusterTextColor:(UIColor*_Nullable)color;
+- (void)setClusterTextSize:(double)size;
+- (void)setClusterTextXOffset:(double)size;
+- (void)setClusterTextYOffset:(double)size;
 
 @end
 

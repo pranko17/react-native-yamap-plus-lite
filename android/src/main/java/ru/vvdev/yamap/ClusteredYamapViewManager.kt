@@ -244,6 +244,48 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
         }
     }
 
+    @ReactProp(name = "clusterIcon")
+    fun setClusterIcon(view: View, icon: String?) {
+        if (icon != null) {
+            castToYamapView(view).setClusterIcon(icon)
+        }
+    }
+
+    @ReactProp(name = "clusterSize")
+    fun setClusterSizes(view: View, params: ReadableMap?) {
+        if (params != null) {
+            castToYamapView(view).setClusterSize(params)
+        }
+    }
+
+    @ReactProp(name = "clusterTextColor")
+    fun setClusterTextColor(view: View, param: Int?) {
+        if (param != null) {
+            castToYamapView(view).setClusterTextColor(param)
+        }
+    }
+
+    @ReactProp(name = "clusterTextSize")
+    fun setClusterTextSize(view: View, param: Int?) {
+        if (param != null) {
+            castToYamapView(view).setClusterTextSize(param.toFloat())
+        }
+    }
+
+    @ReactProp(name = "clusterTextYOffset")
+    fun setClusterTextYOffset(view: View, param: Int?) {
+        if (param != null) {
+            castToYamapView(view).setClusterTextYOffset(param)
+        }
+    }
+
+    @ReactProp(name = "clusterTextXOffset")
+    fun setClusterTextXOffset(view: View, param: Int?) {
+        if (param != null) {
+            castToYamapView(view).setClusterTextXOffset(param)
+        }
+    }
+
     @ReactProp(name = "userLocationIconScale")
     fun setUserLocationIconScale(view: View, scale: Float) {
         castToYamapView(view).setUserLocationIconScale(scale)
