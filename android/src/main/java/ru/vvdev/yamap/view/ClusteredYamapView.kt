@@ -139,7 +139,7 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
         for (placemark in cluster.placemarks) {
             points.add(placemark.geometry)
         }
-        fitMarkers(points)
+        fitMarkers(points, 0.7f, 0)
         return true
     }
 
@@ -155,7 +155,6 @@ class ClusteredYamapView(context: Context?) : YamapView(context), ClusterListene
             textPaint.isAntiAlias = true
             textPaint.textSize = clusterTextSize
             textPaint.color = clusterTextColor
-
             val textMetrics = textPaint.fontMetrics
 
             if (clusterIconSource != "" && clusterWidth != 0 && clusterHeight != 0) {

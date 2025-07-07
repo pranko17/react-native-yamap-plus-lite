@@ -117,8 +117,8 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
                 args.getDouble(4).toFloat(),
                 args.getInt(5)
             )
-            "fitAllMarkers" -> fitAllMarkers(view)
-            "fitMarkers" -> fitMarkers(view, args.getArray(0))
+            "fitAllMarkers" -> fitAllMarkers(view, args.getDouble(0).toFloat(), args.getInt(1))
+            "fitMarkers" -> fitMarkers(view, args.getArray(0), args.getDouble(1).toFloat(), args.getInt(2))
             "findRoutes" -> findRoutes(
                 view,
                 args.getArray(0),
@@ -181,14 +181,14 @@ class YamapViewManager internal constructor() : ViewGroupManager<YamapView>() {
         }
     }
 
-    private fun fitAllMarkers(view: View) {
-        castToYamapView(view).fitAllMarkers()
+    private fun fitAllMarkers(view: View, duration: Float, animation: Int) {
+        castToYamapView(view).fitAllMarkers(duration, animation)
     }
 
-    private fun fitMarkers(view: View, jsPoints: ReadableArray?) {
+    private fun fitMarkers(view: View, jsPoints: ReadableArray?, duration: Float, animation: Int) {
         if (jsPoints != null) {
             val points = PointUtil.jsPointsToPoints(jsPoints)
-            castToYamapView(view).fitMarkers(points)
+            castToYamapView(view).fitMarkers(points, duration, animation)
         }
     }
 

@@ -45,12 +45,12 @@ export const useYamap = (
     _findRoutes(points, ['car'], callback);
   }, [_findRoutes]);
 
-  const fitAllMarkers = useCallback<YamapRef['fitAllMarkers']>(() => {
-    dispatchCommand('fitAllMarkers', []);
+  const fitAllMarkers = useCallback<YamapRef['fitAllMarkers']>((duration, animation) => {
+    dispatchCommand('fitAllMarkers', [duration ?? (Platform.OS === 'ios' ? 1 : 0.7), animation ?? Animation.SMOOTH]);
   }, [dispatchCommand]);
 
-  const fitMarkers = useCallback<YamapRef['fitMarkers']>((points) => {
-    dispatchCommand('fitMarkers', [points]);
+  const fitMarkers = useCallback<YamapRef['fitMarkers']>((points, duration, animation) => {
+    dispatchCommand('fitMarkers', [points, duration ?? (Platform.OS === 'ios' ? 1 : 0.7), animation ?? Animation.SMOOTH]);
   }, [dispatchCommand]);
 
   const setTrafficVisible = useCallback<YamapRef['setTrafficVisible']>((isVisible) => {

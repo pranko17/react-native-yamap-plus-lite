@@ -255,7 +255,7 @@
     for (YMKPlacemarkMapObject *placemark in [cluster placemarks]) {
         [lastKnownMarkers addObject:[placemark geometry]];
     }
-    [self fitMarkers:lastKnownMarkers];
+    [self fitMarkers:lastKnownMarkers withDuration:1.0 withAnimation:0];
     return YES;
 }
 

@@ -542,7 +542,7 @@
     }
 }
 
-- (void)fitAllMarkers {
+- (void)fitAllMarkers:(float)duration withAnimation:(int)animation {
     NSMutableArray<YMKPoint *> *lastKnownMarkers = [[NSMutableArray alloc] init];
 
     for (int i = 0; i < [_reactSubviews count]; ++i) {
@@ -554,7 +554,7 @@
         }
     }
 
-    [self fitMarkers:lastKnownMarkers];
+  [self fitMarkers:lastKnownMarkers withDuration:duration withAnimation:animation];
 }
 
 - (NSArray<YMKPoint *> *)mapPlacemarksToPoints:(NSArray<YMKPlacemarkMapObject *> *)placemarks {
@@ -584,7 +584,7 @@
     return boundingBox;
 }
 
-- (void)fitMarkers:(NSArray<YMKPoint *> *) points {
+- (void)fitMarkers:(NSArray<YMKPoint *> *) points withDuration:(float)duration withAnimation:(int)animation {
     if ([points count] == 0) {
         return;
     }
@@ -595,7 +595,7 @@
     }
     YMKCameraPosition *cameraPosition = [self.mapWindow.map cameraPositionWithGeometry:[YMKGeometry geometryWithBoundingBox:[self calculateBoundingBox:points]]];
     cameraPosition = [YMKCameraPosition cameraPositionWithTarget:cameraPosition.target zoom:cameraPosition.zoom - 0.8f azimuth:cameraPosition.azimuth tilt:cameraPosition.tilt];
-    [self.mapWindow.map moveWithCameraPosition:cameraPosition animation:[YMKAnimation animationWithType:YMKAnimationTypeSmooth duration:1.0] cameraCallback:^(BOOL completed){}];
+    [self.mapWindow.map moveWithCameraPosition:cameraPosition animation:[YMKAnimation animationWithType:animation == 0 ? YMKAnimationTypeSmooth : YMKAnimationTypeLinear duration:duration] cameraCallback:^(BOOL completed){}];
 }
 
 - (void)setLogoPosition:(NSDictionary *)logoPosition {

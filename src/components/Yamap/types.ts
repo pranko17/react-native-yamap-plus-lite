@@ -53,8 +53,8 @@ export type YamapRef = {
     duration?: number,
     animation?: Animation
   ) => void;
-  fitAllMarkers: () => void;
-  fitMarkers: (points: Point[]) => void;
+  fitAllMarkers: (duration?: number, animation?: Animation) => void;
+  fitMarkers: (points: Point[], duration?: number, animation?: Animation) => void;
   findRoutes: (
     points: Point[],
     vehicles: Vehicles[],
