@@ -588,14 +588,17 @@
     if ([points count] == 0) {
         return;
     }
+
+    YMKAnimation *anim = [YMKAnimation animationWithType:(animation == 0 ? YMKAnimationTypeSmooth : YMKAnimationTypeLinear) duration:duration];
+
     if ([points count] == 1) {
         YMKPoint *center = [points objectAtIndex:0];
-        [self.mapWindow.map moveWithCameraPosition:[YMKCameraPosition cameraPositionWithTarget:center zoom:15 azimuth:0 tilt:0]];
+        [self.mapWindow.map moveWithCameraPosition:[YMKCameraPosition cameraPositionWithTarget:center zoom:15 azimuth:0 tilt:0] animation:anim cameraCallback:^(BOOL completed){}];
         return;
     }
     YMKCameraPosition *cameraPosition = [self.mapWindow.map cameraPositionWithGeometry:[YMKGeometry geometryWithBoundingBox:[self calculateBoundingBox:points]]];
     cameraPosition = [YMKCameraPosition cameraPositionWithTarget:cameraPosition.target zoom:cameraPosition.zoom - 0.8f azimuth:cameraPosition.azimuth tilt:cameraPosition.tilt];
-    [self.mapWindow.map moveWithCameraPosition:cameraPosition animation:[YMKAnimation animationWithType:animation == 0 ? YMKAnimationTypeSmooth : YMKAnimationTypeLinear duration:duration] cameraCallback:^(BOOL completed){}];
+    [self.mapWindow.map moveWithCameraPosition:cameraPosition animation:anim cameraCallback:^(BOOL completed){}];
 }
 
 - (void)setLogoPosition:(NSDictionary *)logoPosition {
