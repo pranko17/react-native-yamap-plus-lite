@@ -204,7 +204,7 @@ RCT_CUSTOM_VIEW_PROPERTY(clusterTextYOffset, NSNumber, RNCYMView) {
 }
 
 // ref
-RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag json:(id)json duration: (NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
+RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber*) reactTag duration: (NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         RNCYMView *view = (RNCYMView*) viewRegistry[reactTag];
         if (!view || ![view isKindOfClass:[RNCYMView class]]) {
