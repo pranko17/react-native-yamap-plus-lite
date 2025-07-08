@@ -332,7 +332,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         masstransitRouter.requestRoutes(_points, transitOptions, true, listener)
     }
 
-    fun fitAllMarkers() {
+    fun fitAllMarkers(duration: Float, animation: Int) {
         val points = ArrayList<Point>()
         for (i in 0 until childCount) {
             val obj: Any = getChildAt(i)
@@ -340,7 +340,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
                 obj.point?.let { points.add(it) }
             }
         }
-        fitMarkers(points)
+        fitMarkers(points, duration, animation)
     }
 
     private fun calculateBoundingBox(points: ArrayList<Point>): BoundingBox {
@@ -374,15 +374,18 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
         return boundingBox
     }
 
-    fun fitMarkers(points: ArrayList<Point>) {
+    fun fitMarkers(points: ArrayList<Point>, duration: Float, animation: Int) {
         if (points.size == 0) {
             return
         }
+
+        val anim = Animation(if (animation == 0) Animation.Type.SMOOTH else Animation.Type.LINEAR, duration)
+
         if (points.size == 1) {
             val center = Point(
                 points[0].latitude, points[0].longitude
             )
-            mapWindow.map.move(CameraPosition(center, 15f, 0f, 0f))
+            mapWindow.map.move(CameraPosition(center, 15f, 0f, 0f), anim, null)
             return
         }
         var cameraPosition = mapWindow.map.cameraPosition(Geometry.fromBoundingBox(calculateBoundingBox(points)))
@@ -392,7 +395,7 @@ open class YamapView(context: Context?) : MapView(context), UserLocationObjectLi
             cameraPosition.azimuth,
             cameraPosition.tilt
         )
-        mapWindow.map.move(cameraPosition, Animation(Animation.Type.SMOOTH, 0.7f), null)
+        mapWindow.map.move(cameraPosition, anim, null)
     }
 
     // PROPS

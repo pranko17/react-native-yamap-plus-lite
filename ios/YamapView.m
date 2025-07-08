@@ -166,7 +166,7 @@ RCT_CUSTOM_VIEW_PROPERTY(logoPadding, BOOL, RNYMView) {
 }
 
 // REF
-RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber *)reactTag) {
+RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber *)reactTag duration: (NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
         RNYMView *view = (RNYMView *)viewRegistry[reactTag];
 
@@ -175,11 +175,11 @@ RCT_EXPORT_METHOD(fitAllMarkers:(nonnull NSNumber *)reactTag) {
             return;
         }
 
-        [view fitAllMarkers];
+      [view fitAllMarkers: [duration floatValue] withAnimation:[animation intValue]];
     }];
 }
 
-RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json) {
+RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json duration: (NSNumber*_Nonnull) duration animation:(NSNumber*_Nonnull) animation) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView*> *viewRegistry) {
         RNYMView *view = (RNYMView *)viewRegistry[reactTag];
 
@@ -189,7 +189,7 @@ RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json) {
         }
 
         NSArray<YMKPoint *> *points = [RCTConvert Points:json];
-        [view fitMarkers: points];
+    [view fitMarkers: points withDuration: [duration floatValue] withAnimation: [animation intValue]];
     }];
 }
 
