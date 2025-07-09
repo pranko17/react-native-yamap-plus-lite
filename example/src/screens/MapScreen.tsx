@@ -23,10 +23,6 @@ export const MapScreen = () => {
         mapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
           console.log('getScreenPoints', e);
         });
-        // mapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
-        //   console.log('findRoutes', e);
-        // });
-        // mapRef.current?.setTrafficVisible(true);
       }
     }, [mapLoaded]);
 

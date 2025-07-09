@@ -16,7 +16,6 @@ RCT_EXPORT_MODULE()
 
 - (NSArray<NSString*>*)supportedEvents {
     return @[
-        @"onRouteFound",
         @"onCameraPositionReceived",
         @"onVisibleRegionReceived",
         @"onCameraPositionChange",
@@ -52,7 +51,6 @@ RCT_EXPORT_MODULE()
 }
 
 // PROPS
-RCT_EXPORT_VIEW_PROPERTY(onRouteFound, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onCameraPositionReceived, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onVisibleRegionReceived, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onCameraPositionChange, RCTBubblingEventBlock)
@@ -190,28 +188,6 @@ RCT_EXPORT_METHOD(fitMarkers:(nonnull NSNumber *)reactTag json:(id)json duration
 
         NSArray<YMKPoint *> *points = [RCTConvert Points:json];
     [view fitMarkers: points withDuration: [duration floatValue] withAnimation: [animation intValue]];
-    }];
-}
-
-RCT_EXPORT_METHOD(findRoutes:(nonnull NSNumber *)reactTag json:(NSDictionary *)json) {
-    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
-        RNYMView *view = (RNYMView *)viewRegistry[reactTag];
-
-        if (!view || ![view isKindOfClass:[RNYMView class]]) {
-            RCTLogError(@"Cannot find NativeView with tag #%@", reactTag);
-            return;
-        }
-
-        NSArray<YMKPoint *> *points = [RCTConvert Points:json[@"points"]];
-        NSMutableArray<YMKRequestPoint *> *requestPoints = [[NSMutableArray alloc] init];
-
-        for (int i = 0; i < [points count]; ++i) {
-            YMKRequestPoint *requestPoint = [YMKRequestPoint requestPointWithPoint:[points objectAtIndex:i] type:YMKRequestPointTypeWaypoint pointContext:nil drivingArrivalPointId:nil indoorLevelId:nil];
-            [requestPoints addObject:requestPoint];
-        }
-
-        NSArray<NSString *> *vehicles = [RCTConvert Vehicles:json[@"vehicles"]];
-        [view findRoutes: requestPoints vehicles: vehicles withId:json[@"id"]];
     }];
 }
 

@@ -8,7 +8,6 @@
 
 @interface RNYMView: YMKMapView<YMKUserLocationObjectListener, YMKMapCameraListener, RCTComponent, YMKMapLoadedListener, YMKTrafficDelegate>
 
-@property (nonatomic, copy) RCTBubblingEventBlock _Nullable onRouteFound;
 @property (nonatomic, copy) RCTBubblingEventBlock _Nullable onCameraPositionReceived;
 @property (nonatomic, copy) RCTBubblingEventBlock _Nullable onVisibleRegionReceived;
 @property (nonatomic, copy) RCTBubblingEventBlock _Nullable onCameraPositionChange;
@@ -26,7 +25,6 @@
 - (void)setZoom:(float)zoom withDuration:(float)duration withAnimation:(int)animation;
 - (void)fitAllMarkers:(float)duration withAnimation:(int)animation;
 - (void)fitMarkers:(NSArray<YMKPoint *> *_Nonnull)points withDuration:(float)duration withAnimation:(int)animation;
-- (void)findRoutes:(NSArray<YMKRequestPoint *> *_Nonnull)points vehicles:(NSArray<NSString *> *_Nonnull)vehicles withId:(NSString *_Nonnull)_id;
 - (void)setTrafficVisible:(BOOL)traffic;
 - (void)emitWorldToScreenPoint:(NSArray<YMKPoint *> *_Nonnull)points withId:(NSString*_Nonnull)_id;
 - (void)emitScreenToWorldPoint:(NSArray<YMKScreenPoint *> *_Nonnull)points withId:(NSString*_Nonnull)_id;

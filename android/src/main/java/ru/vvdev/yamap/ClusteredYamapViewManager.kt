@@ -11,7 +11,6 @@ import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.map.CameraPosition
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEndEvent
 import ru.vvdev.yamap.events.yamap.CameraPositionChangeEvent
-import ru.vvdev.yamap.events.yamap.FindRoutesEvent
 import ru.vvdev.yamap.events.yamap.GetCameraPositionEvent
 import ru.vvdev.yamap.events.yamap.GetScreenToWorldPointsEvent
 import ru.vvdev.yamap.events.yamap.GetVisibleRegionEvent
@@ -34,11 +33,6 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
 
     override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
         return mutableMapOf(
-            FindRoutesEvent.EVENT_NAME to
-                    mapOf(
-                        "phasedRegistrationNames" to
-                                mapOf("bubbled" to "onRouteFound")
-                    ),
             GetCameraPositionEvent.EVENT_NAME to
                     mapOf(
                         "phasedRegistrationNames" to
@@ -91,7 +85,6 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
         return mapOf(
             "setCenter" to SET_CENTER,
             "fitAllMarkers" to FIT_ALL_MARKERS,
-            "findRoutes" to FIND_ROUTES,
             "setZoom" to SET_ZOOM,
             "getCameraPosition" to GET_CAMERA_POSITION,
             "getVisibleRegion" to GET_VISIBLE_REGION,
@@ -126,10 +119,6 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
             }
             "fitMarkers" -> if (args != null) {
                 fitMarkers(view, args.getArray(0), args.getDouble(1).toFloat(), args.getInt(2))
-            }
-
-            "findRoutes" -> if (args != null) {
-                findRoutes(view, args.getArray(0), args.getArray(1), args.getString(2))
             }
 
             "setZoom" -> if (args != null) {
@@ -217,24 +206,6 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
         if (jsPoints != null) {
             val points = PointUtil.jsPointsToPoints(jsPoints)
             castToYamapView(view).fitMarkers(points, duration, animation)
-        }
-    }
-
-    private fun findRoutes(
-        view: View,
-        jsPoints: ReadableArray?,
-        jsVehicles: ReadableArray?,
-        id: String?
-    ) {
-        if (jsPoints != null) {
-            val points = PointUtil.jsPointsToPoints(jsPoints)
-            val vehicles = ArrayList<String>()
-            if (jsVehicles != null) {
-                for (i in 0 until jsVehicles.size()) {
-                    vehicles.add(jsVehicles.getString(i) as String)
-                }
-            }
-            castToYamapView(view).findRoutes(points, vehicles, id)
         }
     }
 
@@ -403,13 +374,12 @@ class ClusteredYamapViewManager internal constructor() : ViewGroupManager<Cluste
 
         private const val SET_CENTER = 1
         private const val FIT_ALL_MARKERS = 2
-        private const val FIND_ROUTES = 3
-        private const val SET_ZOOM = 4
-        private const val GET_CAMERA_POSITION = 5
-        private const val GET_VISIBLE_REGION = 6
-        private const val SET_TRAFFIC_VISIBLE = 7
-        private const val FIT_MARKERS = 8
-        private const val GET_SCREEN_POINTS = 9
-        private const val GET_WORLD_POINTS = 10
+        private const val SET_ZOOM = 3
+        private const val GET_CAMERA_POSITION = 4
+        private const val GET_VISIBLE_REGION = 5
+        private const val SET_TRAFFIC_VISIBLE = 6
+        private const val FIT_MARKERS = 7
+        private const val GET_SCREEN_POINTS = 8
+        private const val GET_WORLD_POINTS = 9
     }
 }

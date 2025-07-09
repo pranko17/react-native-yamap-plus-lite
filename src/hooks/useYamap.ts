@@ -1,9 +1,9 @@
-import {ForwardedRef, RefObject, useCallback, useImperativeHandle} from 'react';
-import {ALL_MASSTRANSIT_VEHICLES, Animation} from '../interfaces';
-import {CallbacksManager} from '../utils';
-import {findNodeHandle, Platform, UIManager} from 'react-native';
-import {YamapRef} from '../components/Yamap';
-import {YamapNativeRef} from '../components/Yamap/YamapNativeComponent';
+import { ForwardedRef, RefObject, useCallback, useImperativeHandle } from 'react';
+import { findNodeHandle, Platform, UIManager } from 'react-native';
+import { YamapRef } from '../components/Yamap';
+import { YamapNativeRef } from '../components/Yamap/YamapNativeComponent';
+import { Animation } from '../interfaces';
+import { CallbacksManager } from '../utils';
 
 export const useYamap = (
   nativeRef: RefObject<YamapNativeRef | null>,
@@ -21,29 +21,6 @@ export const useYamap = (
       args
     );
   }, [getCommand, nativeRef]);
-
-  const _findRoutes = useCallback<YamapRef['findRoutes']>((points, vehicles, callback) => {
-    const cbId = CallbacksManager.addCallback(callback);
-    const args = Platform.OS === 'ios' ? [{points, vehicles, id: cbId}] : [points, vehicles, cbId];
-
-    dispatchCommand('findRoutes', args);
-  }, [dispatchCommand]);
-
-  const findRoutes = useCallback<YamapRef['findRoutes']>((points, vehicles, callback) => {
-    _findRoutes(points, vehicles, callback);
-  }, [_findRoutes]);
-
-  const findMasstransitRoutes = useCallback<YamapRef['findMasstransitRoutes']>((points, callback) => {
-    _findRoutes(points, ALL_MASSTRANSIT_VEHICLES, callback);
-  }, [_findRoutes]);
-
-  const findPedestrianRoutes = useCallback<YamapRef['findPedestrianRoutes']>((points, callback) => {
-    _findRoutes(points, [], callback);
-  }, [_findRoutes]);
-
-  const findDrivingRoutes = useCallback<YamapRef['findDrivingRoutes']>((points, callback) => {
-    _findRoutes(points, ['car'], callback);
-  }, [_findRoutes]);
 
   const fitAllMarkers = useCallback<YamapRef['fitAllMarkers']>((duration, animation) => {
     dispatchCommand('fitAllMarkers', [duration ?? (Platform.OS === 'ios' ? 1 : 0.7), animation ?? Animation.SMOOTH]);
@@ -93,10 +70,6 @@ export const useYamap = (
   }, [dispatchCommand]);
 
   useImperativeHandle(ref, () => ({
-    findRoutes,
-    findMasstransitRoutes,
-    findPedestrianRoutes,
-    findDrivingRoutes,
     fitAllMarkers,
     fitMarkers,
     setTrafficVisible,
@@ -107,10 +80,6 @@ export const useYamap = (
     getScreenPoints,
     getWorldPoints,
   }), [
-    findRoutes,
-    findMasstransitRoutes,
-    findPedestrianRoutes,
-    findDrivingRoutes,
     fitAllMarkers,
     fitMarkers,
     setTrafficVisible,

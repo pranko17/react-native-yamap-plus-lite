@@ -1,22 +1,18 @@
-import {ImageSourcePropType, ViewProps} from 'react-native';
+import { ImageSourcePropType, ViewProps } from 'react-native';
 import {
   Animation,
   CameraPosition,
   CameraPositionCallback,
-  DrivingInfo,
   InitialRegion,
   MapLoaded,
-  MasstransitInfo,
   NativeSyntheticEventCallback,
   Point,
-  RoutesFoundCallback,
   ScreenPoint,
   ScreenPointsCallback,
-  Vehicles,
   VisibleRegionCallback,
   WorldPointsCallback,
   YandexLogoPadding,
-  YandexLogoPosition,
+  YandexLogoPosition
 } from '../../interfaces';
 
 export interface YamapProps extends ViewProps {
@@ -55,22 +51,10 @@ export type YamapRef = {
   ) => void;
   fitAllMarkers: (duration?: number, animation?: Animation) => void;
   fitMarkers: (points: Point[], duration?: number, animation?: Animation) => void;
-  findRoutes: (
-    points: Point[],
-    vehicles: Vehicles[],
-    callback:
-      RoutesFoundCallback<DrivingInfo> |
-      RoutesFoundCallback<MasstransitInfo> |
-      RoutesFoundCallback<DrivingInfo | MasstransitInfo>
-  ) => void;
   setZoom: (zoom: number, duration: number, animation: Animation) => void;
   getCameraPosition: (callback: CameraPositionCallback) => void;
   getVisibleRegion: (callback: VisibleRegionCallback) => void;
   setTrafficVisible: (isVisible: boolean) => void;
   getScreenPoints: (points: Point[], callback: ScreenPointsCallback) => void;
   getWorldPoints: (points: ScreenPoint[], callback: WorldPointsCallback) => void;
-
-  findMasstransitRoutes: (points: Point[], callback: RoutesFoundCallback<MasstransitInfo>) => void;
-  findPedestrianRoutes: (points: Point[], callback: RoutesFoundCallback<MasstransitInfo>) => void;
-  findDrivingRoutes: (points: Point[], callback: RoutesFoundCallback<DrivingInfo>) => void;
 };
