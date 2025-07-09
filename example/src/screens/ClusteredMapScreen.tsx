@@ -38,9 +38,6 @@ export const ClusteredMapScreen = () => {
     clusteredMapRef.current?.getScreenPoints([{lat: 55.75124399961543, lon: 37.618422999999986}], e => {
       console.log('clustered getScreenPoints', e);
     });
-    // clusteredMapRef.current?.findRoutes([{lat: 55.75, lon: 37.61}, {lat: 55.76, lon: 37.62}], ['walk'], e => {
-    //   console.log('clustered findRoutes', e);
-    // });
   };
 
   return (

@@ -1,16 +1,9 @@
 import {
   CameraPosition,
-  DrivingInfo,
-  MasstransitInfo,
   NativeSyntheticEventCallback, Point,
-  RoutesFoundEvent, ScreenPoint, VisibleRegion,
+  ScreenPoint, VisibleRegion
 } from '../../interfaces';
-import {CallbacksManager} from '../../utils';
-
-export const onRouteFound: NativeSyntheticEventCallback<{ id: string } & RoutesFoundEvent<DrivingInfo | MasstransitInfo>> = (event) => {
-  const { id, ...routes } = event.nativeEvent;
-  CallbacksManager.call(id, routes);
-};
+import { CallbacksManager } from '../../utils';
 
 export const onCameraPositionReceived: NativeSyntheticEventCallback<{ id: string } & CameraPosition> = (event) => {
   const { id, ...point } = event.nativeEvent;

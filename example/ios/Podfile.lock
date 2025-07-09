@@ -2124,9 +2124,9 @@ PODS:
     - SocketRocket
   - RNYamap (4.17.0):
     - React
-    - YandexMapsMobile (= 4.17.0-full)
+    - YandexMapsMobile (= 4.17.0-lite)
   - SocketRocket (0.7.1)
-  - YandexMapsMobile (4.17.0-full)
+  - YandexMapsMobile (4.17.0-lite)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -2432,9 +2432,9 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 3267432b637c9b38e86961b287f784ee1b08dde0
   ReactCodegen: 5d41e1df061200130dd326e55cdfdf94b0289c6e
   ReactCommon: b028d09a66e60ebd83ca59d8cc9a1216360db147
-  RNYamap: 2635c7d8416bcb41624d5bb358d4ff6115d17e9b
+  RNYamap: 202cd0b38366e02c84939d5954906c67b2626e9a
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  YandexMapsMobile: 0682eba9415201205a86b71dcafde88dba3522b3
+  YandexMapsMobile: 6e2193ed08ab11682efafd3a88e5de854cecc0cf
   Yoga: 0c4b7d2aacc910a1f702694fa86be830386f4ceb
 
 PODFILE CHECKSUM: 8adcb621e22397080405cb98bd69e8bf195e1e95
