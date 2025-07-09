@@ -1,16 +1,16 @@
 {
-  "name": "react-native-yamap-plus",
+  "name": "react-native-yamap-plus-lite",
   "version": "4.17.0",
   "description": "Yandex MapKit for React Native",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
   "scripts": {
     "example": "yarn workspace react-native-yamap-example",
     "prepare": "bob build",
     "release": "release-it"
   },
-  "homepage": "https://github.com/qudaeo/react-native-yamap-plus",
+  "homepage": "https://github.com/pranko17/react-native-yamap-plus-lite",
   "keywords": [
     "react-native",
     "mapkit",
@@ -29,9 +29,10 @@
   "author": "Nikita Sirotkin",
   "license": "MIT",
   "devDependencies": {
+    "@react-native-community/bob": "^0.17.1",
     "@types/react": "*",
     "@types/react-native": "*",
-    "react-native-builder-bob": "0.40.12",
+    "react-native-builder-bob": "^0.30.0",
     "release-it": "19.0.3",
     "typescript": "5.8.3"
   },
@@ -44,6 +45,9 @@
   "files": [
     "src",
     "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
     "android",
     "ios",
     "*.podspec",
@@ -56,9 +60,6 @@
     "!android/local.properties",
     "!ios/RNYamap.xcodeproj/project.xcworkspace",
     "!ios/RNYamap.xcodeproj/xcuserdata",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__",
     "!**/.*"
   ],
   "react-native-builder-bob": {
@@ -83,5 +84,14 @@
   "workspaces": [
     "example"
   ],
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.2",
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  }
 }

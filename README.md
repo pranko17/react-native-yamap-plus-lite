@@ -1,13 +1,13 @@
-## React Native Yandex Maps (Яндекс Карты)
+## React Native Yandex Maps lite (Яндекс Карты)
 
-#### Форк библиотеки [react-native-yamap](https://github.com/volga-volga/react-native-yamap), разработанной компанией [Волга-Волга](https://vvdev.ru/)
+#### Форк библиотеки [react-native-yamap-plus](https://github.com/Qudaeo/react-native-yamap-plus), разработанной [Qudaeo](https://github.com/Qudaeo)
 
 #### Библиотека для интеграции MapKit SDK в React Native
 
 ## Установка
 
 ```
-yarn add react-native-yamap-plus
+yarn add react-native-yamap-plus-lite
 ```
 
 ## Использование карт
@@ -17,7 +17,7 @@ yarn add react-native-yamap-plus
 Для этого лучше всего зайти в корневой файл приложения, например `App.js`, и добавить инициализацию:
 
 ```js
-import { YamapInstance } from "react-native-yamap-plus";
+import { YamapInstance } from "react-native-yamap-plus-lite";
 
 YamapInstance.init(API_KEY);
 ```
@@ -25,7 +25,7 @@ YamapInstance.init(API_KEY);
 ### Изменение языка карт
 
 ```js
-import { YamapInstance } from "react-native-yamap-plus";
+import { YamapInstance } from "react-native-yamap-plus-lite";
 
 const currentLocale = await YamapInstance.getLocale();
 YamapInstance.setLocale("en_US"); // 'ru_RU' или другие
@@ -47,7 +47,7 @@ YamapInstance.resetLocale();
 
 ```jsx
 import React from "react";
-import { Yamap } from "react-native-yamap-plus";
+import { Yamap } from "react-native-yamap-plus-lite";
 
 const Map = () => {
   return (
@@ -201,7 +201,7 @@ type YandexLogoPadding = {
 ### Marker
 
 ```jsx
-import { Yamap, Marker } from "react-native-yamap-plus";
+import { Yamap, Marker } from "react-native-yamap-plus-lite";
 
 <Yamap>
   <Marker point={{ lat: 50, lon: 50 }} />
@@ -230,7 +230,7 @@ import { Yamap, Marker } from "react-native-yamap-plus";
 ### Circle
 
 ```jsx
-import { Yamap, Circle } from "react-native-yamap-plus";
+import { Yamap, Circle } from "react-native-yamap-plus-lite";
 
 <Yamap>
   <Circle center={{ lat: 50, lon: 50 }} radius={300} />
@@ -253,7 +253,7 @@ import { Yamap, Circle } from "react-native-yamap-plus";
 ### Polyline
 
 ```jsx
-import { Yamap, Polyline } from "react-native-yamap-plus";
+import { Yamap, Polyline } from "react-native-yamap-plus-lite";
 
 <Yamap>
   <Polyline
@@ -285,7 +285,7 @@ import { Yamap, Polyline } from "react-native-yamap-plus";
 ### Polygon
 
 ```jsx
-import { Yamap, Polygon } from "react-native-yamap-plus";
+import { Yamap, Polygon } from "react-native-yamap-plus-lite";
 
 <Yamap>
   <Polygon
@@ -315,7 +315,7 @@ import { Yamap, Polygon } from "react-native-yamap-plus";
 
 ```jsx
 import React from "react";
-import { ClusteredYamap } from "react-native-yamap-plus";
+import { ClusteredYamap } from "react-native-yamap-plus-lite";
 
 const Map = () => {
   return (
