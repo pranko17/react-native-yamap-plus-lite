@@ -1,6 +1,6 @@
 {
   "name": "react-native-yamap-plus-lite",
-  "version": "4.17.1",
+  "version": "4.18.0",
   "description": "Yandex MapKit for React Native",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
